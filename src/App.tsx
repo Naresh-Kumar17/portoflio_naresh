@@ -63,6 +63,8 @@ function AnimatedRoutes() {
 
 function AppContent() {
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
+  const location = useLocation();
+  const isHome = location.pathname === '/';
 
   // Global keyboard shortcut for Command Palette (Ctrl+K or Cmd+K)
   useEffect(() => {
@@ -78,16 +80,16 @@ function AppContent() {
   }, []);
 
   return (
-    <div className="app">
+    <div className={`app ${isHome ? 'app--map-active' : ''}`}>
       <ScrollToTop />
       <CursorGlow />
-      <Navbar onOpenCommandPalette={() => setCommandPaletteOpen(true)} />
+      {!isHome && <Navbar onOpenCommandPalette={() => setCommandPaletteOpen(true)} />}
 
-      <div className="main-content">
+      <div className={isHome ? 'main-content main-content--fullscreen' : 'main-content'}>
         <AnimatedRoutes />
       </div>
 
-      <Footer />
+      {!isHome && <Footer />}
 
       <CommandPalette
         isOpen={commandPaletteOpen}

@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { ArrowRight, ExternalLink } from 'lucide-react';
+import { ArrowRight, ExternalLink, Network } from 'lucide-react';
 import { Hero } from '../components/Hero';
+import { NicoUniverse } from '../components/NicoUniverse';
 import { ScrollReveal, StaggerItem } from '../components/ScrollReveal';
 import { MagneticCard } from '../components/MagneticCard';
 import { AnimatedCounter } from '../components/AnimatedCounter';
@@ -23,6 +25,7 @@ function StatusBadge({ status }: { status: ProjectStatus }) {
 
 export function HomePage() {
   const { t } = useI18n();
+  const [viewMode, setViewMode] = useState<'map' | 'list'>('map');
   const mainProject = getMainFeaturedProject();
   const featuredProjects = getFeaturedProjects().filter((p) => !p.mainFeatured);
   const topSkills = skillCategories
@@ -32,8 +35,24 @@ export function HomePage() {
 
   const learnedCount = skillCategories.flatMap((c) => c.skills).filter((s) => s.status === 'learned').length;
 
+  if (viewMode === 'map') {
+    return <NicoUniverse onSwitchToList={() => setViewMode('list')} />;
+  }
+
   return (
     <main>
+      <div style={{ position: 'fixed', bottom: '24px', right: '24px', zIndex: 100 }}>
+        <button
+          type="button"
+          className="btn btn--primary"
+          onClick={() => setViewMode('map')}
+          style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', boxShadow: '0 8px 30px rgba(155, 143, 255, 0.4)' }}
+        >
+          <Network size={16} />
+          <span>EXPLORE MAP VIEW</span>
+        </button>
+      </div>
+
       <Hero />
 
       {/* ── About Preview ── */}
