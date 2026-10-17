@@ -1,971 +1,1539 @@
-import React, { useRef, useEffect, useState, useCallback, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, ExternalLink, Compass } from 'lucide-react';
+import { useEffect, useRef } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
-import { profile } from '../data/profile';
 import './NicoUniverse.css';
 
-/* ── Types & Interfaces ── */
-export interface MapNode {
-  id: string;
-  label: string;
-  category: 'core' | 'data' | 'ai' | 'projects' | 'education' | 'connect';
-  hubId?: string;
-  x: number;
-  y: number;
-  radius: number;
-  title: string;
-  lead: string;
-  details?: string;
-  tags?: string[];
-  meta?: { label: string; value: string }[];
-  link?: string;
-  github?: string;
-  demo?: string;
-  date?: string;
-}
-
-interface Edge {
-  from: string;
-  to: string;
-}
-
-const CATEGORY_COLORS: Record<string, string> = {
-  core: '#9B8FFF',     // Signature Iris Lavender
-  data: '#00B0CD',     // Data Stream Cyan
-  ai: '#E84FD0',       // Neural Magenta / Pink
-  projects: '#CFFF04', // Cyber Citron / Acid Lime
-  education: '#FF6A3D',// Coral Sunset
-  connect: '#9B8FFF',  // Lavender Accent
+/* ── Naresh Kumar Data Science Constellation Dataset ── */
+export const NARESH_DB = {
+  N: [
+    {
+      id: "naresh",
+      name: "Naresh",
+      region: "entry",
+      x: 0,
+      y: 0.23,
+      r: 1.55,
+      z: 0,
+      kicker: "Undergraduate Data Science Researcher",
+      links: [
+        ["Explore Academic Foundations · FAST-NUCES", "#/fast_nuces"],
+        ["GitHub Repository", "https://github.com/Naresh-Kumar17"]
+      ],
+      sum: "Data Science undergraduate at FAST-NUCES Karachi turning statistical pipelines into empirical decisions.",
+      body: "Pursuing BS Data Science at National University of Computer and Emerging Sciences (FAST-NUCES) Karachi (2025–2029). Focused on exploratory data pipelines, statistical modeling, machine learning benchmarks, and visual narratives. Understanding the math first, then designing computational systems that reveal insights in complex data.",
+      cap: "Naresh Kumar · FAST-NUCES Karachi",
+      role: "Student, Data Scientist & Computational Thinker",
+      duration: "FAST-NUCES Karachi · 2025 → 2029",
+      impact: "Building modular, reproducible data pipelines and exploratory statistical frameworks.",
+      scope: "Rigorous coursework in computational statistics, linear algebra, algorithms, and practical machine learning using Python, pandas, NumPy, and scikit-learn.",
+      skills: [
+        ["Python & Data Ecosystem", "core"],
+        ["Exploratory Data Analysis", "core"],
+        ["Machine Learning · Scikit-Learn", "grew"],
+        ["Statistical Inference", "grew"],
+        ["SQL & Relational Schemas", "core"]
+      ],
+      story: "My journey started with a fascination for patterns in data and code. Studying Data Science at FAST-NUCES provides the mathematical rigor, algorithmic thinking, and empirical experimentation needed to tackle real-world data challenges."
+    },
+    {
+      id: "contacto",
+      name: "Let's Connect",
+      region: "entry",
+      x: -2.6,
+      y: 1.15,
+      r: 0.5,
+      z: 0.1,
+      kicker: "Contact & Collaboration",
+      sum: "Open for discussions, research collaborations, and internships.",
+      body: "Interested in data science pipelines, applied machine learning, or research projects? Reach out through any channel below.",
+      cap: "Contact",
+      links: [
+        ["Email · vishnaninaresh8@gmail.com", "mailto:vishnaninaresh8@gmail.com"],
+        ["GitHub · Naresh-Kumar17", "https://github.com/Naresh-Kumar17"],
+        ["Portfolio Repository", "https://github.com/Naresh-Kumar17/protoflio_naresh"],
+        ["FAST-NUCES Karachi", "https://khi.nu.edu.pk/"]
+      ]
+    },
+    {
+      id: "collaborate",
+      name: "Project Brief",
+      region: "entry",
+      x: -3.15,
+      y: -0.6,
+      r: 0.55,
+      z: 0,
+      kicker: "Collaborations",
+      sum: "Data exploration, statistical modeling, and interactive dashboards.",
+      body: "Available for research projects, open-source data science tools, and end-to-end data pipeline builds.",
+      cap: "Work Together"
+    },
+    {
+      id: "fast_nuces",
+      name: "FAST-NUCES",
+      region: "special",
+      x: 2.81,
+      y: 1.56,
+      r: 2.35,
+      z: 0.4,
+      kicker: "Flagship Academic Foundation · BS Data Science",
+      sum: "National University of Computer & Emerging Sciences — Premier computing education.",
+      body: "FAST-NUCES Karachi is Pakistan's premier computing university. The BS Data Science program blends deep computer science theory, discrete mathematics, linear algebra, probability, data structures, and hands-on machine learning.",
+      cap: "FAST-NUCES Karachi Campus",
+      url: "https://khi.nu.edu.pk/",
+      urlLabel: "FAST-NUCES Karachi Portal ↗",
+      role: "Undergraduate Student · BS Data Science (Batch 2025–2029)",
+      duration: "2025 → 2029 · Karachi, Pakistan",
+      impact: "Mastering core CS and statistical foundations across rigorous academic semesters.",
+      scope: "Curriculum covers Programming Fundamentals, Object Oriented Programming, Data Structures, Discrete Mathematics, Linear Algebra, Multivariate Calculus, Probability & Statistics, and Machine Learning.",
+      objectives: [
+        "Master foundational mathematics and algorithmic complexity.",
+        "Implement scalable data processing and machine learning pipelines.",
+        "Apply data science methodologies to solve complex empirical problems."
+      ],
+      impacts: [
+        "Rigorous foundation in computer science principles and software engineering.",
+        "Comprehensive training in statistical hypothesis testing and probability theory.",
+        "Practical laboratory implementations in Python, C++, and SQL."
+      ],
+      skills: [
+        ["Computer Science Foundations", "core"],
+        ["Linear Algebra & Calculus", "core"],
+        ["Data Structures & Algorithms", "core"],
+        ["Probability & Statistics", "core"]
+      ]
+    },
+    {
+      id: "ai",
+      name: "Machine Learning",
+      region: "ai",
+      x: -3.74,
+      y: 2.57,
+      r: 1.45,
+      z: 0.3,
+      kicker: "Domain ① · Model Training, Evaluation & Benchmarking",
+      links: [["Classification Benchmark Lab", "#/classification_lab"]],
+      sum: "Formulating machine learning pipelines, feature transformation, and evaluation metrics.",
+      body: "Machine learning requires more than just calling fit() and predict(). It requires systematic feature engineering, cross-validation, hyperparameter tuning, and clear metric diagnostics to prevent data leakage and overfitting.",
+      role: "Model Developer & Machine Learning Practitioner",
+      duration: "2024 → ongoing",
+      impact: "Designing robust classification and regression pipelines with reproducible benchmarks.",
+      scope: "Working with scikit-learn, XGBoost, feature pipelines, regression modeling, and classification diagnostics (ROC-AUC, Precision-Recall, F1-score).",
+      skills: [
+        ["Scikit-Learn Workflows", "core"],
+        ["Supervised Learning", "core"],
+        ["Feature Engineering", "grew"],
+        ["Model Evaluation & Metrics", "grew"]
+      ]
+    },
+    {
+      id: "classification_lab",
+      name: "Classification Lab",
+      region: "ai",
+      x: -5.93,
+      y: 3.59,
+      r: 0.75,
+      z: 0.5,
+      kicker: "Machine Learning",
+      sum: "Comparative benchmark across Logistic Regression, Random Forests, and SVMs.",
+      body: "A structured machine learning benchmark evaluating classification performance across multi-class datasets. Evaluates decision boundaries, confusion matrices, and precision-recall trade-offs.",
+      cap: "Classification Benchmarks",
+      role: "Lead Experimenter",
+      duration: "2024–2025",
+      impact: "Systematic comparison of 5 classification architectures on structured tabular data.",
+      skills: [
+        ["Logistic Regression", "core"],
+        ["Random Forests", "grew"],
+        ["Cross-Validation", "core"]
+      ]
+    },
+    {
+      id: "network",
+      name: "Graph Analytics",
+      region: "ai",
+      x: -5.46,
+      y: 1.48,
+      r: 0.7,
+      z: 0.1,
+      kicker: "Graph Intelligence",
+      sum: "Network graphs, centrality analysis, and topological data structures.",
+      body: "Exploring graphs to discover relationships, community clusters, and central bridge nodes across connected datasets.",
+      cap: "Graph Network Visualization",
+      role: "Graph Analytics Developer",
+      duration: "2025",
+      skills: [
+        ["NetworkX & Graph Theory", "grew"],
+        ["Centrality Metrics", "core"],
+        ["D3.js Graph Visuals", "grew"]
+      ]
+    },
+    {
+      id: "scikit_toolkit",
+      name: "Scikit Toolkit",
+      region: "ai",
+      x: 0,
+      y: 3.82,
+      r: 0.78,
+      z: 0.2,
+      kicker: "Model Engineering",
+      sum: "Modular preprocessing pipelines, transformers, and cross-validation harnesses.",
+      body: "Reusable scikit-learn Pipeline abstractions for imputation, scaling, one-hot encoding, and hyperparameter search.",
+      cap: "Scikit-Learn Modular Toolkit",
+      skills: [
+        ["ColumnTransformer", "core"],
+        ["GridSearchCV & Optuna", "grew"],
+        ["Pipeline Architecture", "core"]
+      ]
+    },
+    {
+      id: "growth",
+      name: "Analytics & BI",
+      region: "growth",
+      x: 6.16,
+      y: -0.47,
+      r: 1.45,
+      z: -0.3,
+      kicker: "Domain ② · Business Intelligence & Statistical Inference",
+      sum: "Transforming raw business records into actionable KPI metrics and decisions.",
+      body: "Analytics bridges data science and decision making. Connecting SQL extraction, cohorts, funnel metrics, and statistical hypothesis testing to evaluate performance and user behavior.",
+      role: "Data Analyst & Metrics Architect",
+      duration: "2024 → ongoing",
+      impact: "Designing clean SQL reporting layers and reproducible cohort retention analyses.",
+      skills: [
+        ["SQL Querying & Joins", "core"],
+        ["Cohort Analysis", "core"],
+        ["A/B Testing Foundations", "grew"],
+        ["KPI Dashboard Design", "core"]
+      ]
+    },
+    {
+      id: "sql_analytics",
+      name: "SQL Analytics Lab",
+      region: "growth",
+      x: 5.07,
+      y: 1.09,
+      r: 0.95,
+      z: 0.2,
+      kicker: "Relational Intelligence",
+      sum: "Complex aggregations, window functions, and schema normalization.",
+      body: "Advanced SQL queries leveraging CTEs, window functions (ROW_NUMBER, LAG, LEAD), and multi-table joins to analyze transactional databases.",
+      cap: "SQL Analytics & Schema Design",
+      skills: [
+        ["PostgreSQL / MySQL", "core"],
+        ["Window Functions", "core"],
+        ["CTEs & Indexing", "grew"]
+      ]
+    },
+    {
+      id: "kpi_dashboards",
+      name: "Decision Dashboards",
+      region: "growth",
+      x: 6.79,
+      y: -2.57,
+      r: 0.8,
+      z: 0,
+      kicker: "Visual Reporting",
+      sum: "Interactive KPI reporting dashboards for data monitoring.",
+      body: "Designing visual layouts that prioritize key decision variables without clutter or cognitive overhead.",
+      cap: "KPI Reporting Suite",
+      skills: [
+        ["Interactive Dashboards", "core"],
+        ["Visual Hierarchy", "core"]
+      ]
+    },
+    {
+      id: "stats_inference",
+      name: "Inference & A/B",
+      region: "growth",
+      x: 4.99,
+      y: -2.42,
+      r: 0.7,
+      z: 0.1,
+      kicker: "Statistical Inference",
+      sum: "Hypothesis testing, p-values, confidence intervals, and power calculations.",
+      body: "Rigorous statistical inference: two-sample t-tests, Mann-Whitney U tests, chi-square tests, and bootstrap confidence intervals to validate differences.",
+      cap: "Hypothesis Testing Lab",
+      skills: [
+        ["Hypothesis Testing", "core"],
+        ["Bootstrap Methods", "grew"],
+        ["Confidence Intervals", "core"]
+      ]
+    },
+    {
+      id: "business_metrics",
+      name: "Business Metrics",
+      region: "growth",
+      x: 8.11,
+      y: 1.01,
+      r: 0.9,
+      z: 0.2,
+      kicker: "Empirical Metrics",
+      sum: "Customer lifetime value, churn probability, and engagement cohorts.",
+      body: "Modeling customer acquisition, retention curves, and revenue churn using survival curves and statistical distributions.",
+      skills: [
+        ["Retention Curves", "core"],
+        ["Cohort Metrics", "core"]
+      ]
+    },
+    {
+      id: "data_storytelling",
+      name: "Data Storytelling",
+      region: "growth",
+      x: 8.35,
+      y: -1.17,
+      r: 0.8,
+      z: -0.1,
+      kicker: "Communication",
+      sum: "Crafting narratives from data that non-technical stakeholders understand.",
+      body: "A technical analysis without a clear narrative fails to impact decisions. Translating statistical conclusions into clear, actionable prose.",
+      skills: [["Visual Narratives", "core"], ["Technical Writing", "core"]]
+    },
+    {
+      id: "predictive_modeling",
+      name: "Predictive Models",
+      region: "growth",
+      x: 6.01,
+      y: -4.13,
+      r: 0.65,
+      z: -0.2,
+      kicker: "Predictive Analytics",
+      sum: "Time-series forecasting and trend decomposition.",
+      body: "Exploring moving averages, exponential smoothing, and trend decomposition to model time-varying signals.",
+      skills: [["Time Series", "grew"], ["Trend Decomposition", "core"]]
+    },
+    {
+      id: "feature_eng",
+      name: "Feature Engineering",
+      region: "growth",
+      x: 7.88,
+      y: -2.89,
+      r: 0.7,
+      z: 0,
+      kicker: "Data Preprocessing",
+      sum: "Domain feature synthesis, target encoding, and outlier management.",
+      body: "Crafting domain-specific features that maximize model signal while minimizing variance and multicollinearity.",
+      skills: [["Feature Synthesis", "core"], ["Correlation Analysis", "core"]]
+    },
+    {
+      id: "ml_foundations",
+      name: "ML Foundations",
+      region: "growth",
+      x: 7.2,
+      y: -4.5,
+      r: 0.62,
+      z: -0.3,
+      kicker: "Core Theory",
+      sum: "The mathematical backbone of machine learning algorithms.",
+      body: "Cost functions, bias-variance tradeoff, regularization (L1/L2), and convex optimization principles.",
+      skills: [["Loss Functions", "core"], ["Regularization", "core"]]
+    },
+    {
+      id: "data",
+      name: "Data Science & EDA",
+      region: "data",
+      x: -4.29,
+      y: -2.11,
+      r: 1.35,
+      z: -0.2,
+      kicker: "Domain ③ · Exploratory Data Analysis & Visualization",
+      links: [["EDA Pipeline Case Study", "#/eda_pipeline"]],
+      sum: "Raw data in; verified distributions, clean features, and confident decisions out.",
+      body: "The core of my data science practice. Deep exploratory data analysis using Python, pandas, NumPy, Matplotlib, and Seaborn. Systematic profiling of distributions, correlations, outliers, and missing value patterns.",
+      role: "Data Science Researcher & Pipeline Developer",
+      duration: "2024 → ongoing",
+      impact: "Building modular, reproducible data analysis workflows with automated quality checks.",
+      scope: "From raw unstructured or messy CSV/SQL datasets to cleaned, standardized, and richly visualized data assets ready for modeling.",
+      skills: [
+        ["pandas DataFrames", "core"],
+        ["NumPy Vectorization", "core"],
+        ["Data Quality Assessment", "core"],
+        ["Seaborn & Matplotlib", "core"]
+      ]
+    },
+    {
+      id: "eda_pipeline",
+      name: "EDA Pipeline",
+      region: "data",
+      x: -2.11,
+      y: -3.51,
+      r: 0.95,
+      z: 0.3,
+      kicker: "Flagship Project · Data Science",
+      sum: "A comprehensive exploratory data analysis workflow analyzing real-world datasets.",
+      body: "Built a structured exploratory data analysis pipeline using Python, pandas, and visualization libraries. The project walks through automated data ingestion, cleaning, missing value profiling, statistical summaries, distribution analysis, correlation exploration, and visual storytelling.",
+      cap: "EDA Pipeline Architecture",
+      url: "https://github.com/Naresh-Kumar17/protoflio_naresh",
+      urlLabel: "View on GitHub ↗",
+      role: "Lead Developer & Analyst",
+      duration: "2024 · Active Project",
+      impact: "Standardized exploratory methodology adopted across multiple university data projects.",
+      objectives: [
+        "Create a reusable, modular EDA workflow in Python.",
+        "Systematize data cleaning decisions with clear rationale.",
+        "Produce publication-quality visualizations for distribution and correlation analysis."
+      ],
+      impacts: [
+        "Reusable assess_data_quality() function reporting missingness, duplicates, and type mismatches.",
+        "Comprehensive visualization suite handling univariate and bivariate distributions.",
+        "Clean, well-documented Jupyter notebook architecture."
+      ],
+      skills: [
+        ["Python", "core"],
+        ["pandas", "core"],
+        ["Matplotlib & Seaborn", "core"],
+        ["Statistical Profiling", "core"]
+      ]
+    },
+    {
+      id: "viz_gallery",
+      name: "Visualization Gallery",
+      region: "data",
+      x: -6.55,
+      y: -3.2,
+      r: 0.85,
+      z: -0.4,
+      kicker: "Data Visualization",
+      sum: "A collection of publication-grade visualizations exploring chart types and color palettes.",
+      body: "Exploring how chart type choice, typography, and perceptual color palettes impact data interpretation. Comparing heatmaps, violin plots, faceted histograms, and scatter plots.",
+      cap: "Visual Design & Perception",
+      skills: [
+        ["Visual Encoding", "core"],
+        ["Color Perception", "core"],
+        ["Information Design", "grew"]
+      ]
+    },
+    {
+      id: "data_quality",
+      name: "Data Quality Engine",
+      region: "data",
+      x: -5.4,
+      y: -1.2,
+      r: 0.6,
+      z: 0.1,
+      kicker: "Data Reliability",
+      sum: "Automated assertion testing and data quality profiling scripts.",
+      body: "Validating schema constraints, null thresholds, value ranges, and distribution shifts before ingestion into analytical models.",
+      skills: [["Schema Validation", "core"], ["Assertion Testing", "core"]]
+    },
+    {
+      id: "data_cleaning",
+      name: "Cleaning & Normalization",
+      region: "data",
+      x: -6.2,
+      y: -1.8,
+      r: 0.55,
+      z: -0.1,
+      kicker: "Preprocessing",
+      sum: "Systematic handling of outliers, categorical encoding, and datetime parsing.",
+      body: "Standardizing string fields, handling timezones, and applying robust scaling to skewed variables.",
+      skills: [["Data Normalization", "core"], ["Robust Scaling", "core"]]
+    },
+    {
+      id: "musica",
+      name: "Mathematics",
+      region: "musica",
+      x: 0.78,
+      y: -3.74,
+      r: 1.4,
+      z: 0.4,
+      kicker: "Domain ④ · Algorithmic & Mathematical Foundations",
+      sum: "Linear algebra, multivariable calculus, and discrete mathematical structures.",
+      body: "Mathematics is the language of machine learning. Deepening mastery of matrix decomposition (SVD, Eigendecomposition), vector spaces, gradient computation, and probability theory.",
+      role: "Mathematical Foundations Researcher",
+      duration: "Continuous",
+      impact: "Grounding empirical code in rigorous mathematical and algorithmic theory.",
+      skills: [
+        ["Linear Algebra & Matrices", "core"],
+        ["Multivariate Calculus", "core"],
+        ["Discrete Mathematics", "core"],
+        ["Algorithm Complexity", "core"]
+      ]
+    },
+    {
+      id: "linear_algebra",
+      name: "Linear Algebra Lab",
+      region: "musica",
+      x: 2.73,
+      y: -4.84,
+      r: 0.7,
+      z: -0.3,
+      kicker: "Linear Algebra",
+      sum: "Vector projections, eigenvalues, eigenvectors, and dimensionality reduction.",
+      body: "Hands-on implementations of matrix multiplications, orthogonal projections, and principal component analysis (PCA) from first principles using NumPy.",
+      skills: [["Eigenvalues & PCA", "core"], ["Vector Spaces", "core"], ["NumPy Linear Algebra", "core"]]
+    },
+    {
+      id: "probability_stats",
+      name: "Probability & Stats",
+      region: "musica",
+      x: -0.55,
+      y: -5.3,
+      r: 0.85,
+      z: 0.2,
+      kicker: "Stochastic Systems",
+      sum: "Probability distributions, Bayes theorem, and random variables.",
+      body: "Modeling random phenomena using Gaussian, Poisson, Binomial, and Exponential distributions. Applying Bayes theorem for posterior probability calculations.",
+      skills: [["Bayesian Probability", "core"], ["Probability Distributions", "core"]]
+    },
+    {
+      id: "algorithmic_ds",
+      name: "Data Structures",
+      region: "musica",
+      x: -2.34,
+      y: -5.93,
+      r: 0.62,
+      z: -0.1,
+      kicker: "Computer Science",
+      sum: "Trees, graphs, hash tables, and asymptotic Big-O runtime analysis.",
+      body: "Implementing and optimizing core computer science data structures with rigorous complexity analysis.",
+      skills: [["Asymptotic Analysis", "core"], ["Hash Tables & Trees", "core"]]
+    },
+    {
+      id: "optimization",
+      name: "Optimization & Gradients",
+      region: "musica",
+      x: 1.6,
+      y: -6,
+      r: 0.6,
+      z: 0.1,
+      kicker: "Optimization",
+      sum: "Gradient descent, learning rates, momentum, and convex loss surfaces.",
+      body: "Visualizing cost function contours and implementing gradient descent variants (batch, stochastic, mini-batch) in pure Python.",
+      skills: [["Gradient Descent", "core"], ["Convex Optimization", "grew"]]
+    },
+    {
+      id: "discrete_math",
+      name: "Discrete Math & Logic",
+      region: "musica",
+      x: -0.4,
+      y: -6.2,
+      r: 0.62,
+      z: 0,
+      kicker: "Formal Logic",
+      sum: "Propositional logic, set theory, combinatorics, and proof techniques.",
+      body: "Foundations of computational reasoning: truth tables, predicate calculus, mathematical induction, and graph connectivity.",
+      skills: [["Formal Logic", "core"], ["Proof by Induction", "core"]]
+    },
+    {
+      id: "coursework",
+      name: "Coursework",
+      region: "special",
+      x: 5.5,
+      y: 2.4,
+      r: 0.8,
+      z: 0.2,
+      kicker: "Academic Curriculum",
+      sum: "Core degree coursework at FAST-NUCES Karachi.",
+      body: "Comprehensive curriculum tracking across computational sciences, programming, and statistics.",
+      cap: "FAST-NUCES Academic Curriculum",
+      skills: [["C++ & Python", "core"], ["Software Design", "core"]]
+    },
+    {
+      id: "dev_environment",
+      name: "Dev Environment",
+      region: "special",
+      x: 2.2,
+      y: 3.4,
+      r: 0.85,
+      z: 0.3,
+      kicker: "Engineering Tooling",
+      sum: "Modern developer workflow: Linux, Git, VS Code, and reproducible notebooks.",
+      body: "Building an efficient, keyboard-driven development environment with version control, virtual environments, and continuous code quality.",
+      skills: [["Git & GitHub", "core"], ["Linux / Terminal", "core"], ["Jupyter Labs", "core"]]
+    },
+    {
+      id: "manifesto",
+      name: "Manifesto",
+      region: "special",
+      x: 3.7,
+      y: -1.2,
+      r: 0.72,
+      z: 0.1,
+      kicker: "Scientific Methodology",
+      sum: "Guiding principles for ethical, empirical data science.",
+      body: "01 Understand the generation mechanism: never model what you haven't inspected. 02 Respect the data: missing values are information, not inconveniences. 03 Strive for simplicity: prefer interpretable models that solve the problem over opaque architectures that obscure it. 04 Verify empirically: reproducible experiments over optimistic assumptions.",
+      cap: "Data Science Manifesto"
+    },
+    {
+      id: "technical_writing",
+      name: "Technical Notes",
+      region: "special",
+      x: 4.68,
+      y: 3.59,
+      r: 0.55,
+      z: 0.1,
+      kicker: "Documentation",
+      sum: "Documenting learnings, algorithm implementations, and benchmarks.",
+      body: "Writing clear technical explanations, reproducible experiments, and well-commented code repositories.",
+      url: "https://github.com/Naresh-Kumar17",
+      urlLabel: "Read GitHub Repositories ↗"
+    }
+  ],
+  E: [
+    ["naresh", "contacto"],
+    ["naresh", "collaborate"],
+    ["naresh", "fast_nuces"],
+    ["naresh", "ai"],
+    ["naresh", "growth"],
+    ["naresh", "data"],
+    ["naresh", "musica"],
+    ["fast_nuces", "coursework"],
+    ["fast_nuces", "dev_environment"],
+    ["fast_nuces", "manifesto"],
+    ["fast_nuces", "technical_writing"],
+    ["ai", "classification_lab"],
+    ["ai", "network"],
+    ["ai", "scikit_toolkit"],
+    ["growth", "sql_analytics"],
+    ["growth", "kpi_dashboards"],
+    ["growth", "stats_inference"],
+    ["growth", "business_metrics"],
+    ["growth", "data_storytelling"],
+    ["growth", "predictive_modeling"],
+    ["growth", "feature_eng"],
+    ["growth", "ml_foundations"],
+    ["data", "eda_pipeline"],
+    ["data", "viz_gallery"],
+    ["data", "data_quality"],
+    ["data", "data_cleaning"],
+    ["musica", "linear_algebra"],
+    ["musica", "probability_stats"],
+    ["musica", "algorithmic_ds"],
+    ["musica", "optimization"],
+    ["musica", "discrete_math"],
+    ["eda_pipeline", "viz_gallery"],
+    ["eda_pipeline", "data_quality"],
+    ["classification_lab", "scikit_toolkit"],
+    ["sql_analytics", "kpi_dashboards"],
+    ["linear_algebra", "optimization"],
+    ["probability_stats", "stats_inference"],
+    ["data", "ai"],
+    ["ai", "growth"],
+    ["growth", "fast_nuces"],
+    ["data", "musica"]
+  ]
 };
 
-export function NicoUniverse({ onSwitchToList }: { onSwitchToList?: () => void }) {
-  const navigate = useNavigate();
+const COLOR: Record<string, string> = {
+  entry: '#9B8FFF',     // Iris Lavender
+  ai: '#E84FD0',        // Neural Magenta
+  growth: '#FF6A3D',    // Coral Sunset
+  data: '#00B0CD',      // Data Stream Cyan
+  musica: '#FF3D7A',    // Electric Rose
+  special: '#CFFF04'    // Cyber Citron / Acid Lime
+};
+
+const RLAB: Record<string, string> = {
+  entry: 'Naresh',
+  ai: 'Machine Learning',
+  growth: 'Analytics & BI',
+  data: 'Data Science & EDA',
+  musica: 'Mathematics',
+  special: 'FAST-NUCES Systems'
+};
+
+const REG: [string, string][] = [
+  ['entry', 'NARESH'],
+  ['data', 'DATA SCIENCE'],
+  ['ai', 'MACHINE LEARNING'],
+  ['growth', 'ANALYTICS'],
+  ['musica', 'MATHEMATICS'],
+  ['special', 'FAST-NUCES']
+];
+
+const PARENTS = new Set(['ai', 'growth', 'data', 'musica', 'special']);
+
+export interface NicoUniverseProps {
+  onSwitchToList?: () => void;
+}
+
+export function NicoUniverse({ onSwitchToList }: NicoUniverseProps) {
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const { theme, toggleTheme } = useTheme();
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const miniCanvasRef = useRef<HTMLCanvasElement | null>(null);
 
-  // Active state
-  const [selectedTab, setSelectedTab] = useState<string>('all');
-  const [hoveredNode, setHoveredNode] = useState<MapNode | null>(null);
-  const [selectedNode, setSelectedNode] = useState<MapNode | null>(null);
-  const [mousePos, setMousePos] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
-
-  // Camera State (world coordinates)
-  const cameraRef = useRef({
-    x: 0,
-    y: 0,
-    zoom: 1.0,
-    targetX: 0,
-    targetY: 0,
-    targetZoom: 1.0,
-    isDragging: false,
-    dragStartX: 0,
-    dragStartY: 0,
-    camStartX: 0,
-    camStartY: 0,
-  });
-
-  /* ── 1. Define Network Nodes & Constellation Graph ── */
-  const { nodes, edges, hubs } = useMemo(() => {
-    const n: MapNode[] = [
-      // ── Core Center Hub ──
-      {
-        id: 'naresh',
-        label: 'NARESH KUMAR',
-        category: 'core',
-        x: 0,
-        y: 0,
-        radius: 28,
-        title: 'Naresh Kumar',
-        lead: 'Undergraduate Data Science student at FAST-NUCES Karachi focused on exploratory data pipelines, statistical modeling, and machine learning architectures.',
-        details: 'Bridging algorithmic theory and empirical intelligence to discover insights hidden in complex datasets.',
-        meta: [
-          { label: 'ROLE', value: 'Data Science Researcher' },
-          { label: 'UNIVERSITY', value: 'FAST-NUCES Karachi' },
-          { label: 'FOCUS', value: 'Statistical AI & Data Storytelling' },
-          { label: 'GRADUATION', value: '2029 (Expected)' },
-        ],
-        tags: ['Python', 'SQL', 'pandas', 'scikit-learn', 'Three.js'],
-      },
-
-      // ── Hub 1: Data Science Hub (Top-Right) ──
-      {
-        id: 'hub_data',
-        label: 'DATA SCIENCE',
-        category: 'data',
-        x: 280,
-        y: -180,
-        radius: 20,
-        title: 'Data Science & Statistical Modeling',
-        lead: 'Comprehensive pipeline engineering from ingestion, wrangling, and feature synthesis to predictive inference.',
-        details: 'Mastering numerical computing and distribution analytics to answer critical real-world questions.',
-        tags: ['Exploratory Analysis', 'Feature Engineering', 'Statistical Testing'],
-      },
-      {
-        id: 'eda_pipeline',
-        label: 'EDA Pipeline',
-        category: 'data',
-        hubId: 'hub_data',
-        x: 420,
-        y: -230,
-        radius: 13,
-        title: 'Exploratory Data Analysis Pipeline',
-        lead: 'Automated data cleaning, outlier detection, and statistical correlation matrix generators.',
-        details: 'Engineered a repeatable framework that accelerated data preparation cycles by 60% with full audit reporting.',
-        tags: ['pandas', 'NumPy', 'Seaborn', 'Matplotlib'],
-        demo: '/projects/exploratory-data-analysis',
-      },
-      {
-        id: 'data_viz',
-        label: 'Data Visualizer',
-        category: 'data',
-        hubId: 'hub_data',
-        x: 340,
-        y: -310,
-        radius: 12,
-        title: 'Interactive Telemetry Visualizer',
-        lead: 'Custom SVG & Canvas visual analytical engines with live variance and correlation sliders.',
-        tags: ['Data Viz', 'Telemetry', 'SVG', 'Math Models'],
-      },
-      {
-        id: 'sql_analytics',
-        label: 'SQL & Modeling',
-        category: 'data',
-        hubId: 'hub_data',
-        x: 440,
-        y: -110,
-        radius: 11,
-        title: 'Relational Database Intelligence',
-        lead: 'Complex window queries, analytical CTEs, schema optimization, and normalized data warehouse models.',
-        tags: ['PostgreSQL', 'SQLite', 'Database Schemas'],
-      },
-
-      // ── Hub 2: Machine Learning Hub (Right-Bottom) ──
-      {
-        id: 'hub_ai',
-        label: 'MACHINE LEARNING',
-        category: 'ai',
-        x: 320,
-        y: 190,
-        radius: 20,
-        title: 'Applied Machine Learning & AI',
-        lead: 'Supervised and unsupervised architectures designed for high recall, precision, and reliable real-time inference.',
-        tags: ['scikit-learn', 'PyTorch', 'Model Evaluation', 'Hyperparameter Tuning'],
-      },
-      {
-        id: 'churn_ai',
-        label: 'Churn Intelligence',
-        category: 'ai',
-        hubId: 'hub_ai',
-        x: 480,
-        y: 160,
-        radius: 14,
-        title: 'Customer Churn Prediction Engine',
-        lead: 'Predictive retention classification engine delivering 87% ROC-AUC on enterprise subscriber telemetry.',
-        details: 'Identified key drivers of churn using SHAP feature importance analysis and actionable customer cohort clustering.',
-        tags: ['Random Forest', 'XGBoost', 'scikit-learn', 'SHAP'],
-        demo: '/projects/customer-churn-prediction',
-      },
-      {
-        id: 'med_img',
-        label: 'Medical Imaging',
-        category: 'ai',
-        hubId: 'hub_ai',
-        x: 420,
-        y: 280,
-        radius: 13,
-        title: 'Medical Image Classification',
-        lead: 'Deep convolutional neural network architecture for automated radiological anomaly detection.',
-        tags: ['PyTorch', 'CNN', 'Computer Vision', 'Deep Learning'],
-        demo: '/projects/medical-image-classification',
-      },
-      {
-        id: 'house_pred',
-        label: 'Housing Valuation',
-        category: 'ai',
-        hubId: 'hub_ai',
-        x: 260,
-        y: 320,
-        radius: 12,
-        title: 'Predictive Real Estate Valuation',
-        lead: 'Gradient boosted regression engine modeling multidimensional urban property price indices.',
-        tags: ['Regression', 'Gradient Boosting', 'Feature Engineering'],
-        demo: '/projects/housing-price-prediction',
-      },
-
-      // ── Hub 3: Education & Academic (Left-Bottom) ──
-      {
-        id: 'hub_edu',
-        label: 'FAST-NUCES',
-        category: 'education',
-        x: -300,
-        y: 170,
-        radius: 20,
-        title: 'National University of Computer & Emerging Sciences',
-        lead: 'Enrolled in premier Data Science undergraduate program at FAST-NUCES Karachi Campus.',
-        details: 'Rigorous academic focus on linear algebra, discrete math, multivariable calculus, and algorithmic efficiency.',
-        meta: [
-          { label: 'DEGREE', value: 'BS Data Science' },
-          { label: 'YEARS', value: '2025 — 2029' },
-          { label: 'LOCATION', value: 'Karachi, Pakistan' },
-        ],
-        tags: ['FAST-NUCES', 'Academic Excellence', 'Algorithms'],
-      },
-      {
-        id: 'edu_courses',
-        label: 'Core Coursework',
-        category: 'education',
-        hubId: 'hub_edu',
-        x: -430,
-        y: 120,
-        radius: 11,
-        title: 'Foundational Coursework',
-        lead: 'Data Structures, Probability & Statistics, Linear Algebra, Machine Learning Theory.',
-        tags: ['Linear Algebra', 'Calculus', 'Probability'],
-      },
-      {
-        id: 'edu_fast',
-        label: 'Karachi Campus',
-        category: 'education',
-        hubId: 'hub_edu',
-        x: -390,
-        y: 270,
-        radius: 11,
-        title: 'Campus Research & Labs',
-        lead: 'Collaborative development in state-of-the-art computing laboratories and research groups.',
-        tags: ['Research', 'Collab', 'Computing Labs'],
-      },
-
-      // ── Hub 4: Projects Showcase (Top-Left) ──
-      {
-        id: 'hub_projects',
-        label: 'PROJECT LABS',
-        category: 'projects',
-        x: -260,
-        y: -190,
-        radius: 20,
-        title: 'Project Showcases & Case Studies',
-        lead: 'End-to-end analytical solutions, public GitHub repositories, and interactive web deployments.',
-        tags: ['Open Source', 'Case Studies', 'Interactive Demos'],
-      },
-      {
-        id: 'proj_overview',
-        label: 'All Projects (5+)',
-        category: 'projects',
-        hubId: 'hub_projects',
-        x: -390,
-        y: -140,
-        radius: 12,
-        title: 'Project Portfolio Archive',
-        lead: 'Explore detailed methodology documentation, code snippets, and verification datasets.',
-        tags: ['Case Studies', 'Insights', 'Pipelines'],
-      },
-      {
-        id: 'proj_3d',
-        label: '3D Telemetry Canvas',
-        category: 'projects',
-        hubId: 'hub_projects',
-        x: -340,
-        y: -290,
-        radius: 12,
-        title: 'WebGL Generative Art Core',
-        lead: 'Physics-driven geodesic data core built in Three.js with custom shader illumination.',
-        tags: ['Three.js', 'WebGL', 'Generative Art'],
-      },
-
-      // ── Hub 5: Connections & Links (Top-Center) ──
-      {
-        id: 'hub_connect',
-        label: 'CONNECT',
-        category: 'connect',
-        x: 0,
-        y: -300,
-        radius: 18,
-        title: "Let's Connect & Collaborate",
-        lead: 'Open for research inquiries, internship opportunities, and collaborative data science projects.',
-        meta: [
-          { label: 'EMAIL', value: profile.contact.email },
-          { label: 'GITHUB', value: profile.contact.github },
-          { label: 'LINKEDIN', value: profile.contact.linkedin },
-        ],
-        tags: ['Collaborations', 'Inquiries', 'Open Source'],
-      },
-      {
-        id: 'link_github',
-        label: 'GitHub Repo',
-        category: 'connect',
-        hubId: 'hub_connect',
-        x: -120,
-        y: -380,
-        radius: 12,
-        title: 'GitHub Repositories',
-        lead: 'Browse open-source codebases, notebooks, and reproducible experiment pipelines.',
-        link: profile.contact.github,
-        tags: ['GitHub', 'Git', 'Open Source'],
-      },
-      {
-        id: 'link_linkedin',
-        label: 'LinkedIn Profile',
-        category: 'connect',
-        hubId: 'hub_connect',
-        x: 120,
-        y: -380,
-        radius: 12,
-        title: 'LinkedIn Network',
-        lead: 'Professional timeline, achievements, and academic milestones.',
-        link: profile.contact.linkedin,
-        tags: ['LinkedIn', 'Networking'],
-      },
-    ];
-
-    const e: Edge[] = [
-      // Core to Domain Hubs
-      { from: 'naresh', to: 'hub_data' },
-      { from: 'naresh', to: 'hub_ai' },
-      { from: 'naresh', to: 'hub_edu' },
-      { from: 'naresh', to: 'hub_projects' },
-      { from: 'naresh', to: 'hub_connect' },
-
-      // Cross-Hub Connectors (Nico Borja Constellation style)
-      { from: 'hub_data', to: 'hub_ai' },
-      { from: 'hub_ai', to: 'hub_edu' },
-      { from: 'hub_edu', to: 'hub_projects' },
-      { from: 'hub_projects', to: 'hub_connect' },
-      { from: 'hub_data', to: 'hub_connect' },
-
-      // Data Hub Children
-      { from: 'hub_data', to: 'eda_pipeline' },
-      { from: 'hub_data', to: 'data_viz' },
-      { from: 'hub_data', to: 'sql_analytics' },
-      { from: 'eda_pipeline', to: 'data_viz' },
-
-      // AI Hub Children
-      { from: 'hub_ai', to: 'churn_ai' },
-      { from: 'hub_ai', to: 'med_img' },
-      { from: 'hub_ai', to: 'house_pred' },
-      { from: 'churn_ai', to: 'house_pred' },
-
-      // Education Hub Children
-      { from: 'hub_edu', to: 'edu_courses' },
-      { from: 'hub_edu', to: 'edu_fast' },
-
-      // Projects Hub Children
-      { from: 'hub_projects', to: 'proj_overview' },
-      { from: 'hub_projects', to: 'proj_3d' },
-
-      // Connect Hub Children
-      { from: 'hub_connect', to: 'link_github' },
-      { from: 'hub_connect', to: 'link_linkedin' },
-    ];
-
-    const h = n.filter(item => !item.hubId);
-
-    return { nodes: n, edges: e, hubs: h };
-  }, []);
-
-  /* ── 2. Background Starfield Setup ── */
-  const stars = useMemo(() => {
-    return Array.from({ length: 140 }, () => ({
-      x: (Math.random() - 0.5) * 2600,
-      y: (Math.random() - 0.5) * 2600,
-      size: 0.6 + Math.random() * 1.6,
-      brightness: 0.2 + Math.random() * 0.8,
-      speed: 0.0003 + Math.random() * 0.0006,
-      phase: Math.random() * Math.PI * 2,
-    }));
-  }, []);
-
-  /* ── 3. Smooth Camera Navigation & Zooming ── */
-  const focusNode = useCallback((node: MapNode, targetZoom = 1.25) => {
-    cameraRef.current.targetX = -node.x;
-    cameraRef.current.targetY = -node.y;
-    cameraRef.current.targetZoom = targetZoom;
-  }, []);
-
-  const resetView = useCallback(() => {
-    cameraRef.current.targetX = 0;
-    cameraRef.current.targetY = 0;
-    cameraRef.current.targetZoom = 1.0;
-    setSelectedTab('all');
-  }, []);
-
-  /* ── 4. Main Canvas Rendering Loop ── */
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+    const root = containerRef.current;
+    if (!root) return;
 
-    let animId: number;
-    let time = 0;
+    const N = NARESH_DB.N;
+    const E = NARESH_DB.E;
+    const idIndex: Record<string, number> = Object.fromEntries(N.map((n: any, i: number) => [n.id, i]));
+    const byId: Record<string, any> = Object.fromEntries(N.map((n: any) => [n.id, n]));
 
-    const render = () => {
-      time += 0.016;
-
-      // Smooth Camera Interpolation (Spring-like lerp)
-      const cam = cameraRef.current;
-      cam.x += (cam.targetX - cam.x) * 0.08;
-      cam.y += (cam.targetY - cam.y) * 0.08;
-      cam.zoom += (cam.targetZoom - cam.zoom) * 0.08;
-
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const width = canvas.clientWidth;
-      const height = canvas.clientHeight;
-
-      if (canvas.width !== width * dpr || canvas.height !== height * dpr) {
-        canvas.width = width * dpr;
-        canvas.height = height * dpr;
-      }
-
-      ctx.save();
-      ctx.scale(dpr, dpr);
-
-      // Deep Obsidian Canvas Background
-      const isDark = theme === 'dark';
-      ctx.fillStyle = isDark ? '#100E1A' : '#F6F5F0';
-      ctx.fillRect(0, 0, width, height);
-
-      // Translate to center + camera offset
-      const cx = width / 2;
-      const cy = height / 2;
-      ctx.translate(cx, cy);
-      ctx.scale(cam.zoom, cam.zoom);
-      ctx.translate(cam.x, cam.y);
-
-      // ── A. Render Ambient Stars ──
-      for (const s of stars) {
-        const pulse = 0.5 + 0.5 * Math.sin(time * 2 + s.phase);
-        const alpha = s.brightness * (0.3 + 0.7 * pulse);
-        ctx.fillStyle = isDark
-          ? `rgba(180, 175, 220, ${alpha * 0.75})`
-          : `rgba(90, 80, 110, ${alpha * 0.5})`;
-        ctx.beginPath();
-        ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
-        ctx.fill();
-      }
-
-      // ── B. Render Concentric Domain Orbits & Boundaries ──
-      for (const hub of hubs) {
-        if (hub.id === 'naresh') {
-          // Central breathing halo
-          ctx.strokeStyle = isDark ? 'rgba(155, 143, 255, 0.12)' : 'rgba(112, 94, 255, 0.1)';
-          ctx.lineWidth = 1.5;
-          ctx.setLineDash([4, 6]);
-          ctx.beginPath();
-          ctx.arc(hub.x, hub.y, 140 + Math.sin(time) * 4, 0, Math.PI * 2);
-          ctx.stroke();
-          ctx.setLineDash([]);
-        } else {
-          // Domain boundary ring
-          const col = CATEGORY_COLORS[hub.category] || '#9B8FFF';
-          ctx.strokeStyle = `${col}22`;
-          ctx.lineWidth = 1;
-          ctx.setLineDash([2, 5]);
-          ctx.beginPath();
-          ctx.arc(hub.x, hub.y, 90, 0, Math.PI * 2);
-          ctx.stroke();
-          ctx.setLineDash([]);
+    const childrenIdx: Record<number, number[]> = {};
+    N.forEach((n: any, i: number) => {
+      if (PARENTS.has(n.region) && n.id !== n.region) {
+        const r = idIndex[n.region];
+        if (r !== undefined) {
+          (childrenIdx[r] = childrenIdx[r] || []).push(i);
         }
       }
+    });
 
-      // ── C. Render Constellation Curved Telemetry Lines ──
-      for (const edge of edges) {
-        const source = nodes.find(n => n.id === edge.from);
-        const target = nodes.find(n => n.id === edge.to);
-        if (!source || !target) continue;
+    const c = root.querySelector('#c') as HTMLCanvasElement;
+    const ctx = c.getContext('2d')!;
+    const gcanvas = root.querySelector('#glass') as HTMLCanvasElement;
+    const mini = root.querySelector('#mini') as HTMLCanvasElement;
+    const mctx = mini.getContext('2d')!;
+    const tip = root.querySelector('#tip') as HTMLDivElement;
+    const galleryEl = root.querySelector('#gallery') as HTMLElement;
+    const pageEl = root.querySelector('#page') as HTMLDivElement;
+    const docEl = root.querySelector('#doc') as HTMLDivElement;
+    const tabsEl = root.querySelector('#tabs') as HTMLDivElement;
+    const backBtn = root.querySelector('#back') as HTMLElement;
+    const spacer = root.querySelector('#spacer') as HTMLElement;
 
-        const isFiltered =
-          selectedTab === 'all' ||
-          source.category === selectedTab ||
-          target.category === selectedTab ||
-          source.id === 'naresh';
+    let W = (c.width = window.innerWidth);
+    let H = (c.height = window.innerHeight);
+    let SC = 1, LBL = 1;
 
-        const strokeAlpha = isFiltered ? (isDark ? 0.35 : 0.25) : 0.06;
-        const color = CATEGORY_COLORS[target.category] || '#9B8FFF';
-
-        ctx.strokeStyle = `${color}${Math.round(strokeAlpha * 255).toString(16).padStart(2, '0')}`;
-        ctx.lineWidth = isFiltered ? 1.4 : 0.8;
-
-        // Elegant curved dotted arc
-        const midX = (source.x + target.x) / 2 + (target.y - source.y) * 0.08;
-        const midY = (source.y + target.y) / 2 - (target.x - source.x) * 0.08;
-
-        ctx.beginPath();
-        ctx.moveTo(source.x, source.y);
-        ctx.quadraticCurveTo(midX, midY, target.x, target.y);
-        ctx.stroke();
-
-        // Flowing data packet along curve
-        if (isFiltered) {
-          const tPacket = (time * 0.4 + (source.x % 10) * 0.1) % 1;
-          const px = (1 - tPacket) * (1 - tPacket) * source.x + 2 * (1 - tPacket) * tPacket * midX + tPacket * tPacket * target.x;
-          const py = (1 - tPacket) * (1 - tPacket) * source.y + 2 * (1 - tPacket) * tPacket * midY + tPacket * tPacket * target.y;
-
-          ctx.fillStyle = color;
-          ctx.beginPath();
-          ctx.arc(px, py, 1.8, 0, Math.PI * 2);
-          ctx.fill();
-        }
-      }
-
-      // ── D. Render Nodes & Floating Labels ──
-      for (const node of nodes) {
-        const isHovered = hoveredNode?.id === node.id;
-        const isSelected = selectedNode?.id === node.id;
-        const isFiltered = selectedTab === 'all' || node.category === selectedTab || node.id === 'naresh';
-        const col = CATEGORY_COLORS[node.category] || '#9B8FFF';
-
-        const nodeAlpha = isFiltered ? 1 : 0.25;
-
-        ctx.save();
-        ctx.globalAlpha = nodeAlpha;
-
-        // Outer glow on hover or hub
-        if (isHovered || isSelected || node.radius > 16) {
-          const glowRad = node.radius * (isHovered ? 2.4 : 1.8);
-          const grad = ctx.createRadialGradient(node.x, node.y, node.radius * 0.5, node.x, node.y, glowRad);
-          grad.addColorStop(0, `${col}66`);
-          grad.addColorStop(1, `${col}00`);
-          ctx.fillStyle = grad;
-          ctx.beginPath();
-          ctx.arc(node.x, node.y, glowRad, 0, Math.PI * 2);
-          ctx.fill();
-        }
-
-        // Concentric outer pulsing ring for Hubs
-        if (node.radius >= 18) {
-          ctx.strokeStyle = `${col}88`;
-          ctx.lineWidth = 1.2;
-          ctx.beginPath();
-          ctx.arc(node.x, node.y, node.radius + 5 + Math.sin(time * 3 + node.x) * 2, 0, Math.PI * 2);
-          ctx.stroke();
-        }
-
-        // Inner solid core
-        ctx.fillStyle = isHovered ? '#FFFFFF' : col;
-        ctx.beginPath();
-        ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Inner rim border
-        ctx.strokeStyle = isDark ? '#100E1A' : '#FFFFFF';
-        ctx.lineWidth = 2;
-        ctx.stroke();
-
-        // Node Label (Monospace architectural typography)
-        ctx.font = node.radius >= 18
-          ? '600 11.5px "JetBrains Mono", monospace'
-          : '500 10px "JetBrains Mono", monospace';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'top';
-        ctx.letterSpacing = '0.08em';
-
-        // Label shadow for legibility
-        ctx.shadowColor = isDark ? 'rgba(0, 0, 0, 0.9)' : 'rgba(255, 255, 255, 0.9)';
-        ctx.shadowBlur = 4;
-        ctx.fillStyle = isDark
-          ? (isHovered ? '#FFFFFF' : 'rgba(250, 250, 247, 0.88)')
-          : (isHovered ? '#000000' : 'rgba(16, 14, 26, 0.88)');
-
-        ctx.fillText(node.label, node.x, node.y + node.radius + 7);
-        ctx.restore();
-      }
-
-      ctx.restore();
-
-      // Render minimap sync
-      renderMinimap();
-
-      animId = requestAnimationFrame(render);
-    };
-
-    animId = requestAnimationFrame(render);
-    return () => cancelAnimationFrame(animId);
-  }, [nodes, edges, hubs, stars, hoveredNode, selectedNode, selectedTab, theme]);
-
-  /* ── 5. Render Minimap Radar ── */
-  const renderMinimap = useCallback(() => {
-    const mini = miniCanvasRef.current;
-    if (!mini) return;
-    const mctx = mini.getContext('2d');
-    if (!mctx) return;
-
-    const w = mini.clientWidth;
-    const h = mini.clientHeight;
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-
-    if (mini.width !== w * dpr || mini.height !== h * dpr) {
-      mini.width = w * dpr;
-      mini.height = h * dpr;
+    // Origin center
+    const cx0 = N.reduce((a, n) => a + n.x, 0) / N.length;
+    const cy0 = N.reduce((a, n) => a + n.y, 0) / N.length;
+    let orgR = 1;
+    for (const n of N) {
+      const d = Math.hypot(n.x - cx0, n.y - cy0);
+      if (d > orgR) orgR = d;
     }
 
-    mctx.save();
-    mctx.scale(dpr, dpr);
-    mctx.clearRect(0, 0, w, h);
+    function resize() {
+      W = c.width = window.innerWidth;
+      H = c.height = window.innerHeight;
+      if (gcanvas) {
+        gcanvas.width = W;
+        gcanvas.height = H;
+      }
+      const span = W <= 760 ? 1.6 : 2.35;
+      SC = Math.min(W, H) / (orgR * span);
+      LBL = W <= 760 ? 1.5 : 1;
+    }
+    window.addEventListener('resize', resize);
+    resize();
 
-    const isDark = theme === 'dark';
+    // ── Shaders & WebGL Glass ──
+    let GL: WebGLRenderingContext | null = null;
+    let glassProg: WebGLProgram | null = null;
+    let glassQuad: WebGLBuffer | null = null;
+    let glassTex: WebGLTexture | null = null;
+    let glassLoc: any = {};
 
-    // Map bounds
-    const scale = 0.12;
-    const mcx = w / 2;
-    const mcy = h / 2;
+    function initGlass() {
+      if (!gcanvas) return;
+      const gl = gcanvas.getContext('webgl', { premultipliedAlpha: false, alpha: true, antialias: true });
+      if (!gl) {
+        document.body.classList.add('noglass');
+        return;
+      }
+      GL = gl;
+      const VS = 'attribute vec2 p;void main(){gl_Position=vec4(p,0.0,1.0);}';
+      const FS = `precision highp float;
+uniform sampler2D uField;uniform vec2 uRes;uniform vec4 uRect;uniform float uRadius;uniform float uAmt;uniform float uDark;
+float sdRR(vec2 p,vec2 b,float r){vec2 q=abs(p)-b+r;return min(max(q.x,q.y),0.0)+length(max(q,0.0))-r;}
+void main(){
+  vec2 fp=gl_FragCoord.xy;vec2 ctr=uRect.xy+uRect.zw*0.5;vec2 hf=uRect.zw*0.5;vec2 p=fp-ctr;
+  float d=sdRR(p,hf,uRadius);
+  if(d>1.5)discard;
+  float e=2.0;
+  vec2 g=vec2(sdRR(p+vec2(e,0.0),hf,uRadius)-sdRR(p-vec2(e,0.0),hf,uRadius),
+             sdRR(p+vec2(0.0,e),hf,uRadius)-sdRR(p-vec2(0.0,e),hf,uRadius));
+  g=normalize(g+vec2(1e-4));
+  float rim=clamp(-d/24.0,0.0,1.0);
+  float edgeR=pow(1.0-rim,2.2)*uAmt;
+  vec2 disp=g*edgeR*28.0;
+  vec2 uv=(fp+disp)/uRes;
+  vec4 base=texture2D(uField,uv);
+  vec3 tint=vec3(0.06,0.07,0.11);
+  float spec=pow(max(0.0,dot(g,normalize(vec2(-0.4,0.7)))),3.0)*edgeR*0.75;
+  vec3 col=mix(base.rgb,tint,0.25)+vec3(spec);
+  float a=clamp(0.5-d,0.0,1.0);
+  gl_FragColor=vec4(col,a);
+}`;
+      function sh(t: number, s: string) {
+        const o = gl!.createShader(t)!;
+        gl!.shaderSource(o, s);
+        gl!.compileShader(o);
+        return o;
+      }
+      const prog = gl.createProgram()!;
+      gl.attachShader(prog, sh(gl.VERTEX_SHADER, VS));
+      gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, FS));
+      gl.linkProgram(prog);
+      glassProg = prog;
 
-    // Subtle radar grid line
-    mctx.strokeStyle = isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)';
-    mctx.lineWidth = 1;
-    mctx.beginPath();
-    mctx.arc(mcx, mcy, 45, 0, Math.PI * 2);
-    mctx.stroke();
+      glassQuad = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, glassQuad);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
 
-    // Draw all node dots
-    for (const node of nodes) {
-      const nx = mcx + node.x * scale;
-      const ny = mcy + node.y * scale;
-      const col = CATEGORY_COLORS[node.category] || '#9B8FFF';
+      glassTex = gl.createTexture();
+      gl.bindTexture(gl.TEXTURE_2D, glassTex);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+      gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
 
-      mctx.fillStyle = col;
+      glassLoc = {
+        p: gl.getAttribLocation(prog, 'p'),
+        uField: gl.getUniformLocation(prog, 'uField'),
+        uRes: gl.getUniformLocation(prog, 'uRes'),
+        uRect: gl.getUniformLocation(prog, 'uRect'),
+        uRadius: gl.getUniformLocation(prog, 'uRadius'),
+        uAmt: gl.getUniformLocation(prog, 'uAmt'),
+        uDark: gl.getUniformLocation(prog, 'uDark'),
+      };
+    }
+    initGlass();
+
+    function renderGlass(shapes: any[]) {
+      if (!GL || !glassProg) return;
+      const gl = GL;
+      gl.viewport(0, 0, gcanvas.width, gcanvas.height);
+      gl.clearColor(0, 0, 0, 0);
+      gl.clear(gl.COLOR_BUFFER_BIT);
+      if (!shapes || !shapes.length) return;
+
+      gl.useProgram(glassProg);
+      gl.activeTexture(gl.TEXTURE0);
+      gl.bindTexture(gl.TEXTURE_2D, glassTex);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, c);
+      gl.uniform1i(glassLoc.uField, 0);
+      gl.uniform2f(glassLoc.uRes, gcanvas.width, gcanvas.height);
+      gl.uniform1f(glassLoc.uDark, theme === 'light' ? 1.0 : 0.0);
+      gl.bindBuffer(gl.ARRAY_BUFFER, glassQuad);
+      gl.enableVertexAttribArray(glassLoc.p);
+      gl.vertexAttribPointer(glassLoc.p, 2, gl.FLOAT, false, 0, 0);
+      gl.enable(gl.BLEND);
+      gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+
+      for (const s of shapes) {
+        if (s.w < 2) continue;
+        const yb = gcanvas.height - (s.y + s.h);
+        gl.uniform4f(glassLoc.uRect, s.x, yb, s.w, s.h);
+        gl.uniform1f(glassLoc.uRadius, s.rad);
+        gl.uniform1f(glassLoc.uAmt, s.amt === undefined ? 1.0 : s.amt);
+        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+      }
+    }
+
+    // ── Particles, Stars, Haze & Quantum Clusters ──
+    const stars = Array.from({ length: 560 }, () => ({
+      x: Math.random(),
+      y: Math.random(),
+      b: Math.pow(Math.random(), 1.9),
+      tw: Math.random() * 6.28,
+    }));
+
+    function gauss() {
+      let u = 0, v = 0;
+      while (!u) u = Math.random();
+      while (!v) v = Math.random();
+      return Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
+    }
+
+    const haze: any[] = [];
+    for (let i = 0; i < 1500; i++) {
+      const e = E[(Math.random() * E.length) | 0];
+      const a = idIndex[e[0]], b = idIndex[e[1]];
+      const na = N[a] as any, nb = N[b] as any;
+      const u = Math.random();
+      haze.push({
+        x: na.x + (nb.x - na.x) * u + gauss() * 0.5,
+        y: na.y + (nb.y - na.y) * u + gauss() * 0.5,
+        z: (na.z || 0) + ((nb.z || 0) - (na.z || 0)) * u,
+        b: Math.pow(Math.random(), 2.4) * 0.6,
+        ph: Math.random() * 6.283,
+        sp: 0.2 + Math.random() * 0.5,
+        sz: 0.5 + Math.random() * 1.1,
+      });
+    }
+
+    // Attach clusters to nodes
+    for (const n of N as any[]) {
+      n.cl = [];
+      const cnt = Math.round(18 + n.r * 18);
+      for (let j = 0; j < cnt; j++) {
+        const u = Math.random();
+        n.cl.push({
+          a: Math.random() * 6.283,
+          rr: Math.sqrt(u) * (0.85 + Math.random() * 0.55),
+          sz: 0.7 + Math.random() * 1.25,
+          b: Math.pow(Math.random(), 1.5),
+          ph: Math.random() * 6.283,
+          sp: 0.4 + Math.random() * 0.8,
+          jz: (Math.random() - 0.5) * 0.35,
+        });
+      }
+    }
+
+    // ── State Variables ──
+    let mode: 'cold' | 'field' | 'page' | 'trans' = 'cold';
+    let P = 0, transDir = 1, playing = false;
+    let camZoom = 1, coldP = 0;
+    let fieldSel: string | null = 'naresh';
+    let focusSet = new Set<number>([idIndex['naresh']]);
+    let hoverId: string | null = null;
+    let galMode: 'area' | 'node' | null = null;
+    let galNode: string | null = null;
+
+    let curRot = 0, curBr = 1, lastTs = 0;
+    let fieldCX = 0.5, fieldCXt = 0.5;
+    let userZoom = 1, viewRot = 0, viewTiltX = 0, userInteracted = false;
+
+    const ease = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+    const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+
+    function proj(wx: number, wy: number, wz: number = 0): [number, number, number] {
+      let x = wx - cx0, y = wy - cy0, z = (wz || 0) * 1.3;
+      const sp = curRot, cs = Math.cos(sp), sn = Math.sin(sp);
+      let px = x * cs - y * sn, py = x * sn + y * cs;
+      const ay = viewRot, cay = Math.cos(ay), say = Math.sin(ay);
+      let x1 = px * cay - z * say, z1 = px * say + z * cay;
+      const ax = viewTiltX, cax = Math.cos(ax), sax = Math.sin(ax);
+      let y1 = py * cax - z1 * sax, z2 = py * sax + z1 * cax;
+      x1 *= curBr; y1 *= curBr;
+      const persp = 5.5 / (5.5 - z2 * 0.5);
+      const Z = camZoom * userZoom * persp;
+      return [W * fieldCX + x1 * SC * Z, H / 2 - y1 * SC * Z, persp];
+    }
+
+    // ── Interaction: Pointer, Drag, Click ──
+    let isDragging = false, dragStartX = 0, dragStartY = 0;
+    let startRot = 0, startTilt = 0;
+
+    c.addEventListener('pointerdown', (e: PointerEvent) => {
+      isDragging = true;
+      dragStartX = e.clientX;
+      dragStartY = e.clientY;
+      startRot = viewRot;
+      startTilt = viewTiltX;
+      userInteracted = true;
+    });
+
+    window.addEventListener('pointermove', (e: PointerEvent) => {
+      const mouseX = e.clientX, mouseY = e.clientY;
+      if (isDragging) {
+        const dx = (mouseX - dragStartX) / W;
+        const dy = (mouseY - dragStartY) / H;
+        viewRot = startRot + dx * 2.5;
+        viewTiltX = Math.max(-0.6, Math.min(0.6, startTilt + dy * 1.8));
+      }
+
+      // Check node hover in field mode
+      if (mode === 'field') {
+        let best: any = null, bestDist = 28;
+        for (let i = 0; i < N.length; i++) {
+          const [sx, sy] = proj(N[i].x, N[i].y, (N[i] as any).z);
+          const d = Math.hypot(mouseX - sx, mouseY - sy);
+          if (d < Math.max(bestDist, N[i].r * 18 * userZoom)) {
+            bestDist = d;
+            best = N[i];
+          }
+        }
+        if (best !== hoverId) {
+          hoverId = best ? best.id : null;
+          if (best) showTip(best, mouseX, mouseY);
+          else hideTip();
+        } else if (best) {
+          tip.style.left = mouseX + 'px';
+          tip.style.top = mouseY + 'px';
+        }
+      }
+    });
+
+    window.addEventListener('pointerup', (e: PointerEvent) => {
+      if (!isDragging) return;
+      isDragging = false;
+      const dist = Math.hypot(e.clientX - dragStartX, e.clientY - dragStartY);
+      if (dist < 6) {
+        handleCanvasClick(e.clientX, e.clientY);
+      }
+    });
+
+    c.addEventListener('wheel', (e: WheelEvent) => {
+      e.preventDefault();
+      userInteracted = true;
+      const delta = e.deltaY > 0 ? 0.9 : 1.1;
+      userZoom = Math.max(0.6, Math.min(2.8, userZoom * delta));
+    }, { passive: false });
+
+    function handleCanvasClick(clientX: number, clientY: number) {
+      if (mode !== 'field') return;
+      for (let i = 0; i < N.length; i++) {
+        const [sx, sy] = proj(N[i].x, N[i].y, (N[i] as any).z);
+        const hitR = Math.max(22, N[i].r * 18 * userZoom);
+        if (Math.hypot(clientX - sx, clientY - sy) <= hitR) {
+          const clickedNode = N[i];
+          if (fieldSel === clickedNode.id) {
+            openPage(clickedNode.id);
+          } else {
+            setFieldFocus(clickedNode.id);
+          }
+          return;
+        }
+      }
+      goHome();
+    }
+
+    function showTip(n: any, x: number, y: number) {
+      const col = COLOR[n.region];
+      tip.querySelector('.nm')!.innerHTML =
+        '<span class="tdot" style="background:' + col + ';box-shadow:0 0 8px ' + col + '"></span>' + n.name;
+      tip.querySelector('.kc')!.textContent = n.kicker || '';
+      tip.querySelector('.go')!.textContent = 'PROYECTO · click para explorar →';
+      tip.style.borderColor = col;
+      tip.style.opacity = '1';
+      tip.style.left = x + 'px';
+      tip.style.top = y + 'px';
+    }
+
+    function hideTip() {
+      tip.style.opacity = '0';
+    }
+
+    function setFieldFocus(id: string) {
+      fieldSel = id;
+      const i = idIndex[id];
+      if (id === 'naresh') {
+        focusSet = new Set([i]);
+        galMode = 'area';
+        galNode = 'naresh';
+      } else if (PARENTS.has(byId[id].region) && id === byId[id].region) {
+        focusSet = new Set([i, ...(childrenIdx[i] || [])]);
+        galMode = 'area';
+        galNode = id;
+      } else {
+        focusSet = new Set([i]);
+        galMode = 'node';
+        galNode = id;
+      }
+      setTabsOn();
+      renderGallery();
+    }
+
+    function goHome() {
+      mode = 'field';
+      P = 0;
+      playing = false;
+      hoverId = null;
+      hideTip();
+      fieldSel = null;
+      focusSet = new Set();
+      galMode = null;
+      galNode = null;
+      userZoom = 1;
+      viewRot = 0;
+      viewTiltX = 0;
+      userInteracted = false;
+      fieldCX = fieldCXt = 0.5;
+      setTabsOn();
+      renderGallery();
+    }
+
+    function openPage(id: string) {
+      galMode = null;
+      galNode = null;
+      renderGallery();
+      hideTip();
+      buildPage(byId[id]);
+      mode = 'trans';
+      transDir = 1;
+      playing = true;
+    }
+
+    function returnHome() {
+      hoverId = null;
+      hideTip();
+      if (mode !== 'field') {
+        mode = 'trans';
+        transDir = -1;
+        playing = true;
+      }
+      goHome();
+    }
+
+    backBtn.onclick = returnHome;
+    if (spacer) spacer.onclick = returnHome;
+
+    // ── Build Category Tabs ──
+    function buildTabs() {
+      tabsEl.innerHTML = '';
+      const allBtn = document.createElement('div');
+      allBtn.className = 't on';
+      allBtn.innerHTML = '<i></i>ALL';
+      allBtn.onclick = () => goHome();
+      tabsEl.appendChild(allBtn);
+
+      REG.forEach(([r, lbl]) => {
+        const d = document.createElement('div');
+        d.className = 't';
+        d.dataset.r = r;
+        const col = COLOR[r];
+        d.innerHTML = '<i style="background:' + col + ';box-shadow:0 0 6px ' + col + '"></i>' + lbl;
+        d.onclick = () => {
+          hoverId = null;
+          hideTip();
+          setFieldFocus(r);
+        };
+        tabsEl.appendChild(d);
+      });
+    }
+    buildTabs();
+
+    function setTabsOn() {
+      const activeRegion = fieldSel && byId[fieldSel] ? byId[fieldSel].region : null;
+      tabsEl.querySelectorAll('.t').forEach((t: any) => {
+        if (!activeRegion) {
+          t.classList.toggle('on', !t.dataset.r);
+        } else {
+          t.classList.toggle('on', t.dataset.r === activeRegion);
+        }
+      });
+    }
+
+    // ── Side Gallery Drawer (#gallery) ──
+    function renderGallery() {
+      if (!galMode || !galNode || mode === 'page') {
+        galleryEl.classList.remove('show');
+        galleryEl.innerHTML = '';
+        return;
+      }
+      const n = byId[galNode];
+      const acc = COLOR[n.region];
+      galleryEl.style.setProperty('--cc', acc);
+      galleryEl.classList.add('show');
+
+      const isNode = galMode === 'node';
+      const enterCTA = isNode
+        ? '<button class="genter" data-enter="' + n.id + '">↦ Entrar al proyecto →</button>'
+        : '';
+
+      const items = galMode === 'area'
+        ? (childrenIdx[idIndex[n.id]] || []).map((ix) => N[ix])
+        : E.filter((e) => e[0] === n.id || e[1] === n.id).map((e) => byId[e[0] === n.id ? e[1] : e[0]]);
+
+      const cardsHTML = items.map((m: any) => `
+        <div class="gcard" data-go="${m.id}" style="--cc:${COLOR[m.region]}">
+          <span class="gdot"></span>
+          <div class="gcc"><span class="gcn">${m.name}</span><span class="gcs">${m.kicker || RLAB[m.region]}</span></div>
+          <span class="gco">→</span>
+        </div>
+      `).join('');
+
+      galleryEl.innerHTML = `
+        <button class="gback" data-back="1">↖ Volver al mapa</button>
+        <div class="gtag">${RLAB[n.region]} · ${n.name}</div>
+        <h2 style="font-family:var(--display);font-size:32px;font-weight:800;margin:12px 0 8px;line-height:1.05;">${n.name}</h2>
+        <div class="gdesc">${n.sum || n.body || ''}</div>
+        ${enterCTA}
+        <div class="gcaplab2">Nodos Conectados (${items.length})</div>
+        <div class="gcardgrid">${cardsHTML}</div>
+      `;
+
+      galleryEl.querySelectorAll('[data-enter]').forEach((btn: any) => {
+        btn.onclick = () => openPage(btn.dataset.enter);
+      });
+      galleryEl.querySelectorAll('[data-go]').forEach((card: any) => {
+        card.onclick = () => setFieldFocus(card.dataset.go);
+      });
+      galleryEl.querySelectorAll('[data-back]').forEach((btn: any) => {
+        btn.onclick = () => goHome();
+      });
+    }
+
+    // ── Full Editorial Page (#page / #doc) ──
+    function buildPage(n: any) {
+      const acc = COLOR[n.region];
+      document.documentElement.style.setProperty('--acc', acc);
+      pageEl.style.setProperty('--cc', acc);
+
+      const metaItems = [
+        ['En el mapa', RLAB[n.region]],
+        ['Rol', n.role || 'Data Science Research'],
+        ['Periodo', n.duration || '2024–2025'],
+        ['Impacto', n.impact || 'Reproducible analytics & pipelines']
+      ];
+
+      const metaHTML = `
+        <div class="meta">
+          ${metaItems.map(([k, v]) => `<div><div class="k">${k}</div><div class="v">${v}</div></div>`).join('')}
+        </div>
+      `;
+
+      const skillsHTML = n.skills
+        ? `
+          <div class="pdetail">
+            <h3>Habilidades & Herramientas</h3>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;">
+              ${n.skills.map(([s]: any) => `<span class="tag" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);padding:5px 12px;border-radius:999px;font-family:var(--mono);font-size:11px;">${s}</span>`).join('')}
+            </div>
+          </div>
+        `
+        : '';
+
+      const cta = n.url
+        ? `<a class="cta" href="${n.url}" target="_blank" style="display:inline-flex;align-items:center;gap:8px;margin:20px 0;background:${acc};color:#000;padding:12px 24px;border-radius:8px;font-family:var(--mono);font-size:13px;font-weight:700;text-decoration:none;">${n.urlLabel || 'Abrir Proyecto ↗'}</a>`
+        : '';
+
+      const linksHTML = n.links
+        ? `
+          <div class="links" style="margin:20px 0;display:flex;gap:12px;flex-wrap:wrap;">
+            ${n.links.map(([title, url]: any) => `<a class="lk" href="${url}" target="_blank" style="color:${acc};font-family:var(--mono);font-size:12px;text-decoration:none;border-bottom:1px solid ${acc};">${title} ↗</a>`).join('')}
+          </div>
+        `
+        : '';
+
+      docEl.innerHTML = `
+        <div class="kicker">${n.kicker || ''}</div>
+        <h1 class="title">${n.name}</h1>
+        <p class="lead">${n.sum || ''}</p>
+        ${cta}
+        ${linksHTML}
+        ${metaHTML}
+        <div class="pbody" style="font-family:var(--sans);font-size:17px;line-height:1.7;color:var(--ink2);margin:30px 0;">
+          <p>${n.body || ''}</p>
+          ${n.scope ? `<p><strong>Alcance:</strong> ${n.scope}</p>` : ''}
+          ${n.story ? `<p><strong>Contexto:</strong> ${n.story}</p>` : ''}
+        </div>
+        ${skillsHTML}
+        <div class="pgfoot" style="margin-top:60px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.12);display:flex;justify-content:space-between;">
+          <span class="lk" data-ret="1" style="cursor:pointer;color:${acc};font-family:var(--mono);font-size:13px;">↑ Volver al Mapa</span>
+        </div>
+      `;
+
+      docEl.querySelectorAll('[data-ret]').forEach((el: any) => {
+        el.onclick = returnHome;
+      });
+    }
+
+    // ── Main Frame Animation Loop ──
+    let animId: number;
+
+    function frame(ts: number) {
+      const t = (ts || 0) / 1000;
+      const dt = Math.min(0.05, ((ts || 0) - lastTs) / 1000 || 0);
+      lastTs = ts || 0;
+
+      if (playing) {
+        P += (transDir * dt) / 0.85;
+        if (P >= 1) {
+          P = 1;
+          playing = false;
+          if (mode === 'trans' && transDir > 0) {
+            mode = 'page';
+            pageEl.style.opacity = '1';
+            pageEl.style.pointerEvents = 'auto';
+          }
+        }
+        if (P <= 0) {
+          P = 0;
+          playing = false;
+          if (transDir < 0) {
+            mode = 'field';
+            docEl.innerHTML = '';
+            pageEl.style.opacity = '0';
+            pageEl.style.pointerEvents = 'none';
+          }
+        }
+      }
+
+      if (mode === 'cold') {
+        coldP += dt / 2.5;
+        if (coldP >= 1) {
+          coldP = 1;
+          mode = 'field';
+          setFieldFocus('naresh');
+        }
+        camZoom = lerp(0.6, 1.0, ease(coldP));
+      } else {
+        camZoom = 1;
+      }
+
+      if ((mode === 'field' || mode === 'cold') && !userInteracted) {
+        curRot += dt * 0.08;
+      } else if (mode === 'page') {
+        curRot += dt * 0.02;
+      }
+      curBr = 1 + Math.sin(t * 0.5) * 0.02;
+
+      // Adjust camera horizontal center when gallery panel is active
+      const galShown = mode === 'field' && !!galMode && window.innerWidth > 760;
+      fieldCXt = galShown ? 0.32 : 0.5;
+      fieldCX += (fieldCXt - fieldCX) * 0.08;
+
+      const fieldLike = mode === 'field' || mode === 'cold';
+      const eViz = fieldLike ? 0 : ease(P);
+      const LITE = theme === 'light';
+
+      // 1. Background fill
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.fillStyle = LITE ? '#EFE7D4' : '#100E1A';
+      ctx.fillRect(0, 0, W, H);
+
+      // 2. Stars field
+      ctx.globalCompositeOperation = LITE ? 'source-over' : 'lighter';
+      const bgA = curRot * 0.0105, cb = Math.cos(bgA), sb = Math.sin(bgA);
+      for (const s of stars) {
+        const a = (0.16 + s.b * 0.74) * (0.55 + 0.45 * Math.sin(t * 0.6 + s.tw)) * (1 - eViz * 0.4);
+        const sz = s.b > 0.55 ? 2.2 : (s.b > 0.25 ? 1.5 : 1);
+        const dx = s.x - 0.5, dy = s.y - 0.5;
+        const rx = dx * cb - dy * sb + 0.5, ry = dx * sb + dy * cb + 0.5;
+        ctx.fillStyle = LITE ? `rgba(58,64,84,${a})` : `rgba(216,224,244,${Math.min(1, a * 1.15)})`;
+        ctx.fillRect(rx * W, ry * H, sz, sz);
+      }
+
+      // 3. Volumetric Nebula Haze
+      if (eViz < 0.98) {
+        for (const p of haze) {
+          const pr = proj(p.x, p.y, p.z);
+          const X = pr[0], Y = pr[1];
+          const tw = 0.6 + 0.4 * Math.sin(t * p.sp + p.ph);
+          const a = (0.04 + p.b * 0.35) * tw * (1 - eViz);
+          if (a <= 0.005) continue;
+          ctx.fillStyle = LITE ? `rgba(70,75,95,${a * 0.7})` : `rgba(155,143,255,${a})`;
+          ctx.beginPath();
+          ctx.arc(X, Y, Math.max(0.5, p.sz * 2.2 * pr[2]), 0, 6.283);
+          ctx.fill();
+        }
+      }
+
+      // 4. Edges & Curved Photons
+      ctx.globalCompositeOperation = LITE ? 'source-over' : 'lighter';
+      for (const e of E) {
+        const a = idIndex[e[0]], b = idIndex[e[1]];
+        if (a === undefined || b === undefined) continue;
+        const na = N[a] as any, nb = N[b] as any;
+        const [x1, y1] = proj(na.x, na.y, na.z || 0);
+        const [x2, y2] = proj(nb.x, nb.y, nb.z || 0);
+
+        const isFocus = focusSet.has(a) || focusSet.has(b);
+        const alpha = isFocus ? 0.8 : (focusSet.size ? 0.15 : 0.4);
+        const col = COLOR[na.region] || '#9B8FFF';
+
+        // Draw curved bezier line with travelling photons
+        const mx = (x1 + x2) / 2, my = (y1 + y2) / 2 - Math.hypot(x2 - x1, y2 - y1) * 0.12;
+        ctx.strokeStyle = LITE ? `rgba(36,40,54,${alpha * 0.62})` : `rgba(220,228,245,${alpha * 0.45})`;
+        ctx.lineWidth = isFocus ? 1.5 : 1;
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.quadraticCurveTo(mx, my, x2, y2);
+        ctx.stroke();
+
+        // Travelling photon dots
+        const nd = isFocus ? 3 : 1;
+        const A = col.match(/\w\w/g)!.map((h) => parseInt(h, 16));
+        for (let i = 0; i < nd; i++) {
+          const u = (t * 0.25 + i / nd) % 1;
+          const ix = (1 - u) * (1 - u) * x1 + 2 * (1 - u) * u * mx + u * u * x2;
+          const iy = (1 - u) * (1 - u) * y1 + 2 * (1 - u) * u * my + u * u * y2;
+          ctx.fillStyle = `rgba(${A[0]},${A[1]},${A[2]},${alpha})`;
+          ctx.beginPath();
+          ctx.arc(ix, iy, 1.8, 0, 6.283);
+          ctx.fill();
+        }
+      }
+
+      // 5. Draw Nodes & Labels
+      for (let i = 0; i < N.length; i++) {
+        const n = N[i] as any;
+        const [sx, sy, persp] = proj(n.x, n.y, n.z);
+        const R = n.r * 18 * camZoom * userZoom * persp;
+        const col = COLOR[n.region];
+        const isHover = hoverId === n.id;
+        const isSel = fieldSel === n.id;
+        const isFocus = focusSet.has(i);
+        const alpha = isFocus || isHover || isSel ? 1.0 : (focusSet.size ? 0.35 : 0.85);
+
+        const A = col.match(/\w\w/g)!.map((h) => parseInt(h, 16));
+
+        // Draw quantum particle cluster around node
+        for (const p of n.cl) {
+          const rad = p.rr * R;
+          const x = sx + Math.cos(p.a) * rad;
+          const y = sy + Math.sin(p.a) * rad * 0.92;
+          const tw = 0.62 + 0.38 * Math.sin(t * p.sp + p.ph);
+          const a = (0.05 + p.b * 0.55) * tw * alpha;
+          ctx.fillStyle = `rgba(${A[0]},${A[1]},${A[2]},${a})`;
+          ctx.beginPath();
+          ctx.arc(x, y, p.sz, 0, 6.283);
+          ctx.fill();
+        }
+
+        // Draw node center & outer halo ring
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.beginPath();
+        ctx.arc(sx, sy, R, 0, 6.283);
+        ctx.fillStyle = LITE ? '#FAF7EE' : '#100E1A';
+        ctx.fill();
+        ctx.lineWidth = isSel || isHover ? 2.5 : 1.5;
+        ctx.strokeStyle = col;
+        ctx.stroke();
+
+        // Glowing center dot
+        ctx.beginPath();
+        ctx.arc(sx, sy, Math.max(3, R * 0.28), 0, 6.283);
+        ctx.fillStyle = col;
+        ctx.fill();
+
+        // Node Label
+        ctx.font = `${isSel ? '700' : '500'} ${Math.max(10, Math.round(11 * LBL))}px "Martian Mono", monospace`;
+        ctx.fillStyle = LITE ? '#0A0A0A' : '#FAFAF7';
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(n.name, sx + R + 7, sy);
+      }
+
+      // 6. Draw Minimap Radar (#mini)
+      drawMinimap(t);
+
+      // 7. WebGL Glass Distortion Refraction
+      const shapes: any[] = [];
+      if (galShown) {
+        shapes.push({
+          x: galleryEl.offsetLeft,
+          y: galleryEl.offsetTop,
+          w: galleryEl.offsetWidth,
+          h: galleryEl.offsetHeight,
+          rad: 0,
+          amt: 0.8,
+        });
+      }
+      renderGlass(shapes);
+
+      animId = requestAnimationFrame(frame);
+    }
+
+    function drawMinimap(t: number) {
+      const MW = (mini.width = 204);
+      const MH = (mini.height = 138);
+      mctx.clearRect(0, 0, MW, MH);
+
+      const cx = MW / 2, cy = MH / 2;
+      const scale = Math.min(MW, MH) / (orgR * 2.8);
+
+      // Minimap sweep radar angle
+      const radarAng = (t * 1.5) % 6.283;
+      mctx.strokeStyle = 'rgba(155,143,255,0.22)';
+      mctx.lineWidth = 1;
       mctx.beginPath();
-      mctx.arc(nx, ny, node.radius > 16 ? 3.5 : 2, 0, Math.PI * 2);
+      mctx.moveTo(cx, cy);
+      mctx.lineTo(cx + Math.cos(radarAng) * (MW / 2), cy + Math.sin(radarAng) * (MH / 2));
+      mctx.stroke();
+
+      // Nodes on minimap
+      for (const n of N as any[]) {
+        const nx = cx + (n.x - cx0) * scale;
+        const ny = cy - (n.y - cy0) * scale;
+        mctx.fillStyle = COLOR[n.region];
+        mctx.beginPath();
+        mctx.arc(nx, ny, n.r * 2.2, 0, 6.283);
+        mctx.fill();
+      }
+
+      // Camera indicator dot
+      mctx.fillStyle = '#CFFF04';
+      mctx.beginPath();
+      mctx.arc(cx, cy, 3, 0, 6.283);
       mctx.fill();
     }
 
-    // Viewport box
-    const cam = cameraRef.current;
-    const viewW = (window.innerWidth / cam.zoom) * scale;
-    const viewH = (window.innerHeight / cam.zoom) * scale;
-    const vx = mcx + (-cam.x) * scale - viewW / 2;
-    const vy = mcy + (-cam.y) * scale - viewH / 2;
+    animId = requestAnimationFrame(frame);
 
-    mctx.strokeStyle = isDark ? 'rgba(255, 255, 255, 0.45)' : 'rgba(0, 0, 0, 0.4)';
-    mctx.lineWidth = 1.2;
-    mctx.strokeRect(vx, vy, viewW, viewH);
-
-    mctx.restore();
-  }, [nodes, theme]);
-
-  /* ── 6. Mouse & Touch Interactions ── */
-  const handlePointerDown = (e: React.PointerEvent) => {
-    // Only drag with left click
-    if (e.button !== 0) return;
-    const cam = cameraRef.current;
-    cam.isDragging = true;
-    cam.dragStartX = e.clientX;
-    cam.dragStartY = e.clientY;
-    cam.camStartX = cam.targetX;
-    cam.camStartY = cam.targetY;
-  };
-
-  const handlePointerMove = (e: React.PointerEvent) => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    setMousePos({ x: e.clientX, y: e.clientY });
-
-    const cam = cameraRef.current;
-
-    // Handle Pan Dragging
-    if (cam.isDragging) {
-      const deltaX = (e.clientX - cam.dragStartX) / cam.zoom;
-      const deltaY = (e.clientY - cam.dragStartY) / cam.zoom;
-      cam.targetX = cam.camStartX + deltaX;
-      cam.targetY = cam.camStartY + deltaY;
-      return;
-    }
-
-    // Hover Detection
-    const rect = canvas.getBoundingClientRect();
-    const cx = rect.width / 2;
-    const cy = rect.height / 2;
-
-    const mouseWorldX = (e.clientX - rect.left - cx) / cam.zoom - cam.x;
-    const mouseWorldY = (e.clientY - rect.top - cy) / cam.zoom - cam.y;
-
-    let found: MapNode | null = null;
-    for (const node of nodes) {
-      const dist = Math.hypot(node.x - mouseWorldX, node.y - mouseWorldY);
-      if (dist <= node.radius + 6) {
-        found = node;
-        break;
-      }
-    }
-
-    setHoveredNode(found);
-    canvas.style.cursor = found ? 'pointer' : (cam.isDragging ? 'grabbing' : 'grab');
-  };
-
-  const handlePointerUp = (e: React.PointerEvent) => {
-    const cam = cameraRef.current;
-    const dragDist = Math.hypot(e.clientX - cam.dragStartX, e.clientY - cam.dragStartY);
-    cam.isDragging = false;
-
-    // If it was a quick click and not a drag, open the hovered node
-    if (dragDist < 6 && hoveredNode) {
-      handleNodeClick(hoveredNode);
-    }
-  };
-
-  const handleWheel = (e: React.WheelEvent) => {
-    e.preventDefault();
-    const cam = cameraRef.current;
-    const zoomFactor = e.deltaY < 0 ? 1.15 : 0.85;
-    cam.targetZoom = Math.max(0.4, Math.min(2.5, cam.targetZoom * zoomFactor));
-  };
-
-  const handleNodeClick = (node: MapNode) => {
-    focusNode(node, 1.4);
-    setSelectedNode(node);
-  };
-
-  const handleTabClick = (category: string) => {
-    setSelectedTab(category);
-    if (category === 'all') {
-      resetView();
-    } else {
-      const targetHub = hubs.find(h => h.category === category);
-      if (targetHub) {
-        focusNode(targetHub, 1.15);
-      }
-    }
-  };
+    return () => {
+      cancelAnimationFrame(animId);
+      window.removeEventListener('resize', resize);
+    };
+  }, [theme]);
 
   return (
-    <div className="nico-universe" onWheel={handleWheel}>
-      {/* ── Main Constellation Canvas & Radial Vignette ── */}
-      <canvas
-        ref={canvasRef}
-        className="nico-canvas"
-        onPointerDown={handlePointerDown}
-        onPointerMove={handlePointerMove}
-        onPointerUp={handlePointerUp}
-      />
-      <div className="nico-vig" />
+    <div ref={containerRef} className="nico-universe-wrapper">
+      <canvas id="c" />
+      <div id="vig" />
+      <canvas id="glass" />
 
-      {/* ── Top Left Wordmark ── */}
-      <div className="nico-wordmark" onClick={resetView}>
-        <span className="nico-wordmark__title">{profile.name}</span>
-        <span className="nico-wordmark__subtitle">Data Science • FAST-NUCES</span>
+      <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true">
+        <filter id="glassfx" x="-20%" y="-20%" width="140%" height="140%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.011 0.014" numOctaves={2} seed={7} result="n" />
+          <feGaussianBlur in="n" stdDeviation="0.6" result="ns" />
+          <feDisplacementMap in="SourceGraphic" in2="ns" scale={22} xChannelSelector="R" yChannelSelector="G" result="d" />
+          <feGaussianBlur in="d" stdDeviation="2.2" />
+        </filter>
+      </svg>
+
+      {/* ── Wordmark & Origin Branding ── */}
+      <div id="wordmark">NARESH KUMAR</div>
+
+      <div id="origenmark">
+        <svg className="nuc" viewBox="0 0 40 40" fill="none">
+          <circle cx="20" cy="20" r="12.5" stroke="rgba(255,255,255,.22)" strokeWidth="1" />
+          <ellipse cx="20" cy="20" rx="17" ry="6.4" stroke="rgba(207,255,4,.5)" strokeWidth="1">
+            <animateTransform attributeName="transform" type="rotate" from="0 20 20" to="360 20 20" dur="7s" repeatCount="indefinite" />
+          </ellipse>
+          <ellipse cx="20" cy="20" rx="17" ry="6.4" stroke="rgba(0,176,205,.5)" strokeWidth="1">
+            <animateTransform attributeName="transform" type="rotate" from="65 20 20" to="425 20 20" dur="9s" repeatCount="indefinite" />
+          </ellipse>
+          <circle cx="20" cy="20" r="3.2" fill="#CFFF04" />
+        </svg>
+        <span className="lbl"><b>THE ORIGIN</b><s>DATA SCIENCE · FAST-NUCES</s></span>
       </div>
 
-      {/* ── Minimap Radar (Top Left) ── */}
-      <div className="nico-minimap-wrap">
-        <div className="nico-minilbl">
-          <span className="nico-minilbl__dot" />
-          <span>SITE MAP · you are here</span>
-        </div>
-        <canvas
-          ref={miniCanvasRef}
-          className="nico-minimap"
-          onClick={(e) => {
-            const rect = e.currentTarget.getBoundingClientRect();
-            const clickX = (e.clientX - rect.left - rect.width / 2) / 0.12;
-            const clickY = (e.clientY - rect.top - rect.height / 2) / 0.12;
-            cameraRef.current.targetX = -clickX;
-            cameraRef.current.targetY = -clickY;
+      <button id="themebtn" aria-label="Switch between light and dark" onClick={toggleTheme}>
+        <span className="ti">{theme === 'light' ? '☾' : '☀'}</span>
+        <span className="tl">{theme === 'light' ? 'Dark' : 'Light'}</span>
+      </button>
+
+      {/* ── Switch to Editorial List View (Optional fallback) ── */}
+      {onSwitchToList && (
+        <button
+          type="button"
+          onClick={onSwitchToList}
+          style={{
+            position: 'fixed',
+            bottom: '24px',
+            right: '24px',
+            zIndex: 14,
+            background: 'rgba(8,10,16,0.65)',
+            border: '1px solid rgba(255,255,255,0.22)',
+            borderRadius: '999px',
+            color: '#FAFAF7',
+            padding: '8px 16px',
+            fontFamily: 'var(--mono)',
+            fontSize: '11px',
+            letterSpacing: '0.12em',
+            textTransform: 'uppercase',
+            cursor: 'pointer',
+            backdropFilter: 'blur(8px)',
           }}
-        />
-      </div>
-
-      {/* ── Top Center Filter Tabs (Nico Borja Frosted Capsules) ── */}
-      <nav className="nico-tabs" aria-label="Explore network areas">
-        <button
-          type="button"
-          className={`nico-tab ${selectedTab === 'all' ? 'on' : ''}`}
-          onClick={() => handleTabClick('all')}
         >
-          <i style={{ background: '#FFFFFF' }} />
-          <span>ALL</span>
+          Editorial View ↓
         </button>
-        <button
-          type="button"
-          className={`nico-tab ${selectedTab === 'data' ? 'on' : ''}`}
-          onClick={() => handleTabClick('data')}
-        >
-          <i style={{ background: CATEGORY_COLORS.data }} />
-          <span>DATA SCIENCE</span>
-        </button>
-        <button
-          type="button"
-          className={`nico-tab ${selectedTab === 'ai' ? 'on' : ''}`}
-          onClick={() => handleTabClick('ai')}
-        >
-          <i style={{ background: CATEGORY_COLORS.ai }} />
-          <span>MACHINE LEARNING</span>
-        </button>
-        <button
-          type="button"
-          className={`nico-tab ${selectedTab === 'projects' ? 'on' : ''}`}
-          onClick={() => handleTabClick('projects')}
-        >
-          <i style={{ background: CATEGORY_COLORS.projects }} />
-          <span>PROJECTS</span>
-        </button>
-        <button
-          type="button"
-          className={`nico-tab ${selectedTab === 'education' ? 'on' : ''}`}
-          onClick={() => handleTabClick('education')}
-        >
-          <i style={{ background: CATEGORY_COLORS.education }} />
-          <span>EDUCATION</span>
-        </button>
-        <button
-          type="button"
-          className={`nico-tab ${selectedTab === 'connect' ? 'on' : ''}`}
-          onClick={() => handleTabClick('connect')}
-        >
-          <i style={{ background: CATEGORY_COLORS.connect }} />
-          <span>CONNECT</span>
-        </button>
-      </nav>
-
-      {/* ── Top Right Controls: View Switcher & Theme Toggle ── */}
-      <div className="nico-top-right">
-        {onSwitchToList && (
-          <button
-            type="button"
-            className="nico-btn-pill"
-            onClick={onSwitchToList}
-            title="Switch to Editorial Scroll View"
-          >
-            <Compass size={14} />
-            <span>LIST VIEW</span>
-          </button>
-        )}
-        <button
-          type="button"
-          className="nico-btn-pill"
-          onClick={toggleTheme}
-          aria-label="Toggle Light/Dark Theme"
-        >
-          <span>{theme === 'dark' ? '☀ LIGHT' : '☾ DARK'}</span>
-        </button>
-      </div>
-
-      {/* ── Floating Tooltip on Hover (#tip) ── */}
-      {hoveredNode && (
-        <div
-          className={`nico-tip ${hoveredNode ? 'visible' : ''}`}
-          style={{ left: mousePos.x, top: mousePos.y }}
-        >
-          <div className="nico-tip__name">
-            <span
-              className="nico-tip__dot"
-              style={{ background: CATEGORY_COLORS[hoveredNode.category] }}
-            />
-            <span>{hoveredNode.title}</span>
-          </div>
-          <div className="nico-tip__category">
-            {hoveredNode.category.toUpperCase()} • CLICK TO OPEN ↗
-          </div>
-        </div>
       )}
 
-      {/* ── Bottom Radar Controls & Hint ── */}
-      <div className="nico-bottom-bar">
-        <span>DRAG TO PAN • SCROLL TO ZOOM • CLICK ANY NODE TO EXPLORE</span>
+      {/* ── Category Filter Tabs ── */}
+      <div id="tabs" />
+
+      {/* ── Minimap ── */}
+      <div id="minilbl">SITE MAP · you are here</div>
+      <canvas id="mini" />
+
+      {/* ── Tooltip ── */}
+      <div id="tip">
+        <div className="nm" />
+        <div className="kc" />
+        <div className="go" />
       </div>
 
-      {/* ── Slide-Over Document Sheet (#page & #doc) ── */}
-      <div
-        className={`nico-sheet ${selectedNode ? 'open' : ''}`}
-        aria-hidden={!selectedNode}
-      >
-        {/* Spacer top click to return to the map */}
-        <div
-          className="nico-sheet__spacer"
-          onClick={() => setSelectedNode(null)}
-          title="Click to return to the map"
-        >
-          <span className="nico-sheet__ret-hint">↖ CLICK HERE TO RETURN TO THE MAP</span>
+      {/* ── Side Gallery Drawer (#gallery) ── */}
+      <aside id="gallery" />
+
+      {/* ── Full Editorial Case Study Reader (#page / #doc) ── */}
+      <div id="pagetop">
+        <span className="num" id="chnum" />
+        <span className="back" id="back">↖ Back to the map</span>
+      </div>
+
+      <div id="page">
+        <div className="spacer" id="spacer">
+          <span className="ret">↖ click here to return to the map</span>
         </div>
-
-        {/* Document Content */}
-        {selectedNode && (
-          <div className="nico-sheet__doc">
-            <div className="nico-sheet__topbar">
-              <button
-                type="button"
-                className="nico-sheet__back-btn"
-                onClick={() => setSelectedNode(null)}
-              >
-                <ArrowLeft size={14} />
-                <span>BACK TO THE MAP</span>
-              </button>
-              <span className="nico-sheet__number">
-                {selectedNode.category.toUpperCase()} // NODE
-              </span>
-            </div>
-
-            <div className="nico-sheet__category">
-              {selectedNode.category.toUpperCase()}
-            </div>
-            <h1 className="nico-sheet__title">{selectedNode.title}</h1>
-            <p className="nico-sheet__lead">{selectedNode.lead}</p>
-
-            {/* Metadata Strip */}
-            {selectedNode.meta && selectedNode.meta.length > 0 && (
-              <div className="nico-sheet__meta">
-                {selectedNode.meta.map((m, i) => (
-                  <div key={i} className="nico-sheet__meta-item">
-                    <div className="nico-sheet__meta-k">{m.label}</div>
-                    <div className="nico-sheet__meta-v">{m.value}</div>
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {/* Detailed Body Copy */}
-            {selectedNode.details && (
-              <div className="nico-sheet__body">
-                <h2 className="nico-sheet__subheading">Architecture & Approach</h2>
-                <p>{selectedNode.details}</p>
-              </div>
-            )}
-
-            {/* Tags */}
-            {selectedNode.tags && (
-              <div className="nico-sheet__tags">
-                {selectedNode.tags.map(t => (
-                  <span key={t} className="nico-sheet__tag">
-                    {t}
-                  </span>
-                ))}
-              </div>
-            )}
-
-            {/* Action Buttons */}
-            <div className="nico-sheet__actions">
-              {selectedNode.demo && (
-                <button
-                  type="button"
-                  className="nico-sheet__btn nico-sheet__btn--primary"
-                  onClick={() => navigate(selectedNode.demo!)}
-                >
-                  <span>VIEW CASE STUDY</span>
-                  <ExternalLink size={14} />
-                </button>
-              )}
-              {selectedNode.link && (
-                <a
-                  href={selectedNode.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="nico-sheet__btn nico-sheet__btn--secondary"
-                >
-                  <span>OPEN EXTERNAL LINK</span>
-                  <ExternalLink size={14} />
-                </a>
-              )}
-              <button
-                type="button"
-                className="nico-sheet__btn nico-sheet__btn--secondary"
-                onClick={() => setSelectedNode(null)}
-              >
-                <span>RETURN TO NETWORK</span>
-              </button>
-            </div>
-          </div>
-        )}
+        <div className="doc" id="doc" />
       </div>
     </div>
   );
