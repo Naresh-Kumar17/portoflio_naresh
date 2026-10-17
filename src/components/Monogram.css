@@ -1,0 +1,32 @@
+.monogram {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.monogram__shape {
+  transition: all var(--duration-normal) var(--ease-out);
+}
+
+.monogram__node {
+  transition: all var(--duration-normal) var(--ease-out);
+}
+
+.monogram:hover .monogram__shape {
+  filter: drop-shadow(0 0 8px rgba(139, 92, 246, 0.3));
+}
+
+.monogram:hover .monogram__node {
+  r: 4;
+}
+
+.monogram__text {
+  transition: all var(--duration-normal) var(--ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .monogram:hover .monogram__node {
+    r: 3;
+  }
+}

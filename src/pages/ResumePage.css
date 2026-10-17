@@ -1,0 +1,281 @@
+.resume-page {
+  padding-top: calc(var(--nav-height) + var(--space-12));
+  padding-bottom: var(--space-20);
+}
+
+.resume-header-bar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  justify-content: space-between;
+  margin-bottom: var(--space-8);
+}
+
+@media (min-width: 640px) {
+  .resume-header-bar {
+    flex-direction: row;
+    align-items: flex-end;
+  }
+}
+
+.resume-page__title {
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.resume-actions {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.resume-notice {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-6);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-6);
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  color: var(--warning);
+  font-size: var(--text-sm);
+  font-weight: 500;
+}
+
+.resume-sheet {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: var(--space-12);
+  background: var(--bg-card);
+  border-radius: var(--radius-2xl);
+  border: 1px solid var(--border-primary);
+  box-shadow: var(--shadow-xl);
+}
+
+.cv-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  justify-content: space-between;
+  padding-bottom: var(--space-8);
+  border-bottom: 2px solid var(--border-primary);
+  margin-bottom: var(--space-8);
+}
+
+@media (min-width: 768px) {
+  .cv-header {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+.cv-name {
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--space-1);
+}
+
+.cv-title {
+  font-size: var(--text-base);
+  color: var(--cyan-400);
+  font-weight: 600;
+  margin-bottom: var(--space-1);
+}
+
+.cv-institution {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+}
+
+.cv-contact-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+}
+
+.cv-contact-item span {
+  color: var(--text-tertiary);
+  font-weight: 600;
+}
+
+.cv-section {
+  margin-bottom: var(--space-8);
+}
+
+.cv-section__title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--border-secondary);
+  margin-bottom: var(--space-4);
+}
+
+.cv-section__icon {
+  color: var(--cyan-400);
+}
+
+.cv-summary-text {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: var(--leading-relaxed);
+  margin-bottom: var(--space-3);
+}
+
+.cv-entry {
+  margin-bottom: var(--space-6);
+}
+
+.cv-entry__head {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-1);
+  margin-bottom: var(--space-2);
+}
+
+@media (min-width: 640px) {
+  .cv-entry__head {
+    flex-direction: row;
+    align-items: baseline;
+  }
+}
+
+.cv-entry__primary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+
+.cv-entry__role {
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.cv-entry__org {
+  font-size: var(--text-sm);
+  color: var(--cyan-400);
+}
+
+.cv-entry__tech-inline {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  font-family: var(--font-mono);
+}
+
+.cv-entry__dates {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+}
+
+.cv-entry__desc {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: var(--leading-normal);
+  margin-bottom: var(--space-2);
+}
+
+.cv-bullets {
+  list-style-type: disc;
+  padding-left: var(--space-5);
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+}
+
+.cv-bullets li {
+  margin-bottom: var(--space-1);
+}
+
+.cv-skills-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.cv-skill-group {
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+}
+
+.cv-skill-group__name {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.cv-skill-group__items {
+  color: var(--text-secondary);
+}
+
+/* Print Styles */
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #111827 !important;
+  }
+
+  .navbar,
+  .footer,
+  .resume-header-bar,
+  .resume-notice,
+  .command-palette,
+  .cursor-glow,
+  .floating-particles,
+  .three-hero-canvas {
+    display: none !important;
+  }
+
+  .resume-page {
+    padding: 0 !important;
+  }
+
+  .resume-sheet {
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+    max-width: 100% !important;
+    background: transparent !important;
+  }
+
+  .cv-name,
+  .cv-entry__role,
+  .cv-section__title {
+    color: #000000 !important;
+  }
+
+  .cv-title,
+  .cv-entry__org {
+    color: #4b5563 !important;
+  }
+
+  .cv-summary-text,
+  .cv-entry__desc,
+  .cv-skill-group__items,
+  .cv-bullets {
+    color: #374151 !important;
+  }
+
+  .cv-contact-item a {
+    color: #111827 !important;
+    text-decoration: none !important;
+  }
+
+  .cv-entry,
+  .cv-section {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+}
