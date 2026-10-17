@@ -3,7 +3,7 @@ import { useTheme } from '../contexts/ThemeContext';
 import './NicoUniverse.css';
 
 /* ── Naresh Kumar Data Science Constellation Dataset ── */
-export const NARESH_DB = {
+const NARESH_DB = {
   N: [
     {
       id: "naresh",
@@ -687,7 +687,8 @@ export function NicoUniverse({ onSwitchToList }: NicoUniverseProps) {
     const tabsEl = root.querySelector('#tabs') as HTMLDivElement;
     const backBtn = root.querySelector('#back') as HTMLElement;
     const spacer = root.querySelector('#spacer') as HTMLElement;
-
+    const topEl = root.querySelector('#pagetop') as HTMLElement;
+    
     let W = (c.width = window.innerWidth);
     let H = (c.height = window.innerHeight);
     let SC = 1, LBL = 1;
@@ -774,6 +775,7 @@ export function NicoUniverse({ onSwitchToList }: NicoUniverseProps) {
     let fieldCX = 0.5, fieldCXt = 0.5;
     let userZoom = 1, viewRot = 0, viewTiltX = 0, userInteracted = false;
 
+    const sat = (v: number) => Math.max(0, Math.min(1, v));
     const ease = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
     const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
@@ -851,18 +853,14 @@ export function NicoUniverse({ onSwitchToList }: NicoUniverseProps) {
       userZoom = Math.max(0.6, Math.min(2.8, userZoom * delta));
     }, { passive: false });
 
-    function handleCanvasClick(clientX: number, clientY: number) {
+        function handleCanvasClick(clientX: number, clientY: number) {
       if (mode !== 'field') return;
       for (let i = 0; i < N.length; i++) {
         const [sx, sy] = proj(N[i].x, N[i].y, (N[i] as any).z);
-        const hitR = Math.max(24, N[i].r * 18 * userZoom);
+        const hitR = Math.max(26, N[i].r * 18 * userZoom);
         if (Math.hypot(clientX - sx, clientY - sy) <= hitR) {
           const clickedNode = N[i];
-          if (fieldSel === clickedNode.id) {
-            openPage(clickedNode.id);
-          } else {
-            setFieldFocus(clickedNode.id);
-          }
+          setFieldFocus(clickedNode.id);
           return;
         }
       }
@@ -964,7 +962,7 @@ export function NicoUniverse({ onSwitchToList }: NicoUniverseProps) {
     };
     window.addEventListener('keydown', handleKeyDown);
 
-        // ── Build Category Tabs ──
+    // ── Build Category Tabs ──
     function buildTabs() {
       tabsEl.innerHTML = '';
       const allBtn = document.createElement('button');
@@ -976,8 +974,11 @@ export function NicoUniverse({ onSwitchToList }: NicoUniverseProps) {
         if (mode !== 'field') {
           mode = 'field';
           playing = false;
+          P = 0;
           pageEl.style.opacity = '0';
+          pageEl.style.display = 'none';
           pageEl.style.pointerEvents = 'none';
+          docEl.innerHTML = '';
         }
         goHome();
       };
@@ -995,8 +996,11 @@ export function NicoUniverse({ onSwitchToList }: NicoUniverseProps) {
           if (mode !== 'field') {
             mode = 'field';
             playing = false;
+            P = 0;
             pageEl.style.opacity = '0';
+            pageEl.style.display = 'none';
             pageEl.style.pointerEvents = 'none';
+            docEl.innerHTML = '';
           }
           hoverId = null;
           hideTip();
@@ -1332,8 +1336,21 @@ export function NicoUniverse({ onSwitchToList }: NicoUniverseProps) {
 
       // 6. Draw Minimap Radar (#mini)
       drawMinimap(t);
+      // ── DOM sync for #page, #gallery, #pagetop ──
+      const isPage = (mode === 'trans' || mode === 'page');
+      const pop = isPage ? sat((P - 0.25) / 0.55) : 0;
+      pageEl.style.opacity = String(pop);
+      pageEl.style.display = (isPage || pop > 0.01) ? 'block' : 'none';
+      pageEl.style.pointerEvents = (isPage && P > 0.55) ? 'auto' : 'none';
+      docEl.style.transform = 'translateY(' + ((1 - ease(sat((P - 0.3) / 0.7))) * 70) + 'px)';
+      if (topEl) {
+        const chO = isPage ? sat((P - 0.5) / 0.4) : 0;
+        topEl.style.opacity = String(chO);
+        topEl.style.pointerEvents = chO > 0.5 ? 'auto' : 'none';
+      }
+      galleryEl.classList.toggle('show', mode === 'field' && !!galMode);
 
-      animId = requestAnimationFrame(frame);
+  animId = requestAnimationFrame(frame);
     }
 
     function drawMinimap(t: number) {
