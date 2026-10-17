@@ -30,12 +30,12 @@ export function Monogram({ size = 40, className = '', variant = 'default' }: Mon
       >
         <defs>
           <linearGradient id="mono-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="var(--violet-500)" />
-            <stop offset="100%" stopColor="var(--cyan-400)" />
+            <stop offset="0%" stopColor="var(--accent-primary)" />
+            <stop offset="100%" stopColor="var(--accent-secondary)" />
           </linearGradient>
           <linearGradient id="mono-grad-subtle" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="var(--violet-400)" stopOpacity="0.3" />
-            <stop offset="100%" stopColor="var(--cyan-400)" stopOpacity="0.3" />
+            <stop offset="0%" stopColor="var(--accent-primary)" stopOpacity="0.25" />
+            <stop offset="100%" stopColor="var(--accent-secondary)" stopOpacity="0.15" />
           </linearGradient>
         </defs>
 

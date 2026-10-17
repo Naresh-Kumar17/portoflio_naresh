@@ -58,7 +58,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--cyan-400);
+  color: var(--accent-primary);
   flex-shrink: 0;
 }
 
@@ -80,13 +80,13 @@
 }
 
 .contact-link {
-  color: var(--cyan-400);
+  color: var(--accent-primary);
   text-decoration: none;
   transition: color var(--transition-fast);
 }
 
 .contact-link:hover {
-  color: var(--violet-400);
+  color: var(--accent-secondary);
   text-decoration: underline;
 }
 
@@ -129,7 +129,7 @@
 
 .contact-social-btn:hover {
   color: var(--text-primary);
-  border-color: var(--cyan-500);
+  border-color: var(--accent-primary);
   background: var(--bg-card-hover);
 }
 
@@ -177,8 +177,8 @@
 
 .form-input:focus {
   outline: none;
-  border-color: var(--cyan-500);
-  box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.15);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px rgba(155, 143, 255, 0.2);
 }
 
 .form-textarea {

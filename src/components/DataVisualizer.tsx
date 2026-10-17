@@ -285,10 +285,10 @@ plt.show()`;
                   y1={getSvgY(Number(stats.meanY) - (Number(stats.correlation) * (maxY - minY) * 0.35))}
                   x2={getSvgX(maxX)}
                   y2={getSvgY(Number(stats.meanY) + (Number(stats.correlation) * (maxY - minY) * 0.35))}
-                  stroke="var(--violet-400)"
+                  stroke="var(--accent-primary)"
                   strokeWidth="2.5"
                   strokeDasharray="6 3"
-                  opacity="0.85"
+                  opacity="0.9"
                 />
               )}
 

@@ -45,25 +45,25 @@ export function ThreeHeroCanvas() {
     const rootGroup = new THREE.Group();
     scene.add(rootGroup);
 
-    // Color definitions (MK Vision Studio Electric Mint Palette)
+    // Color definitions (Nico Borja Obsidian, Lavender & Citron Palette)
     const isDark = theme === 'dark';
-    const primaryColor = new THREE.Color(isDark ? 0x03e29c : 0x059669); // Electric Mint (#03e29c)
-    const accentColor = new THREE.Color(isDark ? 0x2dd4bf : 0x0d9488);  // Cyan Teal
-    const goldColor = new THREE.Color(isDark ? 0x00ffaf : 0x03e29c);    // Vivid Neon Glow
+    const primaryColor = new THREE.Color(isDark ? 0x9b8fff : 0x705eff); // Electric Iris / Lavender (#9b8fff)
+    const accentColor = new THREE.Color(isDark ? 0xcfff04 : 0x566800);  // Cyber Citron / Acid Lime (#cfff04)
+    const goldColor = new THREE.Color(isDark ? 0xff6a3d : 0xc8461f);    // Coral Amber Accent (#ff6a3d)
 
     // ── 1. Inner Faceted Geodesic Crystal (Data Core) ──
     const coreGeometry = new THREE.IcosahedronGeometry(13.5, 1);
     const coreMaterial = new THREE.MeshPhysicalMaterial({
-      color: isDark ? 0x0f172a : 0xf8fafc,
+      color: isDark ? 0x161326 : 0xf8fafc,
       emissive: primaryColor,
-      emissiveIntensity: isDark ? 0.25 : 0.15,
-      metalness: 0.85,
-      roughness: 0.18,
+      emissiveIntensity: isDark ? 0.32 : 0.18,
+      metalness: 0.88,
+      roughness: 0.16,
       clearcoat: 1.0,
-      clearcoatRoughness: 0.1,
-      transmission: 0.25,
+      clearcoatRoughness: 0.08,
+      transmission: 0.28,
       ior: 1.6,
-      reflectivity: 0.9,
+      reflectivity: 0.95,
       flatShading: true,
     });
     const coreMesh = new THREE.Mesh(coreGeometry, coreMaterial);
@@ -74,7 +74,7 @@ export function ThreeHeroCanvas() {
     const wireMaterial = new THREE.LineBasicMaterial({
       color: primaryColor,
       transparent: true,
-      opacity: isDark ? 0.45 : 0.35,
+      opacity: isDark ? 0.5 : 0.35,
       blending: THREE.AdditiveBlending,
     });
     const wireframe = new THREE.LineSegments(wireGeometry, wireMaterial);
@@ -86,7 +86,7 @@ export function ThreeHeroCanvas() {
     const knotMaterial = new THREE.MeshStandardMaterial({
       color: accentColor,
       emissive: accentColor,
-      emissiveIntensity: 0.5,
+      emissiveIntensity: 0.6,
       metalness: 0.9,
       roughness: 0.1,
       wireframe: false,
@@ -101,7 +101,7 @@ export function ThreeHeroCanvas() {
       new THREE.MeshStandardMaterial({
         color: primaryColor,
         emissive: primaryColor,
-        emissiveIntensity: 0.4,
+        emissiveIntensity: 0.45,
         metalness: 0.85,
         roughness: 0.15,
         wireframe: false,
@@ -114,9 +114,9 @@ export function ThreeHeroCanvas() {
     // ── 4. Glowing Data Beacons on Orbit ──
     const beaconGeometry = new THREE.SphereGeometry(0.9, 16, 16);
     const beaconMaterial1 = new THREE.MeshStandardMaterial({
-      color: goldColor,
-      emissive: goldColor,
-      emissiveIntensity: 0.8,
+      color: accentColor,
+      emissive: accentColor,
+      emissiveIntensity: 0.85,
       roughness: 0.1,
     });
     const beacon1 = new THREE.Mesh(beaconGeometry, beaconMaterial1);
@@ -148,7 +148,8 @@ export function ThreeHeroCanvas() {
       particlePositions[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
       particlePositions[i * 3 + 2] = radius * Math.cos(phi);
 
-      const colorMix = Math.random() > 0.5 ? primaryColor : accentColor;
+      const randVal = Math.random();
+      const colorMix = randVal < 0.5 ? primaryColor : randVal < 0.85 ? accentColor : goldColor;
       particleColors[i * 3] = colorMix.r;
       particleColors[i * 3 + 1] = colorMix.g;
       particleColors[i * 3 + 2] = colorMix.b;
