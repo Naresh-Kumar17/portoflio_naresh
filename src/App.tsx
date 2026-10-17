@@ -86,7 +86,7 @@ function AppContent() {
       {!isHome && <Navbar onOpenCommandPalette={() => setCommandPaletteOpen(true)} />}
 
       <div className={isHome ? 'main-content main-content--fullscreen' : 'main-content'}>
-        <AnimatedRoutes />
+        {isHome ? <HomePage /> : <AnimatedRoutes />}
       </div>
 
       {!isHome && <Footer />}

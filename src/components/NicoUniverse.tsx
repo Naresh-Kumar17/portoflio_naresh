@@ -678,7 +678,6 @@ export function NicoUniverse({ onSwitchToList }: NicoUniverseProps) {
 
     const c = root.querySelector('#c') as HTMLCanvasElement;
     const ctx = c.getContext('2d')!;
-    const gcanvas = root.querySelector('#glass') as HTMLCanvasElement;
     const mini = root.querySelector('#mini') as HTMLCanvasElement;
     const mctx = mini.getContext('2d')!;
     const tip = root.querySelector('#tip') as HTMLDivElement;
@@ -705,123 +704,13 @@ export function NicoUniverse({ onSwitchToList }: NicoUniverseProps) {
     function resize() {
       W = c.width = window.innerWidth;
       H = c.height = window.innerHeight;
-      if (gcanvas) {
-        gcanvas.width = W;
-        gcanvas.height = H;
-      }
       const span = W <= 760 ? 1.6 : 2.35;
       SC = Math.min(W, H) / (orgR * span);
       LBL = W <= 760 ? 1.5 : 1;
     }
     window.addEventListener('resize', resize);
     resize();
-
-    // ── Shaders & WebGL Glass ──
-    let GL: WebGLRenderingContext | null = null;
-    let glassProg: WebGLProgram | null = null;
-    let glassQuad: WebGLBuffer | null = null;
-    let glassTex: WebGLTexture | null = null;
-    let glassLoc: any = {};
-
-    function initGlass() {
-      if (!gcanvas) return;
-      const gl = gcanvas.getContext('webgl', { premultipliedAlpha: false, alpha: true, antialias: true });
-      if (!gl) {
-        document.body.classList.add('noglass');
-        return;
-      }
-      GL = gl;
-      const VS = 'attribute vec2 p;void main(){gl_Position=vec4(p,0.0,1.0);}';
-      const FS = `precision highp float;
-uniform sampler2D uField;uniform vec2 uRes;uniform vec4 uRect;uniform float uRadius;uniform float uAmt;uniform float uDark;
-float sdRR(vec2 p,vec2 b,float r){vec2 q=abs(p)-b+r;return min(max(q.x,q.y),0.0)+length(max(q,0.0))-r;}
-void main(){
-  vec2 fp=gl_FragCoord.xy;vec2 ctr=uRect.xy+uRect.zw*0.5;vec2 hf=uRect.zw*0.5;vec2 p=fp-ctr;
-  float d=sdRR(p,hf,uRadius);
-  if(d>1.5)discard;
-  float e=2.0;
-  vec2 g=vec2(sdRR(p+vec2(e,0.0),hf,uRadius)-sdRR(p-vec2(e,0.0),hf,uRadius),
-             sdRR(p+vec2(0.0,e),hf,uRadius)-sdRR(p-vec2(0.0,e),hf,uRadius));
-  g=normalize(g+vec2(1e-4));
-  float rim=clamp(-d/24.0,0.0,1.0);
-  float edgeR=pow(1.0-rim,2.2)*uAmt;
-  vec2 disp=g*edgeR*28.0;
-  vec2 uv=(fp+disp)/uRes;
-  vec4 base=texture2D(uField,uv);
-  vec3 tint=vec3(0.06,0.07,0.11);
-  float spec=pow(max(0.0,dot(g,normalize(vec2(-0.4,0.7)))),3.0)*edgeR*0.75;
-  vec3 col=mix(base.rgb,tint,0.25)+vec3(spec);
-  float a=clamp(0.5-d,0.0,1.0);
-  gl_FragColor=vec4(col,a);
-}`;
-      function sh(t: number, s: string) {
-        const o = gl!.createShader(t)!;
-        gl!.shaderSource(o, s);
-        gl!.compileShader(o);
-        return o;
-      }
-      const prog = gl.createProgram()!;
-      gl.attachShader(prog, sh(gl.VERTEX_SHADER, VS));
-      gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, FS));
-      gl.linkProgram(prog);
-      glassProg = prog;
-
-      glassQuad = gl.createBuffer();
-      gl.bindBuffer(gl.ARRAY_BUFFER, glassQuad);
-      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
-
-      glassTex = gl.createTexture();
-      gl.bindTexture(gl.TEXTURE_2D, glassTex);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-      gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-
-      glassLoc = {
-        p: gl.getAttribLocation(prog, 'p'),
-        uField: gl.getUniformLocation(prog, 'uField'),
-        uRes: gl.getUniformLocation(prog, 'uRes'),
-        uRect: gl.getUniformLocation(prog, 'uRect'),
-        uRadius: gl.getUniformLocation(prog, 'uRadius'),
-        uAmt: gl.getUniformLocation(prog, 'uAmt'),
-        uDark: gl.getUniformLocation(prog, 'uDark'),
-      };
-    }
-    initGlass();
-
-    function renderGlass(shapes: any[]) {
-      if (!GL || !glassProg) return;
-      const gl = GL;
-      gl.viewport(0, 0, gcanvas.width, gcanvas.height);
-      gl.clearColor(0, 0, 0, 0);
-      gl.clear(gl.COLOR_BUFFER_BIT);
-      if (!shapes || !shapes.length) return;
-
-      gl.useProgram(glassProg);
-      gl.activeTexture(gl.TEXTURE0);
-      gl.bindTexture(gl.TEXTURE_2D, glassTex);
-      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, c);
-      gl.uniform1i(glassLoc.uField, 0);
-      gl.uniform2f(glassLoc.uRes, gcanvas.width, gcanvas.height);
-      gl.uniform1f(glassLoc.uDark, theme === 'light' ? 1.0 : 0.0);
-      gl.bindBuffer(gl.ARRAY_BUFFER, glassQuad);
-      gl.enableVertexAttribArray(glassLoc.p);
-      gl.vertexAttribPointer(glassLoc.p, 2, gl.FLOAT, false, 0, 0);
-      gl.enable(gl.BLEND);
-      gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-
-      for (const s of shapes) {
-        if (s.w < 2) continue;
-        const yb = gcanvas.height - (s.y + s.h);
-        gl.uniform4f(glassLoc.uRect, s.x, yb, s.w, s.h);
-        gl.uniform1f(glassLoc.uRadius, s.rad);
-        gl.uniform1f(glassLoc.uAmt, s.amt === undefined ? 1.0 : s.amt);
-        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-      }
-    }
-
-    // ── Particles, Stars, Haze & Quantum Clusters ──
+// ── Particles, Stars, Haze & Quantum Clusters ──
     const stars = Array.from({ length: 560 }, () => ({
       x: Math.random(),
       y: Math.random(),
@@ -1075,43 +964,70 @@ void main(){
     };
     window.addEventListener('keydown', handleKeyDown);
 
-    // ── Build Category Tabs ──
+        // ── Build Category Tabs ──
     function buildTabs() {
       tabsEl.innerHTML = '';
-      const allBtn = document.createElement('div');
+      const allBtn = document.createElement('button');
       allBtn.className = 't on';
+      allBtn.type = 'button';
       allBtn.innerHTML = '<i></i>ALL';
       allBtn.onclick = (e) => {
         e.stopPropagation();
+        if (mode !== 'field') {
+          mode = 'field';
+          playing = false;
+          pageEl.style.opacity = '0';
+          pageEl.style.pointerEvents = 'none';
+        }
         goHome();
       };
       tabsEl.appendChild(allBtn);
 
       REG.forEach(([r, lbl]) => {
-        const d = document.createElement('div');
+        const d = document.createElement('button');
         d.className = 't';
+        d.type = 'button';
         d.dataset.r = r;
         const col = COLOR[r];
-        d.innerHTML = '<i style="background:' + col + ';box-shadow:0 0 6px ' + col + '"></i>' + lbl;
+        d.innerHTML = '<i style="background:' + col + ';box-shadow:0 0 8px ' + col + '"></i>' + lbl;
         d.onclick = (e) => {
           e.stopPropagation();
+          if (mode !== 'field') {
+            mode = 'field';
+            playing = false;
+            pageEl.style.opacity = '0';
+            pageEl.style.pointerEvents = 'none';
+          }
           hoverId = null;
           hideTip();
+          userInteracted = true;
           const targetHub = REGION_TO_HUB[r] || r;
           setFieldFocus(targetHub);
         };
         tabsEl.appendChild(d);
       });
+      setTabsOn();
     }
     buildTabs();
 
     function setTabsOn() {
       const activeRegion = fieldSel && byId[fieldSel] ? byId[fieldSel].region : null;
       tabsEl.querySelectorAll('.t').forEach((t: any) => {
-        if (!activeRegion) {
-          t.classList.toggle('on', !t.dataset.r);
+        const r = t.dataset.r;
+        if (!r) {
+          const isAll = !fieldSel || fieldSel === 'naresh';
+          t.classList.toggle('on', isAll);
+          t.style.background = isAll ? '#FAFAF7' : 'rgba(14, 12, 24, 0.75)';
+          t.style.color = isAll ? '#06070D' : 'rgba(255, 255, 255, 0.85)';
+          t.style.borderColor = isAll ? '#FAFAF7' : 'rgba(255, 255, 255, 0.22)';
+          t.style.fontWeight = isAll ? '700' : '500';
         } else {
-          t.classList.toggle('on', t.dataset.r === activeRegion);
+          const isOn = r === activeRegion;
+          t.classList.toggle('on', isOn);
+          t.style.background = isOn ? COLOR[r] : 'rgba(14, 12, 24, 0.75)';
+          t.style.color = isOn ? '#06070D' : 'rgba(255, 255, 255, 0.85)';
+          t.style.borderColor = isOn ? COLOR[r] : 'rgba(255, 255, 255, 0.22)';
+          t.style.fontWeight = isOn ? '700' : '500';
         }
       });
     }
@@ -1269,7 +1185,7 @@ void main(){
       }
 
       if (mode === 'cold') {
-        coldP += dt / 2.5;
+        coldP += dt / 1.0;
         if (coldP >= 1) {
           coldP = 1;
           mode = 'field';
@@ -1417,20 +1333,6 @@ void main(){
       // 6. Draw Minimap Radar (#mini)
       drawMinimap(t);
 
-      // 7. WebGL Glass Distortion Refraction
-      const shapes: any[] = [];
-      if (galShown) {
-        shapes.push({
-          x: galleryEl.offsetLeft,
-          y: galleryEl.offsetTop,
-          w: galleryEl.offsetWidth,
-          h: galleryEl.offsetHeight,
-          rad: 0,
-          amt: 0.8,
-        });
-      }
-      renderGlass(shapes);
-
       animId = requestAnimationFrame(frame);
     }
 
@@ -1481,8 +1383,6 @@ void main(){
     <div ref={containerRef} className="nico-universe-wrapper">
       <canvas id="c" />
       <div id="vig" />
-      <canvas id="glass" />
-
       <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true">
         <filter id="glassfx" x="-20%" y="-20%" width="140%" height="140%">
           <feTurbulence type="fractalNoise" baseFrequency="0.011 0.014" numOctaves={2} seed={7} result="n" />
