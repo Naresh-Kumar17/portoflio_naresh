@@ -1,0 +1,246 @@
+================================================================================
+          NARESH KUMAR PORTFOLIO - FULL PROJECT ANALYSIS & WORK LOG
+================================================================================
+Generated: 2026-10-18
+Project: Naresh Kumar Portfolio (FAST-NUCES Karachi)
+Target Reference: https://nicoborja.com/
+GitHub Repository: https://github.com/Naresh-Kumar17/protoflio_naresh.git
+Working Directory: f:\Portfolio
+
+================================================================================
+TABLE OF CONTENTS
+================================================================================
+1. EXECUTIVE SUMMARY & OBJECTIVES
+2. REVERSE-ENGINEERING NICO BORJA'S ARCHITECTURE & AESTHETICS
+3. COMPLETE TECHNICAL ARCHITECTURE & DATA SYSTEM
+4. 3D CONSTELLATION GRAPH ENGINE IMPLEMENTATION
+5. INTERACTIVE SUBSYSTEMS & USER INTERFACE
+6. ROOT CAUSE ANALYSES (RCAS) & CRITICAL BUG RESOLUTIONS
+7. GIT REPOSITORY SETUP & COMMIT CHRONOLOGY
+8. PRODUCTION BUILD, BENCHMARKS & CURRENT PROJECT STATUS
+
+================================================================================
+1. EXECUTIVE SUMMARY & OBJECTIVES
+================================================================================
+The primary directive of this project was to transform Naresh Kumar's portfolio
+from a conventional modern web template into a replica of Nico Borja's signature
+architectural design (https://nicoborja.com/). 
+
+Key Core Goals:
+1. Color Grading & Aesthetics: Replace generic neon accents with Nico Borja's
+   curated Deep Obsidian Midnight canvas (#100E1A) in dark mode, Parchment
+   (#EFE7D4) in light mode, and specialized spectral neon accents for specific
+   knowledge domains.
+2. 3D Interactive Cosmos / Constellation: Build a 3D perspective camera engine
+   with volumetric nebula haze, twinkling background stars, Gaussian particle
+   halos, travelling photon pulses along bezier curves, and dynamic camera
+   rotation and drag physics.
+3. Authentic Typography: Implement Fontshare's Cabinet Grotesk for bold architectural
+   display titles, Martian Mono & JetBrains Mono for monospace code/data coordinates,
+   and ZCOOL QingKe HuangYou for brand marks.
+4. Content Tailoring for Naresh Kumar: Showcase Naresh's authentic academic
+   and research journey as a BS Data Science undergraduate at National University
+   of Computer and Emerging Sciences (FAST-NUCES) Karachi (2025–2029).
+5. Automated Version Control: Initialize Git remote tracking and continuously
+   commit and push all verified progress to GitHub (Naresh-Kumar17/protoflio_naresh).
+
+================================================================================
+2. REVERSE-ENGINEERING NICO BORJA'S ARCHITECTURE & AESTHETICS
+================================================================================
+To ensure fidelity, the live assets, scripts, stylesheets, and DOM hierarchies
+of https://nicoborja.com/ were inspected and analyzed.
+
+Color Grading Palette:
+- Dark Mode Background (--bg): #100E1A (Deep Obsidian Midnight)
+- Radial Vignette Overlay: radial-gradient(120% 120% at 50% 46%, transparent 55%, rgba(5,6,10,0.5))
+- Light Mode Background (--bg): #EFE7D4 (Historic Parchment)
+- Primary Ink: rgba(255, 255, 255, 0.97) / Light: #0A0A0A
+- Muted Ink: rgba(255, 255, 255, 0.72) / Light: rgba(10,10,10,0.72)
+- Faint Ink: rgba(255, 255, 255, 0.50) / Light: rgba(10,10,10,0.42)
+
+Region Color Codes:
+- Entry / Center Hub (Naresh): #9B8FFF (Electric Iris / Soft Lavender)
+- Special Flagship (FAST-NUCES): #CFFF04 (Cyber Citron / Acid Lime)
+- Machine Learning & AI: #2B6BFF (Cobalt Royal Blue)
+- Data Science & EDA: #00F0FF (Cyan / Neon Azure)
+- Mathematics & Theory: #FF3D7A (Electric Rose)
+- Analytics & Growth: #FFAA00 (Amber Gold)
+
+Typography System:
+- Display / Headers: "Cabinet Grotesk", "Origin Display", sans-serif
+- Monospace / Coordinates / Data: "Martian Mono", monospace
+- Body / Reading: "JetBrains Mono", ui-monospace, monospace
+- Wordmark Brand: "ZCOOL QingKe HuangYou", cursive / display
+
+================================================================================
+3. COMPLETE TECHNICAL ARCHITECTURE & DATA SYSTEM
+================================================================================
+The interactive universe is powered by a relational dataset (NARESH_DB)
+consisting of nodes (N) and directed edges (E), modeling Naresh Kumar's data
+science journey at FAST-NUCES Karachi.
+
+Core Hubs & Clusters:
+1. Hub "naresh" (Region: entry, x: 0, y: 0.23, r: 1.55):
+   - Underpinning: Undergraduate Data Science Researcher at FAST-NUCES Karachi.
+   - Connected Nodes: Contact ("contacto"), Collaborations ("collaborate"),
+     Academic Flagship ("fast_nuces").
+2. Hub "fast_nuces" (Region: special, x: 2.81, y: 1.56, r: 2.35):
+   - Underpinning: National University of Computer & Emerging Sciences.
+   - Connected Nodes: Coursework ("coursework"), Dev Environment ("dev_environment"),
+     Scientific Methodology ("manifesto"), Technical Notes ("technical_writing").
+3. Hub "ai" (Region: ai, x: -3.74, y: 2.57, r: 1.45):
+   - Underpinning: Machine Learning, model training, evaluation & benchmarking.
+   - Connected Nodes: Classification Lab ("classification_lab"), Graph Analytics ("network"),
+     Scikit-Learn Toolkit ("scikit_toolkit").
+4. Hub "data" (Region: data, x: 1.45, y: -2.85, r: 1.5):
+   - Underpinning: Exploratory Data Analysis (EDA) pipelines & data engineering.
+   - Connected Nodes: EDA Pipeline ("eda_pipeline"), Visualization Gallery ("viz_gallery"),
+     Data Quality Framework ("data_quality"), Automated Cleaning ("data_cleaning").
+5. Hub "growth" (Region: growth, x: -2.1, y: -3.4, r: 1.35):
+   - Underpinning: Analytics & Business Intelligence.
+   - Connected Nodes: SQL Analytics ("sql_analytics"), KPI Dashboards ("kpi_dashboards"),
+     Statistical Inference ("stats_inference"), Business Metrics ("business_metrics"),
+     Predictive Modeling ("predictive_modeling").
+6. Hub "musica" (Region: musica, x: 3.5, y: -3.1, r: 1.4):
+   - Underpinning: Theoretical Mathematics & Algorithms.
+   - Connected Nodes: Linear Algebra & Tensors ("linear_algebra"), Probability &
+     Distributions ("probability_stats"), Algorithmic Data Structures ("algorithmic_ds"),
+     Mathematical Optimization ("optimization").
+
+================================================================================
+4. 3D CONSTELLATION GRAPH ENGINE IMPLEMENTATION
+================================================================================
+File: src/components/NicoUniverse.tsx
+
+Engine Mathematics & Features:
+1. 3D Perspective Projection:
+   - Calculates 3D world coordinates (x, y, z) into 2D screen coordinates:
+     proj(wx, wy, wz) = [W * fieldCX + x1 * SC * Z, H / 2 - y1 * SC * Z, persp]
+   - Applies dual-axis rotation (viewRot, viewTiltX) and subtle ambient rotation (curRot).
+   - Perspective coefficient: persp = 5.5 / (5.5 - z2 * 0.5).
+2. Deep Space Background Starfield:
+   - 560 procedurally generated stars with randomized brightness powers and
+     sinusoidal twinkle phases.
+3. Volumetric Nebula Haze:
+   - 1,500 particles distributed between connected node pairs using Box-Muller
+     Gaussian noise transforms, creating authentic organic nebula clouds.
+4. Quantum Particle Halos (Clusters):
+   - Each node generates 18 to 60 orbiting orbital particles (n.cl) with
+     dynamic radii, phase speeds, and brightness pulsations.
+5. Photonic Edge Connections:
+   - Curved quadratic Bezier arcs between connected nodes with travelling photon
+     pulses animated along the curves via parametric interpolation.
+6. Camera Physics & Navigation:
+   - Smooth horizontal camera gliding (fieldCXt = 0.32 when gallery drawer opens,
+     returning to 0.5 when closed).
+   - Pointer drag for 3D tilt and pan; mouse wheel for smooth continuous zoom.
+
+================================================================================
+5. INTERACTIVE SUBSYSTEMS & USER INTERFACE
+================================================================================
+1. Top Category Tabs (#tabs):
+   - Horizontal navbar with dynamic neon accent highlights:
+     * ALL: #FAFAF7 (Bone White)
+     * NARESH: #9B8FFF (Electric Iris)
+     * DATA SCIENCE: #00F0FF (Neon Cyan)
+     * MACHINE LEARNING: #2B6BFF (Cobalt Royal)
+     * ANALYTICS: #FFAA00 (Amber Gold)
+     * MATHEMATICS: #FF3D7A (Electric Rose)
+     * FAST-NUCES: #CFFF04 (Acid Lime)
+   - Left offset (left: 230px; right: 140px) preventing collision with top-left
+     wordmark and top-right theme toggle.
+
+2. Minimap Radar (#mini & #minilbl):
+   - Positioned at top-left (top: 62px, left: 18px).
+   - Real-time 2D radar with 360-degree sweep line and color-coded node coordinates.
+   - Live yellow/lime indicator representing the user's active viewport position.
+
+3. Obsidian Glass Side Drawer (#gallery):
+   - Slides smoothly from the right (width: 50vw, min-width: 420px, max-width: 680px).
+   - High-craft frosted glass: background: rgba(16, 14, 26, 0.94), backdrop-filter: blur(28px).
+   - Features domain kicker, cluster header, description, and interactive project cards.
+
+4. Full Editorial Case-Study Reader (#page & #doc):
+   - Transparent top spacer (46vh) maintaining visual contact with the 3D map.
+   - Comprehensive case study reader detailing academic coursework, toolkits,
+     technologies, methodology, and direct links.
+   - Dedicated "Back to the map" buttons and Escape key shortcut to return to orbit.
+
+================================================================================
+6. ROOT CAUSE ANALYSES (RCAS) & CRITICAL BUG RESOLUTIONS
+================================================================================
+
+Bug 1: "Still nothing showing on main screen just top bar and side map with dotted colors"
+- Symptoms: React rendered the top bar and minimap, but the main canvas was completely black.
+- Root Cause:
+  The layout included `<canvas id="glass" />` at z-index 6, sitting in front of main
+  canvas `#c` (z-index 1). In WebGL, initializing with `premultipliedAlpha: false` and
+  calling `gl.clearColor(0,0,0,0)` causes the Windows ANGLE / DirectX compositor to treat
+  the entire canvas buffer as an opaque black rectangle, completely obscuring canvas `#c`.
+- Resolution:
+  Completely removed the `#glass` WebGL canvas and its shaders in favor of hardware-accelerated
+  CSS glassmorphism (`backdrop-filter: blur(28px) saturate(1.4)`), immediately revealing
+  the 3D constellation universe.
+
+Bug 2: "Colorful navbar is not working"
+- Symptoms: Clicking category tabs did not trigger visual feedback or color changes.
+- Root Cause:
+  1. Tab buttons only toggled the `.on` class, whose CSS rule forced text color to
+     `#05060A` without setting the dynamic region background color, rendering text invisible.
+  2. Tab IDs did not map to hub node IDs, causing `setFieldFocus` to throw undefined errors.
+- Resolution:
+  Introduced `REGION_TO_HUB` mapping dictionary and updated `setTabsOn()` to dynamically
+  apply each region's signature neon background color with high-contrast text and glowing box-shadows.
+
+Bug 3: "Dark box covering the lower 70% of the screen with 'CLICK HERE TO RETURN TO THE MAP'"
+- Symptoms: As captured in the user screenshot, a large dark block obscured the constellation.
+- Root Cause:
+  1. A hardcoded test override at the bottom of `NicoUniverse.css` (`#page { display: block !important; opacity: 1 !important; }`)
+     permanently forced the case study reader to remain open.
+  2. Clicking on map nodes triggered `openPage()` instead of merely selecting the node.
+- Resolution:
+  1. Removed the `#page` `!important` CSS rule.
+  2. Integrated exact opacity and visibility synchronization inside `frame()`:
+     `pageEl.style.opacity = String(pop); pageEl.style.display = (isPage || pop > 0.01) ? 'block' : 'none';`
+  3. Decoupled canvas node clicks so clicking a node only focuses the cluster and opens
+     the `#gallery` drawer, reserving full-page opens for explicit CTA button clicks.
+
+Bug 4: Top Navbar Colliding with "NARESH KUMAR" Wordmark
+- Symptoms: On screens under 1600px width, the left tabs overlapped the top-left brand title.
+- Root Cause: `#tabs` was centered with `left: 0; right: 0;`.
+- Resolution: Updated `#tabs` positioning to `left: 230px; right: 140px;` with horizontal
+  no-scrollbar flex scrolling, guaranteeing zero overlap across all viewport widths.
+
+================================================================================
+7. GIT REPOSITORY SETUP & COMMIT CHRONOLOGY
+================================================================================
+Remote URL: https://github.com/Naresh-Kumar17/protoflio_naresh.git
+Primary Branch: main
+
+Commit History & Milestones:
+- Commit `b29e08f`: Initial portfolio baseline commit.
+- Commit `1f6874a`: Color grading and font configuration (Cabinet Grotesk, Martian Mono).
+- Commit `bca710b`: Initial Nico Borja architecture integration and 3D constellation draft.
+- Commit `1096732`: Full Nico Borja clone implementation and portfolio routing alignment.
+- Commit `aa0ed5d`: Fix category navigation crash and enhance interactive drawer.
+- Commit `89bacf2`: Fix main canvas display (remove opaque WebGL glass) and activate vibrant category navbar.
+- Commit `4d4aee7`: Fix page overlay blockage, top navbar spacing, and canvas interaction.
+
+================================================================================
+8. PRODUCTION BUILD, BENCHMARKS & CURRENT PROJECT STATUS
+================================================================================
+- TypeScript Compilation (`tsc -b`): Clean, 0 errors, 0 warnings.
+- Production Bundler (`vite build`):
+  * dist/index.html: 1.85 kB (gzip: 0.78 kB)
+  * dist/assets/index.css: 110.20 kB (gzip: 19.72 kB)
+  * dist/assets/index.js: 409.77 kB (gzip: 125.02 kB)
+  * dist/assets/three.js: 541.89 kB (gzip: 134.38 kB)
+  * Build Duration: 2.43s
+- Local Dev Server:
+  * Running at: http://localhost:5173/
+  * Vite Fast Refresh (HMR): Active & fully compatible.
+- Repository Status: Clean, all branches synchronized with origin/main.
+
+================================================================================
+END OF AUDIT & IMPLEMENTATION REPORT
+================================================================================
