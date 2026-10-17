@@ -639,7 +639,16 @@ const REG: [string, string][] = [
   ['special', 'FAST-NUCES']
 ];
 
-const PARENTS = new Set(['ai', 'growth', 'data', 'musica', 'special']);
+const REGION_TO_HUB: Record<string, string> = {
+  entry: 'naresh',
+  data: 'data',
+  ai: 'ai',
+  growth: 'growth',
+  musica: 'musica',
+  special: 'fast_nuces',
+};
+
+const PARENTS = new Set(['ai', 'growth', 'data', 'musica', 'special', 'entry']);
 
 export interface NicoUniverseProps {
   onSwitchToList?: () => void;
@@ -660,11 +669,10 @@ export function NicoUniverse({ onSwitchToList }: NicoUniverseProps) {
 
     const childrenIdx: Record<number, number[]> = {};
     N.forEach((n: any, i: number) => {
-      if (PARENTS.has(n.region) && n.id !== n.region) {
-        const r = idIndex[n.region];
-        if (r !== undefined) {
-          (childrenIdx[r] = childrenIdx[r] || []).push(i);
-        }
+      const hubId = REGION_TO_HUB[n.region];
+      const hubIdx = hubId ? idIndex[hubId] : undefined;
+      if (hubIdx !== undefined && i !== hubIdx) {
+        (childrenIdx[hubIdx] = childrenIdx[hubIdx] || []).push(i);
       }
     });
 
@@ -958,7 +966,7 @@ void main(){
       if (mode !== 'field') return;
       for (let i = 0; i < N.length; i++) {
         const [sx, sy] = proj(N[i].x, N[i].y, (N[i] as any).z);
-        const hitR = Math.max(22, N[i].r * 18 * userZoom);
+        const hitR = Math.max(24, N[i].r * 18 * userZoom);
         if (Math.hypot(clientX - sx, clientY - sy) <= hitR) {
           const clickedNode = N[i];
           if (fieldSel === clickedNode.id) {
@@ -988,21 +996,29 @@ void main(){
       tip.style.opacity = '0';
     }
 
-    function setFieldFocus(id: string) {
-      fieldSel = id;
-      const i = idIndex[id];
-      if (id === 'naresh') {
-        focusSet = new Set([i]);
-        galMode = 'area';
-        galNode = 'naresh';
-      } else if (PARENTS.has(byId[id].region) && id === byId[id].region) {
+    function setFieldFocus(rawId: string) {
+      const targetId = REGION_TO_HUB[rawId] || rawId;
+      const n = byId[targetId];
+      if (!n) return;
+
+      fieldSel = targetId;
+      const i = idIndex[targetId];
+      if (i === undefined) return;
+
+      const isParent = PARENTS.has(n.region) && (targetId === n.region || targetId === 'fast_nuces' || targetId === 'naresh');
+
+      if (targetId === 'naresh') {
         focusSet = new Set([i, ...(childrenIdx[i] || [])]);
         galMode = 'area';
-        galNode = id;
+        galNode = 'naresh';
+      } else if (isParent) {
+        focusSet = new Set([i, ...(childrenIdx[i] || [])]);
+        galMode = 'area';
+        galNode = targetId;
       } else {
         focusSet = new Set([i]);
         galMode = 'node';
-        galNode = id;
+        galNode = targetId;
       }
       setTabsOn();
       renderGallery();
@@ -1052,13 +1068,23 @@ void main(){
     backBtn.onclick = returnHome;
     if (spacer) spacer.onclick = returnHome;
 
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        returnHome();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+
     // ── Build Category Tabs ──
     function buildTabs() {
       tabsEl.innerHTML = '';
       const allBtn = document.createElement('div');
       allBtn.className = 't on';
       allBtn.innerHTML = '<i></i>ALL';
-      allBtn.onclick = () => goHome();
+      allBtn.onclick = (e) => {
+        e.stopPropagation();
+        goHome();
+      };
       tabsEl.appendChild(allBtn);
 
       REG.forEach(([r, lbl]) => {
@@ -1067,10 +1093,12 @@ void main(){
         d.dataset.r = r;
         const col = COLOR[r];
         d.innerHTML = '<i style="background:' + col + ';box-shadow:0 0 6px ' + col + '"></i>' + lbl;
-        d.onclick = () => {
+        d.onclick = (e) => {
+          e.stopPropagation();
           hoverId = null;
           hideTip();
-          setFieldFocus(r);
+          const targetHub = REGION_TO_HUB[r] || r;
+          setFieldFocus(targetHub);
         };
         tabsEl.appendChild(d);
       });
@@ -1096,6 +1124,8 @@ void main(){
         return;
       }
       const n = byId[galNode];
+      if (!n) return;
+
       const acc = COLOR[n.region];
       galleryEl.style.setProperty('--cc', acc);
       galleryEl.classList.add('show');
@@ -1110,21 +1140,24 @@ void main(){
         : E.filter((e) => e[0] === n.id || e[1] === n.id).map((e) => byId[e[0] === n.id ? e[1] : e[0]]);
 
       const cardsHTML = items.map((m: any) => `
-        <div class="gcard" data-go="${m.id}" style="--cc:${COLOR[m.region]}">
-          <span class="gdot"></span>
-          <div class="gcc"><span class="gcn">${m.name}</span><span class="gcs">${m.kicker || RLAB[m.region]}</span></div>
+        <div class="gcard" data-go="${m.id}" style="--cc:${COLOR[m.region]}" title="${m.name}">
+          <span class="gdot" style="background:${COLOR[m.region]};box-shadow:0 0 6px ${COLOR[m.region]}"></span>
+          <div class="gcc">
+            <span class="gcn">${m.name}</span>
+            <span class="gcs">${m.kicker || RLAB[m.region]}</span>
+          </div>
           <span class="gco">→</span>
         </div>
       `).join('');
 
       galleryEl.innerHTML = `
         <button class="gback" data-back="1">↖ Volver al mapa</button>
-        <div class="gtag">${RLAB[n.region]} · ${n.name}</div>
-        <h2 style="font-family:var(--display);font-size:32px;font-weight:800;margin:12px 0 8px;line-height:1.05;">${n.name}</h2>
+        <div class="ghead"><i style="background:${acc};box-shadow:0 0 6px ${acc}"></i><span class="gtag">${RLAB[n.region]}</span></div>
+        <div class="gname">${n.name}</div>
         <div class="gdesc">${n.sum || n.body || ''}</div>
         ${enterCTA}
-        <div class="gcaplab2">Nodos Conectados (${items.length})</div>
-        <div class="gcardgrid">${cardsHTML}</div>
+        <div class="gcaplab">Proyectos Relacionados (${items.length})</div>
+        ${cardsHTML}
       `;
 
       galleryEl.querySelectorAll('[data-enter]').forEach((btn: any) => {
@@ -1140,6 +1173,7 @@ void main(){
 
     // ── Full Editorial Page (#page / #doc) ──
     function buildPage(n: any) {
+      if (!n) return;
       const acc = COLOR[n.region];
       document.documentElement.style.setProperty('--acc', acc);
       pageEl.style.setProperty('--cc', acc);
@@ -1439,6 +1473,7 @@ void main(){
     return () => {
       cancelAnimationFrame(animId);
       window.removeEventListener('resize', resize);
+      window.removeEventListener('keydown', handleKeyDown);
     };
   }, [theme]);
 
