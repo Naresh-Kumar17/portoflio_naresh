@@ -56,6 +56,96 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    id: 'svm-handwritten-digits',
+    title: 'SVM Handwritten Digits Recognition',
+    shortDescription:
+      'Support Vector Machine classifier for handwritten digit recognition with kernel optimization, hyperparameter tuning, and multiclass decision boundary analysis.',
+    longDescription:
+      'Trained and evaluated Support Vector Machine (SVM) models on standard handwritten digit datasets. Explored linear, polynomial, and RBF kernels, optimizing regularization parameter C and kernel coefficient gamma. Implemented confusion matrix diagnostics, ROC curves, and cross-validation pipelines.',
+    category: 'machine-learning',
+    status: 'completed',
+    featured: true,
+    mainFeatured: true,
+    technologies: ['Python', 'scikit-learn', 'SVM', 'NumPy', 'Matplotlib'],
+    github: 'https://github.com/Naresh-Kumar17/svm-handwritten-digits',
+    insights: [
+      'RBF kernel outperformed linear kernels on non-linear pixel boundary separations',
+      'Systematic grid search over C and gamma yielded superior generalizability on unseen test sets',
+    ],
+    learnings: [
+      'Deep understanding of support vectors, margins, and kernel tricks',
+      'Multiclass strategies: One-vs-Rest (OvR) vs One-vs-One (OvO)',
+      'Pixel normalization and feature scaling impact on SVM convergence',
+    ],
+    date: '2025',
+  },
+  {
+    id: 'air-quality-forecasting',
+    title: 'Air Quality Forecasting',
+    shortDescription:
+      'Time-series forecasting model analyzing particulate matter and meteorological trends to predict air quality indices with trend decomposition.',
+    longDescription:
+      'Developed an end-to-end time-series analysis framework predicting air quality and pollutant concentrations. Handled time-series interpolation, seasonal decomposition (STL), stationarity checks (ADF tests), and predictive regression modeling to forecast hazardous AQI episodes.',
+    category: 'data-analysis',
+    status: 'completed',
+    featured: true,
+    technologies: ['Python', 'pandas', 'Time-Series', 'Matplotlib', 'Predictive Modeling'],
+    github: 'https://github.com/Naresh-Kumar17/Air_Quality_Forcasating-',
+    insights: [
+      'Identified strong diurnal and seasonal cycles strongly correlated with temperature inversions',
+      'Lagged rolling window features significantly improved short-term particulate matter predictions',
+    ],
+    learnings: [
+      'Handling temporal data gaps, resampling frequencies, and rolling statistics',
+      'Time-series cross-validation without temporal data leakage',
+    ],
+    date: '2025',
+  },
+  {
+    id: 'road-accident-severity',
+    title: 'Road Accident Severity Prediction',
+    shortDescription:
+      'Machine learning framework predicting traffic collision severity based on environmental conditions, road geometry, and temporal factors.',
+    longDescription:
+      'Built a risk prediction pipeline analyzing road accident records. Tackled severe class imbalance using SMOTE and class-weighting, engineered spatial/temporal interaction terms, and trained gradient boosted decision trees and ensemble classifiers to predict injury severity levels.',
+    category: 'machine-learning',
+    status: 'completed',
+    featured: true,
+    technologies: ['Python', 'pandas', 'scikit-learn', 'Feature Engineering', 'Classification'],
+    github: 'https://github.com/Naresh-Kumar17/Road-Accident-Severity',
+    insights: [
+      'Lighting conditions, weather severity, and junction geometry emerged as primary predictors of severe injury',
+      'Threshold tuning on class probabilities achieved significantly higher recall on critical severity incidents',
+    ],
+    learnings: [
+      'Techniques for high-dimensional categorical encoding and target encoding',
+      'Balancing precision and recall trade-offs for high-consequence safety predictions',
+    ],
+    date: '2025',
+  },
+  {
+    id: 'cosmos-portfolio',
+    title: 'Interactive 3D Cosmos Portfolio',
+    shortDescription:
+      'Nico Borja-inspired 3D constellation universe built from scratch with pure mathematical perspective projection, particle nebula clouds, and responsive editorial drawer.',
+    longDescription:
+      'Designed and developed this portfolio to showcase data science research and software projects. Implemented a custom 3D perspective projection engine on HTML5 Canvas, Box-Muller Gaussian volumetric nebula haze, travelling photon bezier curves, and smooth camera physics.',
+    category: 'visualization',
+    status: 'completed',
+    featured: true,
+    technologies: ['React 19', 'TypeScript', 'HTML5 Canvas', '3D Geometry', 'Vite'],
+    github: 'https://github.com/Naresh-Kumar17/protoflio_naresh',
+    insights: [
+      'Vanilla Canvas 2D engine with hardware-accelerated CSS glassmorphism offers superior framerates and memory efficiency over heavy WebGL frameworks',
+      'Selective progressive disclosure of labels creates a clean astronomical aesthetic without cognitive visual clutter',
+    ],
+    learnings: [
+      '3D camera projection mathematics: yaw, pitch, perspective divide, and coordinate transformations',
+      'Optimizing canvas draw loops and avoiding garbage collection overhead during 60 FPS animation',
+    ],
+    date: '2026',
+  },
+  {
     id: 'exploratory-data-analysis',
     title: 'Exploratory Data Analysis Pipeline',
     shortDescription:
@@ -64,84 +154,9 @@ export const projects: Project[] = [
       'Built a structured exploratory data analysis pipeline using Python, pandas, and visualization libraries. The project walks through data loading, cleaning, statistical summaries, distribution analysis, correlation exploration, and visual storytelling.',
     category: 'data-analysis',
     status: 'in-progress',
-    featured: true,
-    mainFeatured: true,
+    featured: false,
     technologies: ['Python', 'pandas', 'NumPy', 'Matplotlib', 'Seaborn'],
-    insights: [
-      'Identified key correlations between features through systematic analysis',
-      'Developed reusable functions for common data quality checks',
-    ],
-    learnings: [
-      'The importance of understanding data distributions before modeling',
-      'How to handle missing values with context-appropriate strategies',
-      'Creating clear, informative visualizations for different audiences',
-    ],
-    limitations: [
-      'Limited to single-dataset analysis — could be extended to comparative studies',
-      'Visualization choices could be expanded with interactive libraries',
-    ],
-    caseStudy: {
-      problemStatement:
-        'Understanding raw data is the critical first step in any data science project. This project builds a systematic approach to exploring, cleaning, and visualizing datasets.',
-      goals: [
-        'Create a reusable EDA workflow',
-        'Practice data cleaning techniques',
-        'Build clear, informative visualizations',
-        'Document findings and methodology',
-      ],
-      methodology:
-        'Followed a structured approach: data loading → initial inspection → cleaning → univariate analysis → bivariate analysis → correlation analysis → summary of findings.',
-      dataQuality:
-        'Addressed missing values, duplicates, and inconsistent data types. Documented each cleaning decision and its rationale.',
-      codeSnippets: [
-        {
-          title: 'Data Quality Assessment',
-          language: 'python',
-          code: `import pandas as pd
-import numpy as np
-
-def assess_data_quality(df: pd.DataFrame) -> dict:
-    """Assess data quality metrics for a DataFrame."""
-    return {
-        'total_rows': len(df),
-        'total_columns': len(df.columns),
-        'missing_values': df.isnull().sum().to_dict(),
-        'missing_pct': (df.isnull().sum() / len(df) * 100).round(2).to_dict(),
-        'duplicates': df.duplicated().sum(),
-        'dtypes': df.dtypes.value_counts().to_dict(),
-    }`,
-          explanation:
-            'A reusable function that provides a quick overview of data quality issues, helping prioritize cleaning efforts.',
-        },
-      ],
-    },
     date: '2024',
-  },
-  {
-    id: 'data-visualization-gallery',
-    title: 'Data Visualization Gallery',
-    shortDescription:
-      'A collection of publication-quality visualizations exploring different chart types, color palettes, and storytelling techniques.',
-    category: 'visualization',
-    status: 'in-progress',
-    featured: true,
-    technologies: ['Python', 'Matplotlib', 'Seaborn'],
-    learnings: [
-      'How chart type choice affects data interpretation',
-      'The role of color in accessible data communication',
-    ],
-    date: '2024',
-  },
-  {
-    id: 'ml-classification-intro',
-    title: 'Introduction to Classification',
-    shortDescription:
-      'Learning the fundamentals of classification algorithms by implementing and comparing models on structured datasets.',
-    category: 'machine-learning',
-    status: 'planned',
-    featured: true,
-    technologies: ['Python', 'scikit-learn', 'pandas', 'NumPy'],
-    date: '2025',
   },
 ];
 

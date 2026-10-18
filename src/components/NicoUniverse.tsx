@@ -5,6 +5,7 @@ import './NicoUniverse.css';
 /* ── Naresh Kumar Data Science Constellation Dataset ── */
 const NARESH_DB = {
   N: [
+    /* ── CENTER HUB: NARESH ── */
     {
       id: "naresh",
       name: "Naresh",
@@ -15,68 +16,372 @@ const NARESH_DB = {
       z: 0,
       kicker: "Undergraduate Data Science Researcher",
       links: [
-        ["Explore Academic Foundations · FAST-NUCES", "#/fast_nuces"],
-        ["GitHub Repository", "https://github.com/Naresh-Kumar17"]
+        ["Explore Academic Education · FAST-NUCES", "#/education"],
+        ["GitHub · Naresh-Kumar17", "https://github.com/Naresh-Kumar17"],
+        ["Portfolio Repository", "https://github.com/Naresh-Kumar17/protoflio_naresh"]
       ],
-      sum: "Data Science undergraduate at FAST-NUCES Karachi turning statistical pipelines into empirical decisions.",
-      body: "Pursuing BS Data Science at National University of Computer and Emerging Sciences (FAST-NUCES) Karachi (2025–2029). Focused on exploratory data pipelines, statistical modeling, machine learning benchmarks, and visual narratives. Understanding the math first, then designing computational systems that reveal insights in complex data.",
+      sum: "Data Science undergraduate at FAST-NUCES Karachi turning statistical pipelines and machine learning algorithms into empirical decisions.",
+      body: "Pursuing BS Data Science at National University of Computer and Emerging Sciences (FAST-NUCES) Karachi (2025–2029). Passionate about machine learning pipelines, time-series forecasting, statistical modeling, and interactive visual computing. Focused on mastering foundational theory first, then engineering reproducible computational systems that solve real-world problems.",
       cap: "Naresh Kumar · FAST-NUCES Karachi",
-      role: "Student, Data Scientist & Computational Thinker",
+      photo: "/profile.png",
+      role: "Student, Data Scientist & ML Practitioner",
       duration: "FAST-NUCES Karachi · 2025 → 2029",
-      impact: "Building modular, reproducible data pipelines and exploratory statistical frameworks.",
-      scope: "Rigorous coursework in computational statistics, linear algebra, algorithms, and practical machine learning using Python, pandas, NumPy, and scikit-learn.",
+      impact: "Designing robust machine learning classifiers, time-series forecasting models, and reproducible data pipelines.",
+      scope: "Core coursework in Machine Learning, Statistical Inference, Data Structures & Algorithms, Discrete Mathematics, Linear Algebra, and Calculus with practical implementations in Python, C++, and SQL.",
       skills: [
-        ["Python & Data Ecosystem", "core"],
-        ["Exploratory Data Analysis", "core"],
-        ["Machine Learning · Scikit-Learn", "grew"],
-        ["Statistical Inference", "grew"],
+        ["Python & Data Science Ecosystem", "core"],
+        ["Support Vector Machines (SVM)", "core"],
+        ["Time-Series Forecasting", "core"],
+        ["Exploratory Data Analysis (EDA)", "core"],
         ["SQL & Relational Schemas", "core"]
       ],
-      story: "My journey started with a fascination for patterns in data and code. Studying Data Science at FAST-NUCES provides the mathematical rigor, algorithmic thinking, and empirical experimentation needed to tackle real-world data challenges."
+      story: "My journey started with a fascination for patterns in data and algorithmic logic. Studying Data Science at FAST-NUCES provides the rigorous mathematical backing, empirical experimentation, and software design skills needed to build production-grade intelligent systems."
+    },
+    {
+      id: "about_me",
+      name: "About Naresh",
+      region: "entry",
+      x: -2.3,
+      y: 1.6,
+      r: 0.75,
+      z: 0.2,
+      kicker: "Background & Aspirations",
+      sum: "Data Science undergraduate, machine learning developer, and computational thinker.",
+      body: "I am an undergraduate student in Data Science at FAST-NUCES Karachi (Batch 2025–2029). My focus spans applied machine learning, computer vision benchmarks, statistical inference, and fullstack data applications. I enjoy building systems from first principles — understanding model mathematics, mitigating bias, handling edge cases, and delivering clear visual interpretations.",
+      cap: "Naresh Kumar · Biography",
+      photo: "/profile.png",
+      role: "Undergraduate Researcher",
+      duration: "2025 → Present",
+      impact: "Developed open-source projects across handwritten digit recognition, environmental forecasting, and road safety risk prediction.",
+      skills: [
+        ["Machine Learning Architecture", "core"],
+        ["Empirical Research", "core"],
+        ["Data Storytelling", "core"],
+        ["FAST-NUCES Karachi", "core"]
+      ]
     },
     {
       id: "contacto",
       name: "Let's Connect",
       region: "entry",
-      x: -2.2,
-      y: 1.4,
-      r: 0.55,
-      z: 0.1,
+      x: -2.4,
+      y: -1.2,
+      r: 0.6,
+      z: -0.1,
       kicker: "Contact & Collaboration",
-      sum: "Open for discussions, research collaborations, and internships.",
-      body: "Interested in data science pipelines, applied machine learning, or research projects? Reach out through any channel below.",
-      cap: "Contact",
+      sum: "Open for discussions, research collaborations, internships, and data science builds.",
+      body: "Interested in machine learning models, time-series forecasting, or data engineering pipelines? Reach out directly via email or GitHub.",
+      cap: "Connect with Naresh",
       links: [
-        ["Email · vishnaninaresh8@gmail.com", "mailto:vishnaninaresh8@gmail.com"],
+        ["Email · wdnaresh@gmail.com", "mailto:wdnaresh@gmail.com"],
         ["GitHub · Naresh-Kumar17", "https://github.com/Naresh-Kumar17"],
         ["Portfolio Repository", "https://github.com/Naresh-Kumar17/protoflio_naresh"],
         ["FAST-NUCES Karachi", "https://khi.nu.edu.pk/"]
       ]
     },
+
+    /* ── DOMAIN ①: MACHINE LEARNING (AI) ── */
     {
-      id: "collaborate",
-      name: "Project Brief",
-      region: "entry",
-      x: -2.4,
-      y: -1.0,
-      r: 0.55,
-      z: -0.1,
-      kicker: "Collaborations",
-      sum: "Data exploration, statistical modeling, and interactive dashboards.",
-      body: "Available for research projects, open-source data science tools, and end-to-end data pipeline builds.",
-      cap: "Work Together"
+      id: "ai",
+      name: "Machine Learning",
+      region: "ai",
+      x: -5.6,
+      y: 3.2,
+      r: 1.5,
+      z: 0.3,
+      kicker: "Domain ① · Model Engineering & Applied Classification",
+      links: [
+        ["SVM Handwritten Digits Repository", "https://github.com/Naresh-Kumar17/svm-handwritten-digits"],
+        ["Road Accident Severity Repository", "https://github.com/Naresh-Kumar17/Road-Accident-Severity"]
+      ],
+      sum: "Formulating machine learning pipelines, feature transformation, kernel optimization, and benchmark evaluation.",
+      body: "Machine learning requires more than just calling fit() and predict(). It demands disciplined feature engineering, cross-validation, hyperparameter tuning, and clear diagnostic metrics (ROC-AUC, Precision-Recall, Confusion Matrices) to prevent data leakage and overfitting.",
+      role: "Model Developer & Machine Learning Practitioner",
+      duration: "2024 → ongoing",
+      impact: "Designing robust classification pipelines with verified benchmarks.",
+      scope: "Working with scikit-learn, Support Vector Machines, ensemble methods, and classification diagnostics.",
+      skills: [
+        ["Support Vector Machines (SVM)", "core"],
+        ["Supervised Learning", "core"],
+        ["Feature Engineering", "core"],
+        ["Model Evaluation & Metrics", "core"]
+      ]
     },
     {
+      id: "svm_digits",
+      name: "SVM Digit Recognition",
+      region: "ai",
+      x: -8.2,
+      y: 4.8,
+      r: 0.9,
+      z: 0.4,
+      kicker: "Featured Project · Computer Vision",
+      sum: "Support Vector Machine classifier for handwritten digit recognition with kernel optimization.",
+      body: "Trained and evaluated Support Vector Machine (SVM) models on standard handwritten digit datasets. Explored linear, polynomial, and RBF kernels, optimizing regularization parameter C and kernel coefficient gamma. Implemented confusion matrix diagnostics, ROC curves, and cross-validation pipelines to achieve robust multiclass classification accuracy.",
+      cap: "SVM Handwritten Digit Classification",
+      url: "https://github.com/Naresh-Kumar17/svm-handwritten-digits",
+      urlLabel: "View GitHub Repository ↗",
+      role: "Lead Developer",
+      duration: "2025 · Completed",
+      impact: "High-accuracy multiclass digit classification with optimized RBF kernel boundaries.",
+      skills: [
+        ["Support Vector Machines (SVM)", "core"],
+        ["Scikit-Learn Workflows", "core"],
+        ["Hyperparameter Tuning", "core"],
+        ["Multiclass Classification", "core"]
+      ]
+    },
+    {
+      id: "accident_severity",
+      name: "Road Accident Severity",
+      region: "ai",
+      x: -7.8,
+      y: 1.8,
+      r: 0.85,
+      z: 0.1,
+      kicker: "Featured Project · Predictive Risk",
+      sum: "Machine learning framework predicting traffic collision severity based on environmental and road geometry factors.",
+      body: "Built a risk prediction pipeline analyzing road accident records. Tackled severe class imbalance using SMOTE and class-weighting, engineered spatial/temporal interaction terms, and trained decision tree ensembles to predict injury severity levels.",
+      cap: "Road Accident Severity Prediction",
+      url: "https://github.com/Naresh-Kumar17/Road-Accident-Severity",
+      urlLabel: "View GitHub Repository ↗",
+      role: "ML Researcher & Developer",
+      duration: "2025 · Completed",
+      impact: "Effective recall on critical accident severity cases despite severe data skew.",
+      skills: [
+        ["Feature Engineering", "core"],
+        ["Class Imbalance (SMOTE)", "core"],
+        ["Ensemble Classifiers", "core"],
+        ["Risk Modeling", "core"]
+      ]
+    },
+    {
+      id: "scikit_toolkit",
+      name: "Scikit Toolkit",
+      region: "ai",
+      x: -3.4,
+      y: 4.8,
+      r: 0.75,
+      z: 0.2,
+      kicker: "Model Engineering",
+      sum: "Modular preprocessing pipelines, transformers, and cross-validation harnesses.",
+      body: "Reusable scikit-learn Pipeline abstractions for imputation, scaling, one-hot encoding, and hyperparameter search.",
+      cap: "Scikit-Learn Modular Toolkit",
+      skills: [
+        ["ColumnTransformer", "core"],
+        ["GridSearchCV & Optuna", "grew"],
+        ["Pipeline Architecture", "core"]
+      ]
+    },
+
+    /* ── DOMAIN ②: DATA SCIENCE & EDA ── */
+    {
+      id: "data",
+      name: "Data Science & EDA",
+      region: "data",
+      x: -5.8,
+      y: -2.8,
+      r: 1.45,
+      z: -0.2,
+      kicker: "Domain ② · Exploratory Analysis & Forecasting",
+      links: [
+        ["Air Quality Forecasting Repository", "https://github.com/Naresh-Kumar17/Air_Quality_Forcasating-"],
+        ["Portfolio Repository", "https://github.com/Naresh-Kumar17/protoflio_naresh"]
+      ],
+      sum: "Raw data in; verified distributions, clean features, and confident forecasting out.",
+      body: "Deep exploratory data analysis using Python, pandas, NumPy, Matplotlib, and Seaborn. Systematic profiling of distributions, correlations, outliers, missing value patterns, and time-series behavior.",
+      role: "Data Science Researcher & Pipeline Developer",
+      duration: "2024 → ongoing",
+      impact: "Building modular, reproducible data analysis workflows with automated quality checks.",
+      scope: "From raw unstructured CSV/SQL datasets to cleaned, standardized, and richly visualized data assets ready for modeling.",
+      skills: [
+        ["pandas DataFrames", "core"],
+        ["NumPy Vectorization", "core"],
+        ["Data Quality Assessment", "core"],
+        ["Time-Series Analysis", "core"]
+      ]
+    },
+    {
+      id: "air_quality",
+      name: "Air Quality Forecasting",
+      region: "data",
+      x: -3.8,
+      y: -4.6,
+      r: 0.9,
+      z: 0.2,
+      kicker: "Featured Project · Time-Series",
+      sum: "Time-series forecasting model analyzing particulate matter and meteorological trends to predict air quality indices.",
+      body: "Developed an end-to-end time-series analysis framework predicting air quality and pollutant concentrations. Handled time-series interpolation, seasonal decomposition (STL), stationarity checks (ADF tests), and predictive regression modeling to forecast hazardous AQI episodes.",
+      cap: "Air Quality Time-Series Forecasting",
+      url: "https://github.com/Naresh-Kumar17/Air_Quality_Forcasating-",
+      urlLabel: "View GitHub Repository ↗",
+      role: "Time-Series Analyst & Developer",
+      duration: "2025 · Completed",
+      impact: "Accurate short-term forecasting of particulate matter trends incorporating meteorological lags.",
+      skills: [
+        ["Time-Series Forecasting", "core"],
+        ["Pandas & NumPy", "core"],
+        ["Trend & Seasonality", "core"],
+        ["Environmental Analytics", "core"]
+      ]
+    },
+    {
+      id: "eda_pipeline",
+      name: "EDA Pipeline",
+      region: "data",
+      x: -6.4,
+      y: -5.2,
+      r: 0.8,
+      z: -0.3,
+      kicker: "Data Science",
+      sum: "A comprehensive exploratory data analysis workflow analyzing real-world datasets.",
+      body: "Built a structured exploratory data analysis pipeline using Python, pandas, and visualization libraries. The project walks through automated data ingestion, cleaning, missing value profiling, statistical summaries, distribution analysis, and correlation exploration.",
+      cap: "EDA Pipeline Architecture",
+      url: "https://github.com/Naresh-Kumar17/protoflio_naresh",
+      urlLabel: "View on GitHub ↗",
+      role: "Lead Developer",
+      duration: "2024 · Active",
+      skills: [
+        ["Python", "core"],
+        ["pandas", "core"],
+        ["Matplotlib & Seaborn", "core"],
+        ["Statistical Profiling", "core"]
+      ]
+    },
+    {
+      id: "data_quality",
+      name: "Data Quality Engine",
+      region: "data",
+      x: -8.0,
+      y: -1.6,
+      r: 0.65,
+      z: 0.1,
+      kicker: "Data Reliability",
+      sum: "Automated assertion testing and data quality profiling scripts.",
+      body: "Validating schema constraints, null thresholds, value ranges, and distribution shifts before ingestion into analytical models.",
+      skills: [["Schema Validation", "core"], ["Assertion Testing", "core"]]
+    },
+    {
+      id: "viz_gallery",
+      name: "Visualization Gallery",
+      region: "data",
+      x: -8.2,
+      y: -3.6,
+      r: 0.6,
+      z: -0.2,
+      kicker: "Visual Storytelling",
+      sum: "Publication-grade charts exploring distribution, correlation, and perceptual design.",
+      body: "Exploring how chart type choice, typography, and perceptual color palettes impact data interpretation. Comparing heatmaps, violin plots, faceted histograms, and scatter plots.",
+      skills: [["Visual Encoding", "core"], ["Information Design", "core"]]
+    },
+
+    /* ── DOMAIN ③: PROJECTS & SYSTEMS ── */
+    {
+      id: "growth",
+      name: "Projects",
+      region: "growth",
+      x: 6.6,
+      y: -1.8,
+      r: 1.5,
+      z: -0.2,
+      kicker: "Domain ③ · Software & Applied Machine Learning",
+      links: [
+        ["Portfolio Repository", "https://github.com/Naresh-Kumar17/protoflio_naresh"],
+        ["GitHub Profile", "https://github.com/Naresh-Kumar17"]
+      ],
+      sum: "Fullstack data science applications, interactive 3D visualizations, and SQL intelligence.",
+      body: "Connecting machine learning models and data pipelines to interactive software systems. Building robust web architectures, SQL analytical layers, and visual dashboards.",
+      role: "Software & Data Science Developer",
+      duration: "2024 → ongoing",
+      impact: "Delivering end-to-end data applications and interactive computing interfaces.",
+      skills: [
+        ["Fullstack Data Applications", "core"],
+        ["SQL Analytics & Schemas", "core"],
+        ["Interactive Visual Systems", "core"],
+        ["Web Performance", "core"]
+      ]
+    },
+    {
+      id: "cosmos_portfolio",
+      name: "3D Cosmos Portfolio",
+      region: "growth",
+      x: 8.6,
+      y: 0.4,
+      r: 0.95,
+      z: 0.2,
+      kicker: "Featured Project · Interactive Web",
+      sum: "Custom mathematical 3D constellation cosmos engine built with React 19, TypeScript, and HTML5 Canvas.",
+      body: "Designed and developed this portfolio to showcase data science research and software projects. Implemented a custom 3D perspective projection engine on HTML5 Canvas, Box-Muller Gaussian volumetric nebula haze, travelling photon bezier curves, and smooth camera physics.",
+      cap: "Interactive 3D Cosmos Portfolio",
+      url: "https://github.com/Naresh-Kumar17/protoflio_naresh",
+      urlLabel: "View GitHub Repository ↗",
+      role: "Frontend & Canvas Architect",
+      duration: "2026 · Active",
+      impact: "High-performance 60 FPS interactive 3D graph universe with zero external 3D engine overhead.",
+      skills: [
+        ["React 19 & TypeScript", "core"],
+        ["HTML5 Canvas 2D Engine", "core"],
+        ["3D Perspective Geometry", "core"],
+        ["Performance Optimization", "core"]
+      ]
+    },
+    {
+      id: "sql_analytics",
+      name: "SQL Analytics Lab",
+      region: "growth",
+      x: 4.8,
+      y: 0.4,
+      r: 0.85,
+      z: 0.2,
+      kicker: "Relational Intelligence",
+      sum: "Complex aggregations, window functions, and schema normalization.",
+      body: "Advanced SQL queries leveraging CTEs, window functions (ROW_NUMBER, LAG, LEAD), and multi-table joins to analyze transactional databases.",
+      cap: "SQL Analytics & Schema Design",
+      skills: [
+        ["PostgreSQL / MySQL", "core"],
+        ["Window Functions", "core"],
+        ["CTEs & Indexing", "core"]
+      ]
+    },
+    {
+      id: "kpi_dashboards",
+      name: "Decision Dashboards",
+      region: "growth",
+      x: 7.6,
+      y: -4.6,
+      r: 0.75,
+      z: -0.2,
+      kicker: "Visual Reporting",
+      sum: "Interactive KPI reporting dashboards for data monitoring.",
+      body: "Designing visual layouts that prioritize key decision variables without clutter or cognitive overhead.",
+      skills: [["Interactive Dashboards", "core"], ["Visual Hierarchy", "core"]]
+    },
+    {
+      id: "stats_inference",
+      name: "Inference & A/B",
+      region: "growth",
+      x: 4.4,
+      y: -2.8,
+      r: 0.7,
+      z: 0.1,
+      kicker: "Statistical Inference",
+      sum: "Hypothesis testing, p-values, confidence intervals, and bootstrap tests.",
+      body: "Rigorous statistical inference: two-sample t-tests, Mann-Whitney U tests, chi-square tests, and bootstrap confidence intervals to validate differences.",
+      skills: [["Hypothesis Testing", "core"], ["Bootstrap Methods", "core"]]
+    },
+
+    /* ── DOMAIN ④: EDUCATION (FAST-NUCES KARACHI) ── */
+    {
       id: "fast_nuces",
-      name: "FAST-NUCES",
+      name: "Education",
       region: "special",
       x: 5.2,
       y: 3.4,
       r: 2.3,
       z: 0.4,
-      kicker: "Flagship Academic Foundation · BS Data Science",
-      sum: "National University of Computer & Emerging Sciences — Premier computing education.",
-      body: "FAST-NUCES Karachi is Pakistan's premier computing university. The BS Data Science program blends deep computer science theory, discrete mathematics, linear algebra, probability, data structures, and hands-on machine learning.",
+      kicker: "Flagship Academic Foundation · FAST-NUCES",
+      sum: "BS Data Science at National University of Computer & Emerging Sciences (FAST-NUCES Karachi, 2025–2029).",
+      body: "FAST-NUCES Karachi is Pakistan's premier computing university. The BS Data Science program blends deep computer science theory, discrete mathematics, linear algebra, multivariable calculus, probability, data structures, and hands-on machine learning.",
       cap: "FAST-NUCES Karachi Campus",
       url: "https://khi.nu.edu.pk/",
       urlLabel: "FAST-NUCES Karachi Portal ↗",
@@ -100,417 +405,6 @@ const NARESH_DB = {
         ["Data Structures & Algorithms", "core"],
         ["Probability & Statistics", "core"]
       ]
-    },
-    {
-      id: "ai",
-      name: "Machine Learning",
-      region: "ai",
-      x: -5.6,
-      y: 3.2,
-      r: 1.5,
-      z: 0.3,
-      kicker: "Domain ① · Model Training, Evaluation & Benchmarking",
-      links: [["Classification Benchmark Lab", "#/classification_lab"]],
-      sum: "Formulating machine learning pipelines, feature transformation, and evaluation metrics.",
-      body: "Machine learning requires more than just calling fit() and predict(). It requires systematic feature engineering, cross-validation, hyperparameter tuning, and clear metric diagnostics to prevent data leakage and overfitting.",
-      role: "Model Developer & Machine Learning Practitioner",
-      duration: "2024 → ongoing",
-      impact: "Designing robust classification and regression pipelines with reproducible benchmarks.",
-      scope: "Working with scikit-learn, XGBoost, feature pipelines, regression modeling, and classification diagnostics (ROC-AUC, Precision-Recall, F1-score).",
-      skills: [
-        ["Scikit-Learn Workflows", "core"],
-        ["Supervised Learning", "core"],
-        ["Feature Engineering", "grew"],
-        ["Model Evaluation & Metrics", "grew"]
-      ]
-    },
-    {
-      id: "classification_lab",
-      name: "Classification Lab",
-      region: "ai",
-      x: -8.0,
-      y: 4.6,
-      r: 0.75,
-      z: 0.4,
-      kicker: "Machine Learning",
-      sum: "Comparative benchmark across Logistic Regression, Random Forests, and SVMs.",
-      body: "A structured machine learning benchmark evaluating classification performance across multi-class datasets. Evaluates decision boundaries, confusion matrices, and precision-recall trade-offs.",
-      cap: "Classification Benchmarks",
-      role: "Lead Experimenter",
-      duration: "2024–2025",
-      impact: "Systematic comparison of 5 classification architectures on structured tabular data.",
-      skills: [
-        ["Logistic Regression", "core"],
-        ["Random Forests", "grew"],
-        ["Cross-Validation", "core"]
-      ]
-    },
-    {
-      id: "network",
-      name: "Graph Analytics",
-      region: "ai",
-      x: -7.8,
-      y: 1.8,
-      r: 0.7,
-      z: 0.1,
-      kicker: "Graph Intelligence",
-      sum: "Network graphs, centrality analysis, and topological data structures.",
-      body: "Exploring graphs to discover relationships, community clusters, and central bridge nodes across connected datasets.",
-      cap: "Graph Network Visualization",
-      role: "Graph Analytics Developer",
-      duration: "2025",
-      skills: [
-        ["NetworkX & Graph Theory", "grew"],
-        ["Centrality Metrics", "core"],
-        ["D3.js Graph Visuals", "grew"]
-      ]
-    },
-    {
-      id: "scikit_toolkit",
-      name: "Scikit Toolkit",
-      region: "ai",
-      x: -3.4,
-      y: 4.8,
-      r: 0.75,
-      z: 0.2,
-      kicker: "Model Engineering",
-      sum: "Modular preprocessing pipelines, transformers, and cross-validation harnesses.",
-      body: "Reusable scikit-learn Pipeline abstractions for imputation, scaling, one-hot encoding, and hyperparameter search.",
-      cap: "Scikit-Learn Modular Toolkit",
-      skills: [
-        ["ColumnTransformer", "core"],
-        ["GridSearchCV & Optuna", "grew"],
-        ["Pipeline Architecture", "core"]
-      ]
-    },
-    {
-      id: "growth",
-      name: "Analytics & BI",
-      region: "growth",
-      x: 6.6,
-      y: -1.8,
-      r: 1.5,
-      z: -0.2,
-      kicker: "Domain ② · Business Intelligence & Statistical Inference",
-      sum: "Transforming raw business records into actionable KPI metrics and decisions.",
-      body: "Analytics bridges data science and decision making. Connecting SQL extraction, cohorts, funnel metrics, and statistical hypothesis testing to evaluate performance and user behavior.",
-      role: "Data Analyst & Metrics Architect",
-      duration: "2024 → ongoing",
-      impact: "Designing clean SQL reporting layers and reproducible cohort retention analyses.",
-      skills: [
-        ["SQL Querying & Joins", "core"],
-        ["Cohort Analysis", "core"],
-        ["A/B Testing Foundations", "grew"],
-        ["KPI Dashboard Design", "core"]
-      ]
-    },
-    {
-      id: "sql_analytics",
-      name: "SQL Analytics Lab",
-      region: "growth",
-      x: 4.8,
-      y: 0.4,
-      r: 0.85,
-      z: 0.2,
-      kicker: "Relational Intelligence",
-      sum: "Complex aggregations, window functions, and schema normalization.",
-      body: "Advanced SQL queries leveraging CTEs, window functions (ROW_NUMBER, LAG, LEAD), and multi-table joins to analyze transactional databases.",
-      cap: "SQL Analytics & Schema Design",
-      skills: [
-        ["PostgreSQL / MySQL", "core"],
-        ["Window Functions", "core"],
-        ["CTEs & Indexing", "grew"]
-      ]
-    },
-    {
-      id: "kpi_dashboards",
-      name: "Decision Dashboards",
-      region: "growth",
-      x: 7.6,
-      y: -4.6,
-      r: 0.75,
-      z: -0.2,
-      kicker: "Visual Reporting",
-      sum: "Interactive KPI reporting dashboards for data monitoring.",
-      body: "Designing visual layouts that prioritize key decision variables without clutter or cognitive overhead.",
-      cap: "KPI Reporting Suite",
-      skills: [
-        ["Interactive Dashboards", "core"],
-        ["Visual Hierarchy", "core"]
-      ]
-    },
-    {
-      id: "stats_inference",
-      name: "Inference & A/B",
-      region: "growth",
-      x: 4.4,
-      y: -2.8,
-      r: 0.7,
-      z: 0.1,
-      kicker: "Statistical Inference",
-      sum: "Hypothesis testing, p-values, confidence intervals, and power calculations.",
-      body: "Rigorous statistical inference: two-sample t-tests, Mann-Whitney U tests, chi-square tests, and bootstrap confidence intervals to validate differences.",
-      cap: "Hypothesis Testing Lab",
-      skills: [
-        ["Hypothesis Testing", "core"],
-        ["Bootstrap Methods", "grew"],
-        ["Confidence Intervals", "core"]
-      ]
-    },
-    {
-      id: "business_metrics",
-      name: "Business Metrics",
-      region: "growth",
-      x: 8.2,
-      y: 0.6,
-      r: 0.85,
-      z: 0.2,
-      kicker: "Empirical Metrics",
-      sum: "Customer lifetime value, churn probability, and engagement cohorts.",
-      body: "Modeling customer acquisition, retention curves, and revenue churn using survival curves and statistical distributions.",
-      skills: [
-        ["Retention Curves", "core"],
-        ["Cohort Metrics", "core"]
-      ]
-    },
-    {
-      id: "data_storytelling",
-      name: "Data Storytelling",
-      region: "growth",
-      x: 9.4,
-      y: -1.4,
-      r: 0.75,
-      z: -0.1,
-      kicker: "Communication",
-      sum: "Crafting narratives from data that non-technical stakeholders understand.",
-      body: "A technical analysis without a clear narrative fails to impact decisions. Translating statistical conclusions into clear, actionable prose.",
-      skills: [["Visual Narratives", "core"], ["Technical Writing", "core"]]
-    },
-    {
-      id: "predictive_modeling",
-      name: "Predictive Models",
-      region: "growth",
-      x: 5.4,
-      y: -4.8,
-      r: 0.65,
-      z: -0.3,
-      kicker: "Predictive Analytics",
-      sum: "Time-series forecasting and trend decomposition.",
-      body: "Exploring moving averages, exponential smoothing, and trend decomposition to model time-varying signals.",
-      skills: [["Time Series", "grew"], ["Trend Decomposition", "core"]]
-    },
-    {
-      id: "feature_eng",
-      name: "Feature Engineering",
-      region: "growth",
-      x: 9.2,
-      y: -3.4,
-      r: 0.7,
-      z: 0.0,
-      kicker: "Data Preprocessing",
-      sum: "Domain feature synthesis, target encoding, and outlier management.",
-      body: "Crafting domain-specific features that maximize model signal while minimizing variance and multicollinearity.",
-      skills: [["Feature Synthesis", "core"], ["Correlation Analysis", "core"]]
-    },
-    {
-      id: "ml_foundations",
-      name: "ML Foundations",
-      region: "growth",
-      x: 6.6,
-      y: -6.4,
-      r: 0.65,
-      z: -0.3,
-      kicker: "Core Theory",
-      sum: "The mathematical backbone of machine learning algorithms.",
-      body: "Cost functions, bias-variance tradeoff, regularization (L1/L2), and convex optimization principles.",
-      skills: [["Loss Functions", "core"], ["Regularization", "core"]]
-    },
-    {
-      id: "data",
-      name: "Data Science & EDA",
-      region: "data",
-      x: -5.8,
-      y: -2.8,
-      r: 1.45,
-      z: -0.2,
-      kicker: "Domain ③ · Exploratory Data Analysis & Visualization",
-      links: [["EDA Pipeline Case Study", "#/eda_pipeline"]],
-      sum: "Raw data in; verified distributions, clean features, and confident decisions out.",
-      body: "The core of my data science practice. Deep exploratory data analysis using Python, pandas, NumPy, Matplotlib, and Seaborn. Systematic profiling of distributions, correlations, outliers, and missing value patterns.",
-      role: "Data Science Researcher & Pipeline Developer",
-      duration: "2024 → ongoing",
-      impact: "Building modular, reproducible data analysis workflows with automated quality checks.",
-      scope: "From raw unstructured or messy CSV/SQL datasets to cleaned, standardized, and richly visualized data assets ready for modeling.",
-      skills: [
-        ["pandas DataFrames", "core"],
-        ["NumPy Vectorization", "core"],
-        ["Data Quality Assessment", "core"],
-        ["Seaborn & Matplotlib", "core"]
-      ]
-    },
-    {
-      id: "eda_pipeline",
-      name: "EDA Pipeline",
-      region: "data",
-      x: -3.6,
-      y: -4.4,
-      r: 0.95,
-      z: 0.2,
-      kicker: "Flagship Project · Data Science",
-      sum: "A comprehensive exploratory data analysis workflow analyzing real-world datasets.",
-      body: "Built a structured exploratory data analysis pipeline using Python, pandas, and visualization libraries. The project walks through automated data ingestion, cleaning, missing value profiling, statistical summaries, distribution analysis, correlation exploration, and visual storytelling.",
-      cap: "EDA Pipeline Architecture",
-      url: "https://github.com/Naresh-Kumar17/protoflio_naresh",
-      urlLabel: "View on GitHub ↗",
-      role: "Lead Developer & Analyst",
-      duration: "2024 · Active Project",
-      impact: "Standardized exploratory methodology adopted across multiple university data projects.",
-      objectives: [
-        "Create a reusable, modular EDA workflow in Python.",
-        "Systematize data cleaning decisions with clear rationale.",
-        "Produce publication-quality visualizations for distribution and correlation analysis."
-      ],
-      impacts: [
-        "Reusable assess_data_quality() function reporting missingness, duplicates, and type mismatches.",
-        "Comprehensive visualization suite handling univariate and bivariate distributions.",
-        "Clean, well-documented Jupyter notebook architecture."
-      ],
-      skills: [
-        ["Python", "core"],
-        ["pandas", "core"],
-        ["Matplotlib & Seaborn", "core"],
-        ["Statistical Profiling", "core"]
-      ]
-    },
-    {
-      id: "viz_gallery",
-      name: "Visualization Gallery",
-      region: "data",
-      x: -6.4,
-      y: -5.2,
-      r: 0.8,
-      z: -0.3,
-      kicker: "Data Visualization",
-      sum: "A collection of publication-grade visualizations exploring chart types and color palettes.",
-      body: "Exploring how chart type choice, typography, and perceptual color palettes impact data interpretation. Comparing heatmaps, violin plots, faceted histograms, and scatter plots.",
-      cap: "Visual Design & Perception",
-      skills: [
-        ["Visual Encoding", "core"],
-        ["Color Perception", "core"],
-        ["Information Design", "grew"]
-      ]
-    },
-    {
-      id: "data_quality",
-      name: "Data Quality Engine",
-      region: "data",
-      x: -8.0,
-      y: -1.6,
-      r: 0.65,
-      z: 0.1,
-      kicker: "Data Reliability",
-      sum: "Automated assertion testing and data quality profiling scripts.",
-      body: "Validating schema constraints, null thresholds, value ranges, and distribution shifts before ingestion into analytical models.",
-      skills: [["Schema Validation", "core"], ["Assertion Testing", "core"]]
-    },
-    {
-      id: "data_cleaning",
-      name: "Cleaning & Normalization",
-      region: "data",
-      x: -8.2,
-      y: -3.6,
-      r: 0.6,
-      z: -0.2,
-      kicker: "Preprocessing",
-      sum: "Systematic handling of outliers, categorical encoding, and datetime parsing.",
-      body: "Standardizing string fields, handling timezones, and applying robust scaling to skewed variables.",
-      skills: [["Data Normalization", "core"], ["Robust Scaling", "core"]]
-    },
-    {
-      id: "musica",
-      name: "Mathematics",
-      region: "musica",
-      x: 0.2,
-      y: -4.8,
-      r: 1.45,
-      z: 0.3,
-      kicker: "Domain ④ · Algorithmic & Mathematical Foundations",
-      sum: "Linear algebra, multivariable calculus, and discrete mathematical structures.",
-      body: "Mathematics is the language of machine learning. Deepening mastery of matrix decomposition (SVD, Eigendecomposition), vector spaces, gradient computation, and probability theory.",
-      role: "Mathematical Foundations Researcher",
-      duration: "Continuous",
-      impact: "Grounding empirical code in rigorous mathematical and algorithmic theory.",
-      skills: [
-        ["Linear Algebra & Matrices", "core"],
-        ["Multivariate Calculus", "core"],
-        ["Discrete Mathematics", "core"],
-        ["Algorithm Complexity", "core"]
-      ]
-    },
-    {
-      id: "linear_algebra",
-      name: "Linear Algebra Lab",
-      region: "musica",
-      x: 2.6,
-      y: -5.8,
-      r: 0.75,
-      z: -0.2,
-      kicker: "Linear Algebra",
-      sum: "Vector projections, eigenvalues, eigenvectors, and dimensionality reduction.",
-      body: "Hands-on implementations of matrix multiplications, orthogonal projections, and principal component analysis (PCA) from first principles using NumPy.",
-      skills: [["Eigenvalues & PCA", "core"], ["Vector Spaces", "core"], ["NumPy Linear Algebra", "core"]]
-    },
-    {
-      id: "probability_stats",
-      name: "Probability & Stats",
-      region: "musica",
-      x: -0.6,
-      y: -7.2,
-      r: 0.8,
-      z: 0.2,
-      kicker: "Stochastic Systems",
-      sum: "Probability distributions, Bayes theorem, and random variables.",
-      body: "Modeling random phenomena using Gaussian, Poisson, Binomial, and Exponential distributions. Applying Bayes theorem for posterior probability calculations.",
-      skills: [["Bayesian Probability", "core"], ["Probability Distributions", "core"]]
-    },
-    {
-      id: "algorithmic_ds",
-      name: "Data Structures",
-      region: "musica",
-      x: -2.6,
-      y: -4.8,
-      r: 0.65,
-      z: -0.1,
-      kicker: "Computer Science",
-      sum: "Trees, graphs, hash tables, and asymptotic Big-O runtime analysis.",
-      body: "Implementing and optimizing core computer science data structures with rigorous complexity analysis.",
-      skills: [["Asymptotic Analysis", "core"], ["Hash Tables & Trees", "core"]]
-    },
-    {
-      id: "optimization",
-      name: "Optimization & Gradients",
-      region: "musica",
-      x: 1.4,
-      y: -7.2,
-      r: 0.65,
-      z: 0.1,
-      kicker: "Optimization",
-      sum: "Gradient descent, learning rates, momentum, and convex loss surfaces.",
-      body: "Visualizing cost function contours and implementing gradient descent variants (batch, stochastic, mini-batch) in pure Python.",
-      skills: [["Gradient Descent", "core"], ["Convex Optimization", "grew"]]
-    },
-    {
-      id: "discrete_math",
-      name: "Discrete Math & Logic",
-      region: "musica",
-      x: -2.0,
-      y: -6.6,
-      r: 0.65,
-      z: 0.1,
-      kicker: "Formal Logic",
-      sum: "Propositional logic, set theory, combinatorics, and proof techniques.",
-      body: "Foundations of computational reasoning: truth tables, predicate calculus, mathematical induction, and graph connectivity.",
-      skills: [["Formal Logic", "core"], ["Proof by Induction", "core"]]
     },
     {
       id: "coursework",
@@ -541,7 +435,7 @@ const NARESH_DB = {
     },
     {
       id: "manifesto",
-      name: "Manifesto",
+      name: "Methodology",
       region: "special",
       x: 7.4,
       y: 2.0,
@@ -568,87 +462,68 @@ const NARESH_DB = {
     }
   ],
   E: [
+    ["naresh", "about_me"],
     ["naresh", "contacto"],
-    ["naresh", "collaborate"],
     ["naresh", "fast_nuces"],
     ["naresh", "ai"],
     ["naresh", "growth"],
     ["naresh", "data"],
-    ["naresh", "musica"],
     ["fast_nuces", "coursework"],
     ["fast_nuces", "dev_environment"],
     ["fast_nuces", "manifesto"],
     ["fast_nuces", "technical_writing"],
-    ["ai", "classification_lab"],
-    ["ai", "network"],
+    ["ai", "svm_digits"],
+    ["ai", "accident_severity"],
     ["ai", "scikit_toolkit"],
+    ["growth", "cosmos_portfolio"],
     ["growth", "sql_analytics"],
     ["growth", "kpi_dashboards"],
     ["growth", "stats_inference"],
-    ["growth", "business_metrics"],
-    ["growth", "data_storytelling"],
-    ["growth", "predictive_modeling"],
-    ["growth", "feature_eng"],
-    ["growth", "ml_foundations"],
+    ["data", "air_quality"],
     ["data", "eda_pipeline"],
-    ["data", "viz_gallery"],
     ["data", "data_quality"],
-    ["data", "data_cleaning"],
-    ["musica", "linear_algebra"],
-    ["musica", "probability_stats"],
-    ["musica", "algorithmic_ds"],
-    ["musica", "optimization"],
-    ["musica", "discrete_math"],
-    ["eda_pipeline", "viz_gallery"],
-    ["eda_pipeline", "data_quality"],
-    ["classification_lab", "scikit_toolkit"],
-    ["sql_analytics", "kpi_dashboards"],
-    ["linear_algebra", "optimization"],
-    ["probability_stats", "stats_inference"],
+    ["data", "viz_gallery"],
+    ["svm_digits", "accident_severity"],
+    ["air_quality", "eda_pipeline"],
     ["data", "ai"],
     ["ai", "growth"],
-    ["growth", "fast_nuces"],
-    ["data", "musica"]
+    ["growth", "fast_nuces"]
   ]
 };
 
 const COLOR: Record<string, string> = {
   entry: '#9B8FFF',     // Iris Lavender
   ai: '#E84FD0',        // Neural Magenta
-  growth: '#FF6A3D',    // Coral Sunset
+  growth: '#FFAA00',    // Amber Gold / Projects
   data: '#00B0CD',      // Data Stream Cyan
-  musica: '#FF3D7A',    // Electric Rose
   special: '#CFFF04'    // Cyber Citron / Acid Lime
 };
 
 const RLAB: Record<string, string> = {
   entry: 'Naresh',
   ai: 'Machine Learning',
-  growth: 'Analytics & BI',
+  growth: 'Projects & Systems',
   data: 'Data Science & EDA',
-  musica: 'Mathematics',
-  special: 'FAST-NUCES Systems'
+  special: 'Education & Academics'
 };
 
 const REG: [string, string][] = [
   ['entry', 'NARESH'],
-  ['data', 'DATA SCIENCE'],
   ['ai', 'MACHINE LEARNING'],
-  ['growth', 'ANALYTICS'],
-  ['musica', 'MATHEMATICS'],
-  ['special', 'FAST-NUCES']
+  ['data', 'DATA SCIENCE'],
+  ['growth', 'PROJECTS'],
+  ['special', 'EDUCATION']
 ];
 
 const REGION_TO_HUB: Record<string, string> = {
   entry: 'naresh',
-  data: 'data',
   ai: 'ai',
+  data: 'data',
   growth: 'growth',
-  musica: 'musica',
   special: 'fast_nuces',
 };
 
-const PARENTS = new Set(['ai', 'growth', 'data', 'musica', 'special', 'entry']);
+const PARENTS = new Set(['ai', 'growth', 'data', 'special', 'entry']);
 
 export interface NicoUniverseProps {
   onSwitchToList?: () => void;
@@ -1172,9 +1047,18 @@ export function NicoUniverse({ onSwitchToList }: NicoUniverseProps) {
         `
         : '';
 
+      const photoHTML = (n.photo || n.id === 'naresh' || n.id === 'about_me')
+        ? `
+          <div class="cphoto" style="max-width:220px;margin:18px 0 20px;border-radius:14px;overflow:hidden;border:2px solid ${acc};box-shadow:0 12px 32px rgba(0,0,0,0.5);">
+            <img src="/profile.png" alt="Naresh Kumar" style="width:100%;height:auto;display:block;" />
+          </div>
+        `
+        : '';
+
       docEl.innerHTML = `
         <div class="kicker">${n.kicker || ''}</div>
         <h1 class="title">${n.name}</h1>
+        ${photoHTML}
         <p class="lead">${n.sum || ''}</p>
         ${cta}
         ${linksHTML}

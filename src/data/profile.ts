@@ -32,8 +32,8 @@ export const profile = {
     "When I'm not coding, I'm exploring new datasets, reading about emerging AI research, or working on side projects that challenge me to learn something new.",
   ],
 
-  /** Profile photo path (relative to /public) — set to null until provided */
-  photo: null as string | null,
+  /** Profile photo path (relative to /public) */
+  photo: '/profile.png' as string | null,
 
   /** Contact information */
   contact: {
