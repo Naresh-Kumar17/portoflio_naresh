@@ -10,8 +10,8 @@ const NARESH_DB = {
       name: "Naresh",
       region: "entry",
       x: 0,
-      y: 0.23,
-      r: 1.55,
+      y: 0.2,
+      r: 1.6,
       z: 0,
       kicker: "Undergraduate Data Science Researcher",
       links: [
@@ -38,9 +38,9 @@ const NARESH_DB = {
       id: "contacto",
       name: "Let's Connect",
       region: "entry",
-      x: -2.6,
-      y: 1.15,
-      r: 0.5,
+      x: -2.2,
+      y: 1.4,
+      r: 0.55,
       z: 0.1,
       kicker: "Contact & Collaboration",
       sum: "Open for discussions, research collaborations, and internships.",
@@ -57,10 +57,10 @@ const NARESH_DB = {
       id: "collaborate",
       name: "Project Brief",
       region: "entry",
-      x: -3.15,
-      y: -0.6,
+      x: -2.4,
+      y: -1.0,
       r: 0.55,
-      z: 0,
+      z: -0.1,
       kicker: "Collaborations",
       sum: "Data exploration, statistical modeling, and interactive dashboards.",
       body: "Available for research projects, open-source data science tools, and end-to-end data pipeline builds.",
@@ -70,9 +70,9 @@ const NARESH_DB = {
       id: "fast_nuces",
       name: "FAST-NUCES",
       region: "special",
-      x: 2.81,
-      y: 1.56,
-      r: 2.35,
+      x: 5.2,
+      y: 3.4,
+      r: 2.3,
       z: 0.4,
       kicker: "Flagship Academic Foundation · BS Data Science",
       sum: "National University of Computer & Emerging Sciences — Premier computing education.",
@@ -105,9 +105,9 @@ const NARESH_DB = {
       id: "ai",
       name: "Machine Learning",
       region: "ai",
-      x: -3.74,
-      y: 2.57,
-      r: 1.45,
+      x: -5.6,
+      y: 3.2,
+      r: 1.5,
       z: 0.3,
       kicker: "Domain ① · Model Training, Evaluation & Benchmarking",
       links: [["Classification Benchmark Lab", "#/classification_lab"]],
@@ -128,10 +128,10 @@ const NARESH_DB = {
       id: "classification_lab",
       name: "Classification Lab",
       region: "ai",
-      x: -5.93,
-      y: 3.59,
+      x: -8.0,
+      y: 4.6,
       r: 0.75,
-      z: 0.5,
+      z: 0.4,
       kicker: "Machine Learning",
       sum: "Comparative benchmark across Logistic Regression, Random Forests, and SVMs.",
       body: "A structured machine learning benchmark evaluating classification performance across multi-class datasets. Evaluates decision boundaries, confusion matrices, and precision-recall trade-offs.",
@@ -149,8 +149,8 @@ const NARESH_DB = {
       id: "network",
       name: "Graph Analytics",
       region: "ai",
-      x: -5.46,
-      y: 1.48,
+      x: -7.8,
+      y: 1.8,
       r: 0.7,
       z: 0.1,
       kicker: "Graph Intelligence",
@@ -169,9 +169,9 @@ const NARESH_DB = {
       id: "scikit_toolkit",
       name: "Scikit Toolkit",
       region: "ai",
-      x: 0,
-      y: 3.82,
-      r: 0.78,
+      x: -3.4,
+      y: 4.8,
+      r: 0.75,
       z: 0.2,
       kicker: "Model Engineering",
       sum: "Modular preprocessing pipelines, transformers, and cross-validation harnesses.",
@@ -187,10 +187,10 @@ const NARESH_DB = {
       id: "growth",
       name: "Analytics & BI",
       region: "growth",
-      x: 6.16,
-      y: -0.47,
-      r: 1.45,
-      z: -0.3,
+      x: 6.6,
+      y: -1.8,
+      r: 1.5,
+      z: -0.2,
       kicker: "Domain ② · Business Intelligence & Statistical Inference",
       sum: "Transforming raw business records into actionable KPI metrics and decisions.",
       body: "Analytics bridges data science and decision making. Connecting SQL extraction, cohorts, funnel metrics, and statistical hypothesis testing to evaluate performance and user behavior.",
@@ -208,9 +208,9 @@ const NARESH_DB = {
       id: "sql_analytics",
       name: "SQL Analytics Lab",
       region: "growth",
-      x: 5.07,
-      y: 1.09,
-      r: 0.95,
+      x: 4.8,
+      y: 0.4,
+      r: 0.85,
       z: 0.2,
       kicker: "Relational Intelligence",
       sum: "Complex aggregations, window functions, and schema normalization.",
@@ -226,10 +226,10 @@ const NARESH_DB = {
       id: "kpi_dashboards",
       name: "Decision Dashboards",
       region: "growth",
-      x: 6.79,
-      y: -2.57,
-      r: 0.8,
-      z: 0,
+      x: 7.6,
+      y: -4.6,
+      r: 0.75,
+      z: -0.2,
       kicker: "Visual Reporting",
       sum: "Interactive KPI reporting dashboards for data monitoring.",
       body: "Designing visual layouts that prioritize key decision variables without clutter or cognitive overhead.",
@@ -243,8 +243,8 @@ const NARESH_DB = {
       id: "stats_inference",
       name: "Inference & A/B",
       region: "growth",
-      x: 4.99,
-      y: -2.42,
+      x: 4.4,
+      y: -2.8,
       r: 0.7,
       z: 0.1,
       kicker: "Statistical Inference",
@@ -261,9 +261,9 @@ const NARESH_DB = {
       id: "business_metrics",
       name: "Business Metrics",
       region: "growth",
-      x: 8.11,
-      y: 1.01,
-      r: 0.9,
+      x: 8.2,
+      y: 0.6,
+      r: 0.85,
       z: 0.2,
       kicker: "Empirical Metrics",
       sum: "Customer lifetime value, churn probability, and engagement cohorts.",
@@ -277,9 +277,9 @@ const NARESH_DB = {
       id: "data_storytelling",
       name: "Data Storytelling",
       region: "growth",
-      x: 8.35,
-      y: -1.17,
-      r: 0.8,
+      x: 9.4,
+      y: -1.4,
+      r: 0.75,
       z: -0.1,
       kicker: "Communication",
       sum: "Crafting narratives from data that non-technical stakeholders understand.",
@@ -290,10 +290,10 @@ const NARESH_DB = {
       id: "predictive_modeling",
       name: "Predictive Models",
       region: "growth",
-      x: 6.01,
-      y: -4.13,
+      x: 5.4,
+      y: -4.8,
       r: 0.65,
-      z: -0.2,
+      z: -0.3,
       kicker: "Predictive Analytics",
       sum: "Time-series forecasting and trend decomposition.",
       body: "Exploring moving averages, exponential smoothing, and trend decomposition to model time-varying signals.",
@@ -303,10 +303,10 @@ const NARESH_DB = {
       id: "feature_eng",
       name: "Feature Engineering",
       region: "growth",
-      x: 7.88,
-      y: -2.89,
+      x: 9.2,
+      y: -3.4,
       r: 0.7,
-      z: 0,
+      z: 0.0,
       kicker: "Data Preprocessing",
       sum: "Domain feature synthesis, target encoding, and outlier management.",
       body: "Crafting domain-specific features that maximize model signal while minimizing variance and multicollinearity.",
@@ -316,9 +316,9 @@ const NARESH_DB = {
       id: "ml_foundations",
       name: "ML Foundations",
       region: "growth",
-      x: 7.2,
-      y: -4.5,
-      r: 0.62,
+      x: 6.6,
+      y: -6.4,
+      r: 0.65,
       z: -0.3,
       kicker: "Core Theory",
       sum: "The mathematical backbone of machine learning algorithms.",
@@ -329,9 +329,9 @@ const NARESH_DB = {
       id: "data",
       name: "Data Science & EDA",
       region: "data",
-      x: -4.29,
-      y: -2.11,
-      r: 1.35,
+      x: -5.8,
+      y: -2.8,
+      r: 1.45,
       z: -0.2,
       kicker: "Domain ③ · Exploratory Data Analysis & Visualization",
       links: [["EDA Pipeline Case Study", "#/eda_pipeline"]],
@@ -352,10 +352,10 @@ const NARESH_DB = {
       id: "eda_pipeline",
       name: "EDA Pipeline",
       region: "data",
-      x: -2.11,
-      y: -3.51,
+      x: -3.6,
+      y: -4.4,
       r: 0.95,
-      z: 0.3,
+      z: 0.2,
       kicker: "Flagship Project · Data Science",
       sum: "A comprehensive exploratory data analysis workflow analyzing real-world datasets.",
       body: "Built a structured exploratory data analysis pipeline using Python, pandas, and visualization libraries. The project walks through automated data ingestion, cleaning, missing value profiling, statistical summaries, distribution analysis, correlation exploration, and visual storytelling.",
@@ -386,10 +386,10 @@ const NARESH_DB = {
       id: "viz_gallery",
       name: "Visualization Gallery",
       region: "data",
-      x: -6.55,
-      y: -3.2,
-      r: 0.85,
-      z: -0.4,
+      x: -6.4,
+      y: -5.2,
+      r: 0.8,
+      z: -0.3,
       kicker: "Data Visualization",
       sum: "A collection of publication-grade visualizations exploring chart types and color palettes.",
       body: "Exploring how chart type choice, typography, and perceptual color palettes impact data interpretation. Comparing heatmaps, violin plots, faceted histograms, and scatter plots.",
@@ -404,9 +404,9 @@ const NARESH_DB = {
       id: "data_quality",
       name: "Data Quality Engine",
       region: "data",
-      x: -5.4,
-      y: -1.2,
-      r: 0.6,
+      x: -8.0,
+      y: -1.6,
+      r: 0.65,
       z: 0.1,
       kicker: "Data Reliability",
       sum: "Automated assertion testing and data quality profiling scripts.",
@@ -417,10 +417,10 @@ const NARESH_DB = {
       id: "data_cleaning",
       name: "Cleaning & Normalization",
       region: "data",
-      x: -6.2,
-      y: -1.8,
-      r: 0.55,
-      z: -0.1,
+      x: -8.2,
+      y: -3.6,
+      r: 0.6,
+      z: -0.2,
       kicker: "Preprocessing",
       sum: "Systematic handling of outliers, categorical encoding, and datetime parsing.",
       body: "Standardizing string fields, handling timezones, and applying robust scaling to skewed variables.",
@@ -430,10 +430,10 @@ const NARESH_DB = {
       id: "musica",
       name: "Mathematics",
       region: "musica",
-      x: 0.78,
-      y: -3.74,
-      r: 1.4,
-      z: 0.4,
+      x: 0.2,
+      y: -4.8,
+      r: 1.45,
+      z: 0.3,
       kicker: "Domain ④ · Algorithmic & Mathematical Foundations",
       sum: "Linear algebra, multivariable calculus, and discrete mathematical structures.",
       body: "Mathematics is the language of machine learning. Deepening mastery of matrix decomposition (SVD, Eigendecomposition), vector spaces, gradient computation, and probability theory.",
@@ -451,10 +451,10 @@ const NARESH_DB = {
       id: "linear_algebra",
       name: "Linear Algebra Lab",
       region: "musica",
-      x: 2.73,
-      y: -4.84,
-      r: 0.7,
-      z: -0.3,
+      x: 2.6,
+      y: -5.8,
+      r: 0.75,
+      z: -0.2,
       kicker: "Linear Algebra",
       sum: "Vector projections, eigenvalues, eigenvectors, and dimensionality reduction.",
       body: "Hands-on implementations of matrix multiplications, orthogonal projections, and principal component analysis (PCA) from first principles using NumPy.",
@@ -464,9 +464,9 @@ const NARESH_DB = {
       id: "probability_stats",
       name: "Probability & Stats",
       region: "musica",
-      x: -0.55,
-      y: -5.3,
-      r: 0.85,
+      x: -0.6,
+      y: -7.2,
+      r: 0.8,
       z: 0.2,
       kicker: "Stochastic Systems",
       sum: "Probability distributions, Bayes theorem, and random variables.",
@@ -477,9 +477,9 @@ const NARESH_DB = {
       id: "algorithmic_ds",
       name: "Data Structures",
       region: "musica",
-      x: -2.34,
-      y: -5.93,
-      r: 0.62,
+      x: -2.6,
+      y: -4.8,
+      r: 0.65,
       z: -0.1,
       kicker: "Computer Science",
       sum: "Trees, graphs, hash tables, and asymptotic Big-O runtime analysis.",
@@ -490,9 +490,9 @@ const NARESH_DB = {
       id: "optimization",
       name: "Optimization & Gradients",
       region: "musica",
-      x: 1.6,
-      y: -6,
-      r: 0.6,
+      x: 1.4,
+      y: -7.2,
+      r: 0.65,
       z: 0.1,
       kicker: "Optimization",
       sum: "Gradient descent, learning rates, momentum, and convex loss surfaces.",
@@ -503,10 +503,10 @@ const NARESH_DB = {
       id: "discrete_math",
       name: "Discrete Math & Logic",
       region: "musica",
-      x: -0.4,
-      y: -6.2,
-      r: 0.62,
-      z: 0,
+      x: -2.0,
+      y: -6.6,
+      r: 0.65,
+      z: 0.1,
       kicker: "Formal Logic",
       sum: "Propositional logic, set theory, combinatorics, and proof techniques.",
       body: "Foundations of computational reasoning: truth tables, predicate calculus, mathematical induction, and graph connectivity.",
@@ -516,9 +516,9 @@ const NARESH_DB = {
       id: "coursework",
       name: "Coursework",
       region: "special",
-      x: 5.5,
-      y: 2.4,
-      r: 0.8,
+      x: 5.2,
+      y: 5.8,
+      r: 0.75,
       z: 0.2,
       kicker: "Academic Curriculum",
       sum: "Core degree coursework at FAST-NUCES Karachi.",
@@ -530,9 +530,9 @@ const NARESH_DB = {
       id: "dev_environment",
       name: "Dev Environment",
       region: "special",
-      x: 2.2,
-      y: 3.4,
-      r: 0.85,
+      x: 2.6,
+      y: 4.6,
+      r: 0.8,
       z: 0.3,
       kicker: "Engineering Tooling",
       sum: "Modern developer workflow: Linux, Git, VS Code, and reproducible notebooks.",
@@ -543,9 +543,9 @@ const NARESH_DB = {
       id: "manifesto",
       name: "Manifesto",
       region: "special",
-      x: 3.7,
-      y: -1.2,
-      r: 0.72,
+      x: 7.4,
+      y: 2.0,
+      r: 0.7,
       z: 0.1,
       kicker: "Scientific Methodology",
       sum: "Guiding principles for ethical, empirical data science.",
@@ -556,10 +556,10 @@ const NARESH_DB = {
       id: "technical_writing",
       name: "Technical Notes",
       region: "special",
-      x: 4.68,
-      y: 3.59,
-      r: 0.55,
-      z: 0.1,
+      x: 7.6,
+      y: 4.6,
+      r: 0.6,
+      z: 0.2,
       kicker: "Documentation",
       sum: "Documenting learnings, algorithm implementations, and benchmarks.",
       body: "Writing clear technical explanations, reproducible experiments, and well-commented code repositories.",
@@ -688,6 +688,30 @@ export function NicoUniverse({ onSwitchToList }: NicoUniverseProps) {
     const backBtn = root.querySelector('#back') as HTMLElement;
     const spacer = root.querySelector('#spacer') as HTMLElement;
     const topEl = root.querySelector('#pagetop') as HTMLElement;
+    const resetOrbitBtn = root.querySelector('#reset-orbit') as HTMLElement;
+    const zoomInBtn = root.querySelector('#zoom-in') as HTMLElement;
+    const zoomOutBtn = root.querySelector('#zoom-out') as HTMLElement;
+
+    if (resetOrbitBtn) {
+      resetOrbitBtn.onclick = (e) => {
+        e.stopPropagation();
+        goHome();
+      };
+    }
+    if (zoomInBtn) {
+      zoomInBtn.onclick = (e) => {
+        e.stopPropagation();
+        userInteracted = true;
+        userZoom = Math.min(2.8, userZoom * 1.25);
+      };
+    }
+    if (zoomOutBtn) {
+      zoomOutBtn.onclick = (e) => {
+        e.stopPropagation();
+        userInteracted = true;
+        userZoom = Math.max(0.6, userZoom * 0.8);
+      };
+    }
     
     let W = (c.width = window.innerWidth);
     let H = (c.height = window.innerHeight);
@@ -705,9 +729,9 @@ export function NicoUniverse({ onSwitchToList }: NicoUniverseProps) {
     function resize() {
       W = c.width = window.innerWidth;
       H = c.height = window.innerHeight;
-      const span = W <= 760 ? 1.6 : 2.35;
+      const span = W <= 760 ? 1.7 : 2.35;
       SC = Math.min(W, H) / (orgR * span);
-      LBL = W <= 760 ? 1.5 : 1;
+      LBL = W <= 760 ? 1.2 : 1;
     }
     window.addEventListener('resize', resize);
     resize();
@@ -781,14 +805,20 @@ export function NicoUniverse({ onSwitchToList }: NicoUniverseProps) {
 
     function proj(wx: number, wy: number, wz: number = 0): [number, number, number] {
       let x = wx - cx0, y = wy - cy0, z = (wz || 0) * 1.3;
-      const sp = curRot, cs = Math.cos(sp), sn = Math.sin(sp);
-      let px = x * cs - y * sn, py = x * sn + y * cs;
-      const ay = viewRot, cay = Math.cos(ay), say = Math.sin(ay);
-      let x1 = px * cay - z * say, z1 = px * say + z * cay;
-      const ax = viewTiltX, cax = Math.cos(ax), sax = Math.sin(ax);
-      let y1 = py * cax - z1 * sax, z2 = py * sax + z1 * cax;
+      // Ambient slow yaw + user horizontal rotation (turntable)
+      const totalYaw = curRot + viewRot;
+      const cy = Math.cos(totalYaw), sy = Math.sin(totalYaw);
+      let x1 = x * cy - z * sy;
+      let z1 = x * sy + z * cy;
+
+      // Vertical tilt (pitch)
+      const ax = viewTiltX;
+      const cax = Math.cos(ax), sax = Math.sin(ax);
+      let y1 = y * cax - z1 * sax;
+      let z2 = y * sax + z1 * cax;
+
       x1 *= curBr; y1 *= curBr;
-      const persp = 5.5 / (5.5 - z2 * 0.5);
+      const persp = 6.0 / (6.0 - z2 * 0.4);
       const Z = camZoom * userZoom * persp;
       return [W * fieldCX + x1 * SC * Z, H / 2 - y1 * SC * Z, persp];
     }
@@ -797,8 +827,11 @@ export function NicoUniverse({ onSwitchToList }: NicoUniverseProps) {
     let isDragging = false, dragStartX = 0, dragStartY = 0;
     let startRot = 0, startTilt = 0;
 
+    c.style.cursor = 'grab';
+
     c.addEventListener('pointerdown', (e: PointerEvent) => {
       isDragging = true;
+      c.style.cursor = 'grabbing';
       dragStartX = e.clientX;
       dragStartY = e.clientY;
       startRot = viewRot;
@@ -817,17 +850,18 @@ export function NicoUniverse({ onSwitchToList }: NicoUniverseProps) {
 
       // Check node hover in field mode
       if (mode === 'field') {
-        let best: any = null, bestDist = 28;
+        let best: any = null, bestDist = 36;
         for (let i = 0; i < N.length; i++) {
           const [sx, sy] = proj(N[i].x, N[i].y, (N[i] as any).z);
           const d = Math.hypot(mouseX - sx, mouseY - sy);
-          if (d < Math.max(bestDist, N[i].r * 18 * userZoom)) {
+          if (d < Math.max(bestDist, N[i].r * 22 * userZoom)) {
             bestDist = d;
             best = N[i];
           }
         }
         if (best !== hoverId) {
           hoverId = best ? best.id : null;
+          c.style.cursor = isDragging ? 'grabbing' : (best ? 'pointer' : 'grab');
           if (best) showTip(best, mouseX, mouseY);
           else hideTip();
         } else if (best) {
@@ -840,8 +874,9 @@ export function NicoUniverse({ onSwitchToList }: NicoUniverseProps) {
     window.addEventListener('pointerup', (e: PointerEvent) => {
       if (!isDragging) return;
       isDragging = false;
+      c.style.cursor = hoverId ? 'pointer' : 'grab';
       const dist = Math.hypot(e.clientX - dragStartX, e.clientY - dragStartY);
-      if (dist < 6) {
+      if (dist < 8) {
         handleCanvasClick(e.clientX, e.clientY);
       }
     });
@@ -853,18 +888,21 @@ export function NicoUniverse({ onSwitchToList }: NicoUniverseProps) {
       userZoom = Math.max(0.6, Math.min(2.8, userZoom * delta));
     }, { passive: false });
 
-        function handleCanvasClick(clientX: number, clientY: number) {
+    function handleCanvasClick(clientX: number, clientY: number) {
       if (mode !== 'field') return;
       for (let i = 0; i < N.length; i++) {
         const [sx, sy] = proj(N[i].x, N[i].y, (N[i] as any).z);
-        const hitR = Math.max(26, N[i].r * 18 * userZoom);
+        const hitR = Math.max(32, N[i].r * 22 * userZoom);
         if (Math.hypot(clientX - sx, clientY - sy) <= hitR) {
           const clickedNode = N[i];
           setFieldFocus(clickedNode.id);
           return;
         }
       }
-      goHome();
+      // Clicked on empty space: close gallery drawer & return to all
+      if (galMode) {
+        goHome();
+      }
     }
 
     function showTip(n: any, x: number, y: number) {
@@ -872,7 +910,7 @@ export function NicoUniverse({ onSwitchToList }: NicoUniverseProps) {
       tip.querySelector('.nm')!.innerHTML =
         '<span class="tdot" style="background:' + col + ';box-shadow:0 0 8px ' + col + '"></span>' + n.name;
       tip.querySelector('.kc')!.textContent = n.kicker || '';
-      tip.querySelector('.go')!.textContent = 'PROYECTO · click para explorar →';
+      tip.querySelector('.go')!.textContent = 'EXPLORE · click to inspect →';
       tip.style.borderColor = col;
       tip.style.opacity = '1';
       tip.style.left = x + 'px';
@@ -1052,7 +1090,7 @@ export function NicoUniverse({ onSwitchToList }: NicoUniverseProps) {
 
       const isNode = galMode === 'node';
       const enterCTA = isNode
-        ? '<button class="genter" data-enter="' + n.id + '">↦ Entrar al proyecto →</button>'
+        ? '<button class="genter" data-enter="' + n.id + '">↦ Explore Case Study →</button>'
         : '';
 
       const items = galMode === 'area'
@@ -1071,12 +1109,12 @@ export function NicoUniverse({ onSwitchToList }: NicoUniverseProps) {
       `).join('');
 
       galleryEl.innerHTML = `
-        <button class="gback" data-back="1">↖ Volver al mapa</button>
+        <button class="gback" data-back="1">↖ Return to Map</button>
         <div class="ghead"><i style="background:${acc};box-shadow:0 0 6px ${acc}"></i><span class="gtag">${RLAB[n.region]}</span></div>
         <div class="gname">${n.name}</div>
         <div class="gdesc">${n.sum || n.body || ''}</div>
         ${enterCTA}
-        <div class="gcaplab">Proyectos Relacionados (${items.length})</div>
+        <div class="gcaplab">Connected Knowledge Nodes (${items.length})</div>
         ${cardsHTML}
       `;
 
@@ -1099,10 +1137,10 @@ export function NicoUniverse({ onSwitchToList }: NicoUniverseProps) {
       pageEl.style.setProperty('--cc', acc);
 
       const metaItems = [
-        ['En el mapa', RLAB[n.region]],
-        ['Rol', n.role || 'Data Science Research'],
-        ['Periodo', n.duration || '2024–2025'],
-        ['Impacto', n.impact || 'Reproducible analytics & pipelines']
+        ['Domain', RLAB[n.region]],
+        ['Role', n.role || 'Data Science Research'],
+        ['Timeline', n.duration || '2024–2025'],
+        ['Impact', n.impact || 'Reproducible analytics & pipelines']
       ];
 
       const metaHTML = `
@@ -1114,7 +1152,7 @@ export function NicoUniverse({ onSwitchToList }: NicoUniverseProps) {
       const skillsHTML = n.skills
         ? `
           <div class="pdetail">
-            <h3>Habilidades & Herramientas</h3>
+            <h3>Skills & Tooling</h3>
             <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;">
               ${n.skills.map(([s]: any) => `<span class="tag" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);padding:5px 12px;border-radius:999px;font-family:var(--mono);font-size:11px;">${s}</span>`).join('')}
             </div>
@@ -1123,7 +1161,7 @@ export function NicoUniverse({ onSwitchToList }: NicoUniverseProps) {
         : '';
 
       const cta = n.url
-        ? `<a class="cta" href="${n.url}" target="_blank" style="display:inline-flex;align-items:center;gap:8px;margin:20px 0;background:${acc};color:#000;padding:12px 24px;border-radius:8px;font-family:var(--mono);font-size:13px;font-weight:700;text-decoration:none;">${n.urlLabel || 'Abrir Proyecto ↗'}</a>`
+        ? `<a class="cta" href="${n.url}" target="_blank" style="display:inline-flex;align-items:center;gap:8px;margin:20px 0;background:${acc};color:#000;padding:12px 24px;border-radius:8px;font-family:var(--mono);font-size:13px;font-weight:700;text-decoration:none;">${n.urlLabel || 'Open Project ↗'}</a>`
         : '';
 
       const linksHTML = n.links
@@ -1143,12 +1181,12 @@ export function NicoUniverse({ onSwitchToList }: NicoUniverseProps) {
         ${metaHTML}
         <div class="pbody" style="font-family:var(--sans);font-size:17px;line-height:1.7;color:var(--ink2);margin:30px 0;">
           <p>${n.body || ''}</p>
-          ${n.scope ? `<p><strong>Alcance:</strong> ${n.scope}</p>` : ''}
-          ${n.story ? `<p><strong>Contexto:</strong> ${n.story}</p>` : ''}
+          ${n.scope ? `<p><strong>Scope & Focus:</strong> ${n.scope}</p>` : ''}
+          ${n.story ? `<p><strong>Background Context:</strong> ${n.story}</p>` : ''}
         </div>
         ${skillsHTML}
         <div class="pgfoot" style="margin-top:60px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.12);display:flex;justify-content:space-between;">
-          <span class="lk" data-ret="1" style="cursor:pointer;color:${acc};font-family:var(--mono);font-size:13px;">↑ Volver al Mapa</span>
+          <span class="lk" data-ret="1" style="cursor:pointer;color:${acc};font-family:var(--mono);font-size:13px;">↑ Return to Constellation Map</span>
         </div>
       `;
 
@@ -1201,9 +1239,9 @@ export function NicoUniverse({ onSwitchToList }: NicoUniverseProps) {
       }
 
       if ((mode === 'field' || mode === 'cold') && !userInteracted) {
-        curRot += dt * 0.08;
+        curRot += dt * 0.035;
       } else if (mode === 'page') {
-        curRot += dt * 0.02;
+        curRot += dt * 0.01;
       }
       curBr = 1 + Math.sin(t * 0.5) * 0.02;
 
@@ -1285,6 +1323,7 @@ export function NicoUniverse({ onSwitchToList }: NicoUniverseProps) {
       }
 
       // 5. Draw Nodes & Labels
+      const HUB_IDS = new Set(Object.values(REGION_TO_HUB));
       for (let i = 0; i < N.length; i++) {
         const n = N[i] as any;
         const [sx, sy, persp] = proj(n.x, n.y, n.z);
@@ -1326,12 +1365,55 @@ export function NicoUniverse({ onSwitchToList }: NicoUniverseProps) {
         ctx.fillStyle = col;
         ctx.fill();
 
-        // Node Label
-        ctx.font = `${isSel ? '700' : '500'} ${Math.max(10, Math.round(11 * LBL))}px "Martian Mono", monospace`;
-        ctx.fillStyle = LITE ? '#0A0A0A' : '#FAFAF7';
-        ctx.textAlign = 'left';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(n.name, sx + R + 7, sy);
+        // Node Label with decluttering (Hubs always visible; children reveal on hover, select, cluster focus, or zoom)
+        const isHub = HUB_IDS.has(n.id);
+        const isCategoryFocused = fieldSel && fieldSel !== 'naresh';
+        const shouldShowLabel =
+          isHub ||
+          isHover ||
+          isSel ||
+          (isCategoryFocused && isFocus) ||
+          userZoom >= 1.5;
+
+        if (shouldShowLabel) {
+          ctx.save();
+          const fontSize = isHub
+            ? Math.max(11, Math.round(12.5 * LBL))
+            : Math.max(9, Math.round(10 * LBL));
+          ctx.font = `${isHub || isSel ? '700' : '500'} ${fontSize}px "Martian Mono", monospace`;
+
+          const labelText = isHub ? n.name.toUpperCase() : n.name;
+          const textMetrics = ctx.measureText(labelText);
+          const textW = textMetrics.width;
+          const textH = fontSize;
+          const tx = sx + R + 8;
+          const ty = sy;
+
+          // Frosted background pill for high contrast and zero clutter
+          ctx.globalCompositeOperation = 'source-over';
+          ctx.fillStyle = LITE ? 'rgba(239, 231, 212, 0.88)' : 'rgba(12, 10, 20, 0.82)';
+          ctx.strokeStyle = isSel || isHover ? col : (LITE ? 'rgba(0,0,0,0.15)' : 'rgba(255,255,255,0.12)');
+          ctx.lineWidth = isSel || isHover ? 1.5 : 0.8;
+
+          const padX = 6, padY = 3;
+          ctx.beginPath();
+          if (ctx.roundRect) {
+            ctx.roundRect(tx - padX, ty - textH / 2 - padY, textW + padX * 2, textH + padY * 2, 4);
+          } else {
+            ctx.rect(tx - padX, ty - textH / 2 - padY, textW + padX * 2, textH + padY * 2);
+          }
+          ctx.fill();
+          ctx.stroke();
+
+          // High contrast label text
+          ctx.fillStyle = isSel || isHover
+            ? col
+            : (isHub ? (LITE ? '#0A0A0A' : '#FAFAF7') : (LITE ? '#333333' : '#C4C8D8'));
+          ctx.textAlign = 'left';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(labelText, tx, ty);
+          ctx.restore();
+        }
       }
 
       // 6. Draw Minimap Radar (#mini)
@@ -1486,6 +1568,28 @@ export function NicoUniverse({ onSwitchToList }: NicoUniverseProps) {
           <span className="ret">↖ click here to return to the map</span>
         </div>
         <div className="doc" id="doc" />
+      </div>
+
+      {/* ── Interactive HUD Controls (Easy to Use) ── */}
+      <div className="cosmos-hud">
+        <div className="hud-hint">
+          <span>Drag to orbit</span>
+          <span className="dot">·</span>
+          <span>Scroll to zoom</span>
+          <span className="dot">·</span>
+          <span>Click node to inspect</span>
+        </div>
+        <div className="hud-actions">
+          <button id="reset-orbit" type="button" title="Center View" aria-label="Center View">
+            ⟲ Center
+          </button>
+          <button id="zoom-in" type="button" title="Zoom In" aria-label="Zoom In">
+            +
+          </button>
+          <button id="zoom-out" type="button" title="Zoom Out" aria-label="Zoom Out">
+            −
+          </button>
+        </div>
       </div>
     </div>
   );

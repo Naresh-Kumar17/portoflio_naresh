@@ -211,6 +211,20 @@ Bug 4: Top Navbar Colliding with "NARESH KUMAR" Wordmark
 - Resolution: Updated `#tabs` positioning to `left: 230px; right: 140px;` with horizontal
   no-scrollbar flex scrolling, guaranteeing zero overlap across all viewport widths.
 
+Bug 5: Constellation Visual Clutter, Overlapping Text Labels & Compressed Layout
+- Symptoms: All 28 node labels were colliding simultaneously, stacking text on top of adjacent
+  circles and creating a dense, messy tangle in the center.
+- Root Causes:
+  1. Unfiltered label rendering: all child nodes drew labels at all times.
+  2. 2D roll rotation in projection loop rotated the coordinate plane sideways into a narrow column.
+  3. Dense coordinate packing within domain clusters (e.g., Analytics & BI having 8 tightly packed children).
+- Resolution:
+  1. Redesigned 3D spatial layout: expanded cluster hubs into distinct quadrant islands with generous breathing room.
+  2. Converted camera rotation to 3D turntable yaw (rotating X and Z around vertical Y axis), preserving widescreen horizontal spread.
+  3. Implemented smart progressive label disclosure: only flagship domain hubs display labels by default; child node labels smoothly reveal on hover, selection, cluster focus, or zoom (>= 1.5x).
+  4. Added frosted glass backdrop pill badges with domain-colored accents to guarantee zero visual collisions with background stars and photon lines.
+  5. Translated Spanish drawer and tooltip strings into professional English.
+
 ================================================================================
 7. GIT REPOSITORY SETUP & COMMIT CHRONOLOGY
 ================================================================================
@@ -225,6 +239,7 @@ Commit History & Milestones:
 - Commit `aa0ed5d`: Fix category navigation crash and enhance interactive drawer.
 - Commit `89bacf2`: Fix main canvas display (remove opaque WebGL glass) and activate vibrant category navbar.
 - Commit `4d4aee7`: Fix page overlay blockage, top navbar spacing, and canvas interaction.
+- Working (Local): Declutter constellation universe (spacious coordinate spread, turntable yaw, smart label reveal).
 
 ================================================================================
 8. PRODUCTION BUILD, BENCHMARKS & CURRENT PROJECT STATUS
@@ -233,13 +248,13 @@ Commit History & Milestones:
 - Production Bundler (`vite build`):
   * dist/index.html: 1.85 kB (gzip: 0.78 kB)
   * dist/assets/index.css: 110.20 kB (gzip: 19.72 kB)
-  * dist/assets/index.js: 409.77 kB (gzip: 125.02 kB)
+  * dist/assets/index.js: 410.24 kB (gzip: 125.13 kB)
   * dist/assets/three.js: 541.89 kB (gzip: 134.38 kB)
-  * Build Duration: 2.43s
+  * Build Duration: 9.59s (Clean exit code 0)
 - Local Dev Server:
   * Running at: http://localhost:5173/
-  * Vite Fast Refresh (HMR): Active & fully compatible.
-- Repository Status: Clean, all branches synchronized with origin/main.
+  * Vite Fast Refresh (HMR): Active & fully synchronized.
+- Repository Status: Clean working tree ready for review before push.
 
 ================================================================================
 END OF AUDIT & IMPLEMENTATION REPORT
