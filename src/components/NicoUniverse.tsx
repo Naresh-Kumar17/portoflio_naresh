@@ -280,35 +280,152 @@ const NARESH_DB = {
       id: "growth",
       name: "Projects",
       region: "growth",
-      x: 6.6,
-      y: -1.8,
+      x: 7.2,
+      y: -1.0,
       r: 1.5,
-      z: -0.2,
-      kicker: "Domain ③ · Software & Applied Machine Learning",
+      z: -0.1,
+      labelPos: "top",
+      kicker: "Domain ③ · Projects & Systems",
       links: [
         ["Portfolio Repository", "https://github.com/Naresh-Kumar17/portoflio_naresh"],
         ["GitHub Profile", "https://github.com/Naresh-Kumar17"]
       ],
-      sum: "Fullstack data science applications, interactive 3D visualizations, and SQL intelligence.",
-      body: "Connecting machine learning models and data pipelines to interactive software systems. Building robust web architectures, SQL analytical layers, and visual dashboards.",
+      sum: "Exploration of academic software architectures, machine learning models, and interactive visual computing.",
+      body: "Connecting theoretical computing foundations to production-grade applications. Divided into structured FAST-NUCES academic coursework projects and independent machine learning initiatives.",
       role: "Software & Data Science Developer",
       duration: "2024 → ongoing",
-      impact: "Delivering end-to-end data applications and interactive computing interfaces.",
+      impact: "Delivering end-to-end data applications, low-level systems, and interactive 3D computing interfaces.",
       skills: [
-        ["Fullstack Data Applications", "core"],
-        ["SQL Analytics & Schemas", "core"],
+        ["Academic Systems & OOP", "core"],
+        ["Machine Learning Models", "core"],
         ["Interactive Visual Systems", "core"],
-        ["Web Performance", "core"]
+        ["Hardware & Assembly", "core"]
+      ]
+    },
+    {
+      id: "academic_projects",
+      name: "Academic Projects",
+      region: "growth",
+      x: 5.4,
+      y: -4.4,
+      r: 1.2,
+      z: 0.1,
+      labelPos: "left",
+      kicker: "FAST-NUCES Coursework Hub",
+      links: [
+        ["Bank Management System (PF)", "https://github.com/Naresh-Kumar17/Bank-Management-System-C-Raylib"],
+        ["Cricket Match Management (OOP)", "https://github.com/Naresh-Kumar17/Cricket-Match-Management-System"],
+        ["2048 Game in Assembly (COAL)", "https://github.com/Naresh-Kumar17/2048-Game"],
+        ["Education & Curriculum", "#/education"]
+      ],
+      sum: "Rigorous semester projects engineered for the FAST-NUCES Karachi computing curriculum.",
+      body: "Core curriculum coursework implementations: procedural systems in C with Raylib graphical UI, Object-Oriented tournament simulations in C++, and low-level x86 Assembly hardware game engines.",
+      cap: "FAST-NUCES Academic Projects",
+      role: "Undergraduate Student Developer",
+      duration: "2024 → Present · FAST-NUCES",
+      impact: "Mastery of systems programming, OOP abstractions, and hardware-level computing.",
+      skills: [
+        ["Programming Fundamentals (C)", "core"],
+        ["Object-Oriented Programming (C++)", "core"],
+        ["Computer Org & Assembly (COAL)", "core"],
+        ["Systems Programming", "core"]
+      ]
+    },
+    {
+      id: "bank_management",
+      name: "Bank Management (C)",
+      region: "growth",
+      x: 2.6,
+      y: -4.0,
+      r: 0.85,
+      z: 0.2,
+      labelPos: "left",
+      kicker: "Academic Project · Programming Fundamentals",
+      sum: "Interactive graphical Bank Management System developed in C utilizing Raylib for UI rendering, account records management, transaction processing, and file persistence.",
+      body: "Coursework project for Programming Fundamentals (PF) at FAST-NUCES Karachi. Designed with modular procedural C architecture, implementing account creation, deposit/withdrawal validation, PIN security, transaction ledger logging, and dynamic 2D GUI elements rendered in Raylib.",
+      cap: "Bank Management System (C & Raylib)",
+      url: "https://github.com/Naresh-Kumar17/Bank-Management-System-C-Raylib",
+      urlLabel: "View on GitHub ↗",
+      role: "Lead Developer",
+      duration: "2024 · FAST-NUCES",
+      skills: [["C Programming", "core"], ["Raylib Graphics", "core"], ["File Persistence", "core"], ["Procedural C", "core"]]
+    },
+    {
+      id: "cricket_management",
+      name: "Cricket Match System",
+      region: "growth",
+      x: 4.2,
+      y: -6.6,
+      r: 0.85,
+      z: 0.1,
+      labelPos: "bottom",
+      kicker: "Academic Project · Object-Oriented Programming",
+      sum: "Comprehensive cricket scoring and tournament simulation platform architected with strict Object-Oriented Programming principles in C++.",
+      body: "Coursework project for Object-Oriented Programming (OOP) at FAST-NUCES Karachi. Built using advanced C++ object hierarchies: abstract base classes, operator overloading, run-time polymorphism for innings calculations, bowler spell tracking, and real-time commentary logs.",
+      cap: "Cricket Match Management (OOP C++)",
+      url: "https://github.com/Naresh-Kumar17/Cricket-Match-Management-System",
+      urlLabel: "View on GitHub ↗",
+      role: "Lead Developer",
+      duration: "2025 · FAST-NUCES",
+      skills: [["C++ (OOP)", "core"], ["Inheritance & Polymorphism", "core"], ["Tournament Modeling", "core"], ["File Handling", "core"]]
+    },
+    {
+      id: "assembly_2048",
+      name: "2048 Game (x86 ASM)",
+      region: "growth",
+      x: 7.2,
+      y: -6.6,
+      r: 0.85,
+      z: 0.2,
+      labelPos: "right",
+      kicker: "Academic Project · Computer Org & Assembly (COAL)",
+      sum: "Hardware-level implementation of the classic 2048 tile-sliding game written in x86 Assembly utilizing BIOS/DOS interrupts and direct register manipulation.",
+      body: "Developed for the Computer Organization & Assembly Language (COAL) course at FAST-NUCES Karachi. Features direct CPU register memory operations (AX, BX, CX, DX, SI, DI), 4x4 matrix shift-and-merge algorithms, keyboard scan-code polling via INT 16h, color video buffer manipulation via INT 10h, and high-score tracking.",
+      cap: "2048 Game (x86 Assembly)",
+      url: "https://github.com/Naresh-Kumar17/2048-Game",
+      urlLabel: "View on GitHub ↗",
+      role: "Assembly Developer",
+      duration: "2025 · FAST-NUCES",
+      skills: [["x86 Assembly", "core"], ["COAL", "core"], ["BIOS/DOS Interrupts", "core"], ["Hardware Registers", "core"]]
+    },
+    {
+      id: "personal_projects",
+      name: "Personal Projects",
+      region: "growth",
+      x: 11.4,
+      y: 0.2,
+      r: 1.2,
+      z: -0.1,
+      labelPos: "right",
+      kicker: "Independent Research & Software",
+      links: [
+        ["3D Cosmos Portfolio", "https://github.com/Naresh-Kumar17/portoflio_naresh"],
+        ["SVM Handwritten Digits", "https://github.com/Naresh-Kumar17/svm-handwritten-digits"],
+        ["Air Quality Forecasting", "https://github.com/Naresh-Kumar17/Air_Quality_Forcasating-"],
+        ["Road Accident Severity", "https://github.com/Naresh-Kumar17/Road-Accident-Severity"]
+      ],
+      sum: "Independent machine learning classifiers, time-series forecasting, and interactive 3D web engines.",
+      body: "Autonomous projects bridging applied machine learning theory, real-world environmental and safety datasets, mathematical perspective geometry, and high-performance frontend interfaces.",
+      cap: "Personal Projects & Independent Research",
+      role: "Machine Learning & Fullstack Developer",
+      duration: "2024 → ongoing",
+      impact: "End-to-end data pipelines from data cleaning and feature engineering to interactive visualization.",
+      skills: [
+        ["Machine Learning Models", "core"],
+        ["Time-Series Forecasting", "core"],
+        ["Interactive 3D Geometry", "core"],
+        ["End-to-End Pipelines", "core"]
       ]
     },
     {
       id: "cosmos_portfolio",
       name: "3D Cosmos Portfolio",
       region: "growth",
-      x: 8.6,
-      y: 0.4,
+      x: 14.2,
+      y: 1.2,
       r: 0.95,
       z: 0.2,
+      labelPos: "right",
       kicker: "Featured Project · Interactive Web",
       sum: "Custom mathematical 3D constellation cosmos engine built with React 19, TypeScript, and HTML5 Canvas.",
       body: "Designed and developed this portfolio to showcase data science research and software projects. Implemented a custom 3D perspective projection engine on HTML5 Canvas, Box-Muller Gaussian volumetric nebula haze, travelling photon bezier curves, and smooth camera physics.",
@@ -325,50 +442,6 @@ const NARESH_DB = {
         ["Performance Optimization", "core"]
       ]
     },
-    {
-      id: "sql_analytics",
-      name: "SQL Analytics Lab",
-      region: "growth",
-      x: 4.8,
-      y: 0.4,
-      r: 0.85,
-      z: 0.2,
-      kicker: "Relational Intelligence",
-      sum: "Complex aggregations, window functions, and schema normalization.",
-      body: "Advanced SQL queries leveraging CTEs, window functions (ROW_NUMBER, LAG, LEAD), and multi-table joins to analyze transactional databases.",
-      cap: "SQL Analytics & Schema Design",
-      skills: [
-        ["PostgreSQL / MySQL", "core"],
-        ["Window Functions", "core"],
-        ["CTEs & Indexing", "core"]
-      ]
-    },
-    {
-      id: "kpi_dashboards",
-      name: "Decision Dashboards",
-      region: "growth",
-      x: 7.6,
-      y: -4.6,
-      r: 0.75,
-      z: -0.2,
-      kicker: "Visual Reporting",
-      sum: "Interactive KPI reporting dashboards for data monitoring.",
-      body: "Designing visual layouts that prioritize key decision variables without clutter or cognitive overhead.",
-      skills: [["Interactive Dashboards", "core"], ["Visual Hierarchy", "core"]]
-    },
-    {
-      id: "stats_inference",
-      name: "Inference & A/B",
-      region: "growth",
-      x: 4.4,
-      y: -2.8,
-      r: 0.7,
-      z: 0.1,
-      kicker: "Statistical Inference",
-      sum: "Hypothesis testing, p-values, confidence intervals, and bootstrap tests.",
-      body: "Rigorous statistical inference: two-sample t-tests, Mann-Whitney U tests, chi-square tests, and bootstrap confidence intervals to validate differences.",
-      skills: [["Hypothesis Testing", "core"], ["Bootstrap Methods", "core"]]
-    },
 
     /* ── DOMAIN ④: EDUCATION (FAST-NUCES KARACHI) ── */
     {
@@ -377,7 +450,7 @@ const NARESH_DB = {
       region: "special",
       x: 5.2,
       y: 3.4,
-      r: 2.3,
+      r: 1.35,
       z: 0.4,
       kicker: "Flagship Academic Foundation · FAST-NUCES",
       sum: "BS Data Science at National University of Computer & Emerging Sciences (FAST-NUCES Karachi, 2025–2029).",
@@ -412,13 +485,18 @@ const NARESH_DB = {
       region: "special",
       x: 5.2,
       y: 5.8,
-      r: 0.75,
+      r: 0.85,
       z: 0.2,
       kicker: "Academic Curriculum",
-      sum: "Core degree coursework at FAST-NUCES Karachi.",
-      body: "Comprehensive curriculum tracking across computational sciences, programming, and statistics.",
+      links: [
+        ["Bank Management System (PF)", "https://github.com/Naresh-Kumar17/Bank-Management-System-C-Raylib"],
+        ["Cricket Match Management (OOP)", "https://github.com/Naresh-Kumar17/Cricket-Match-Management-System"],
+        ["2048 Game in Assembly (COAL)", "https://github.com/Naresh-Kumar17/2048-Game"]
+      ],
+      sum: "Core degree coursework at FAST-NUCES Karachi across programming fundamentals, OOP, and computer systems.",
+      body: "Comprehensive curriculum tracking across computational sciences, programming, and statistics. Includes semester projects in C, C++, and x86 Assembly language.",
       cap: "FAST-NUCES Academic Curriculum",
-      skills: [["C++ & Python", "core"], ["Software Design", "core"]]
+      skills: [["C++ & Python", "core"], ["Software Design", "core"], ["Assembly Language", "core"]]
     },
     {
       id: "dev_environment",
@@ -468,17 +546,35 @@ const NARESH_DB = {
     ["naresh", "ai"],
     ["naresh", "growth"],
     ["naresh", "data"],
+
+    // Projects: Main connects ONLY two nodes (Academic Projects & Personal Projects)
+    ["growth", "academic_projects"],
+    ["growth", "personal_projects"],
+
+    // Academic Projects connects ONLY to its 3 projects (no coursework or other stuff)
+    ["academic_projects", "bank_management"],
+    ["academic_projects", "cricket_management"],
+    ["academic_projects", "assembly_2048"],
+    ["bank_management", "cricket_management"],
+    ["cricket_management", "assembly_2048"],
+
+    // Personal Projects connects to Cosmos 3D Portfolio and other builds
+    ["personal_projects", "cosmos_portfolio"],
+    ["personal_projects", "svm_digits"],
+    ["personal_projects", "air_quality"],
+    ["personal_projects", "accident_severity"],
+    ["personal_projects", "eda_pipeline"],
+
+    // Education
     ["fast_nuces", "coursework"],
     ["fast_nuces", "dev_environment"],
     ["fast_nuces", "manifesto"],
     ["fast_nuces", "technical_writing"],
+
+    // AI & Data
     ["ai", "svm_digits"],
     ["ai", "accident_severity"],
     ["ai", "scikit_toolkit"],
-    ["growth", "cosmos_portfolio"],
-    ["growth", "sql_analytics"],
-    ["growth", "kpi_dashboards"],
-    ["growth", "stats_inference"],
     ["data", "air_quality"],
     ["data", "eda_pipeline"],
     ["data", "data_quality"],
@@ -486,8 +582,7 @@ const NARESH_DB = {
     ["svm_digits", "accident_severity"],
     ["air_quality", "eda_pipeline"],
     ["data", "ai"],
-    ["ai", "growth"],
-    ["growth", "fast_nuces"]
+    ["ai", "growth"]
   ]
 };
 
@@ -1270,8 +1365,39 @@ export function NicoUniverse({ onSwitchToList }: NicoUniverseProps) {
           const textMetrics = ctx.measureText(labelText);
           const textW = textMetrics.width;
           const textH = fontSize;
-          const tx = sx + R + 8;
-          const ty = sy;
+
+          // Flexible directional label placement to avoid node/text overlap
+          const pos = (n as any).labelPos || (n.x < -2 ? 'left' : 'right');
+          const padX = 6, padY = 3.5;
+          let boxX = 0, boxY = 0, textX = 0, textY = 0;
+          let align: CanvasTextAlign = 'left';
+
+          if (pos === 'top') {
+            boxX = sx - textW / 2 - padX;
+            boxY = sy - R - textH - padY * 2 - 6;
+            textX = sx;
+            textY = sy - R - textH / 2 - padY - 6;
+            align = 'center';
+          } else if (pos === 'bottom') {
+            boxX = sx - textW / 2 - padX;
+            boxY = sy + R + 6;
+            textX = sx;
+            textY = sy + R + 6 + textH / 2 + padY;
+            align = 'center';
+          } else if (pos === 'left') {
+            boxX = sx - R - 8 - textW - padX * 2;
+            boxY = sy - textH / 2 - padY;
+            textX = sx - R - 8 - padX;
+            textY = sy;
+            align = 'right';
+          } else {
+            // Default 'right'
+            boxX = sx + R + 8 - padX;
+            boxY = sy - textH / 2 - padY;
+            textX = sx + R + 8;
+            textY = sy;
+            align = 'left';
+          }
 
           // Frosted background pill for high contrast and zero clutter
           ctx.globalCompositeOperation = 'source-over';
@@ -1279,12 +1405,11 @@ export function NicoUniverse({ onSwitchToList }: NicoUniverseProps) {
           ctx.strokeStyle = isSel || isHover ? col : (LITE ? 'rgba(0,0,0,0.15)' : 'rgba(255,255,255,0.12)');
           ctx.lineWidth = isSel || isHover ? 1.5 : 0.8;
 
-          const padX = 6, padY = 3;
           ctx.beginPath();
           if (ctx.roundRect) {
-            ctx.roundRect(tx - padX, ty - textH / 2 - padY, textW + padX * 2, textH + padY * 2, 4);
+            ctx.roundRect(boxX, boxY, textW + padX * 2, textH + padY * 2, 4);
           } else {
-            ctx.rect(tx - padX, ty - textH / 2 - padY, textW + padX * 2, textH + padY * 2);
+            ctx.rect(boxX, boxY, textW + padX * 2, textH + padY * 2);
           }
           ctx.fill();
           ctx.stroke();
@@ -1293,9 +1418,9 @@ export function NicoUniverse({ onSwitchToList }: NicoUniverseProps) {
           ctx.fillStyle = isSel || isHover
             ? col
             : (isHub ? (LITE ? '#0A0A0A' : '#FAFAF7') : (LITE ? '#333333' : '#C4C8D8'));
-          ctx.textAlign = 'left';
+          ctx.textAlign = align;
           ctx.textBaseline = 'middle';
-          ctx.fillText(labelText, tx, ty);
+          ctx.fillText(labelText, textX, textY);
           ctx.restore();
         }
       }

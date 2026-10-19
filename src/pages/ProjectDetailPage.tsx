@@ -1,5 +1,5 @@
 import { useParams, Link, Navigate } from 'react-router-dom';
-import { ArrowLeft, ExternalLink, Calendar, Layers, CheckCircle2, AlertCircle, Lightbulb, Database, Sparkles } from 'lucide-react';
+import { ArrowLeft, ExternalLink, Calendar, Layers, CheckCircle2, AlertCircle, Lightbulb, Database, Sparkles, GraduationCap, Rocket } from 'lucide-react';
 import { ScrollReveal } from '../components/ScrollReveal';
 import { MagneticCard } from '../components/MagneticCard';
 import { GithubIcon } from '../components/SocialIcons';
@@ -37,6 +37,17 @@ export function ProjectDetailPage() {
         <ScrollReveal delay={100}>
           <div className="project-detail__header card">
             <div className="project-detail__meta-top">
+              {project.projectType === 'academic' ? (
+                <span className="project-tag-pill project-tag-pill--academic" style={{ fontSize: '0.75rem' }}>
+                  <GraduationCap size={14} />
+                  <span>{project.course ? `FAST-NUCES · ${project.course}` : 'Academic Coursework'}</span>
+                </span>
+              ) : (
+                <span className="project-tag-pill project-tag-pill--personal" style={{ fontSize: '0.75rem' }}>
+                  <Rocket size={14} />
+                  <span>Personal Project</span>
+                </span>
+              )}
               <span className="project-detail__category">
                 {project.category.replace('-', ' ')}
               </span>

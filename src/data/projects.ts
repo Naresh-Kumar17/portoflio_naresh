@@ -2,16 +2,21 @@
  * ============================================================
  * PROJECTS CONFIGURATION
  * ============================================================
- * Add your projects here. Each project has metadata for
- * filtering, recommendations, and case study generation.
- *
+ * Categorized into Academic Coursework and Personal Projects.
  * status: 'completed' | 'in-progress' | 'planned'
- * featured: true for homepage showcase
+ * projectType: 'personal' | 'academic'
  * ============================================================
  */
 
 export type ProjectStatus = 'completed' | 'in-progress' | 'planned';
-export type ProjectCategory = 'data-analysis' | 'machine-learning' | 'visualization' | 'other';
+export type ProjectType = 'personal' | 'academic';
+export type ProjectCategory =
+  | 'data-analysis'
+  | 'machine-learning'
+  | 'visualization'
+  | 'systems'
+  | 'gaming'
+  | 'other';
 
 export interface Project {
   id: string;
@@ -19,6 +24,9 @@ export interface Project {
   shortDescription: string;
   longDescription?: string;
   category: ProjectCategory;
+  projectType: ProjectType;
+  /** Specific academic course name if applicable */
+  course?: string;
   status: ProjectStatus;
   featured: boolean;
   /** Main featured project (only one should be true) */
@@ -55,6 +63,9 @@ export interface Project {
 }
 
 export const projects: Project[] = [
+  /* ────────────────────────────────────────────────────────────
+   * 1. PERSONAL PROJECTS
+   * ──────────────────────────────────────────────────────────── */
   {
     id: 'svm-handwritten-digits',
     title: 'SVM Handwritten Digits Recognition',
@@ -63,6 +74,7 @@ export const projects: Project[] = [
     longDescription:
       'Trained and evaluated Support Vector Machine (SVM) models on standard handwritten digit datasets. Explored linear, polynomial, and RBF kernels, optimizing regularization parameter C and kernel coefficient gamma. Implemented confusion matrix diagnostics, ROC curves, and cross-validation pipelines.',
     category: 'machine-learning',
+    projectType: 'personal',
     status: 'completed',
     featured: true,
     mainFeatured: true,
@@ -87,6 +99,7 @@ export const projects: Project[] = [
     longDescription:
       'Developed an end-to-end time-series analysis framework predicting air quality and pollutant concentrations. Handled time-series interpolation, seasonal decomposition (STL), stationarity checks (ADF tests), and predictive regression modeling to forecast hazardous AQI episodes.',
     category: 'data-analysis',
+    projectType: 'personal',
     status: 'completed',
     featured: true,
     technologies: ['Python', 'pandas', 'Time-Series', 'Matplotlib', 'Predictive Modeling'],
@@ -109,6 +122,7 @@ export const projects: Project[] = [
     longDescription:
       'Built a risk prediction pipeline analyzing road accident records. Tackled severe class imbalance using SMOTE and class-weighting, engineered spatial/temporal interaction terms, and trained gradient boosted decision trees and ensemble classifiers to predict injury severity levels.',
     category: 'machine-learning',
+    projectType: 'personal',
     status: 'completed',
     featured: true,
     technologies: ['Python', 'pandas', 'scikit-learn', 'Feature Engineering', 'Classification'],
@@ -127,10 +141,11 @@ export const projects: Project[] = [
     id: 'cosmos-portfolio',
     title: 'Interactive 3D Cosmos Portfolio',
     shortDescription:
-      'Nico Borja-inspired 3D constellation universe built from scratch with pure mathematical perspective projection, particle nebula clouds, and responsive editorial drawer.',
+      'Custom mathematical 3D constellation cosmos engine built with React 19, TypeScript, and HTML5 Canvas with zero heavy engine overhead.',
     longDescription:
       'Designed and developed this portfolio to showcase data science research and software projects. Implemented a custom 3D perspective projection engine on HTML5 Canvas, Box-Muller Gaussian volumetric nebula haze, travelling photon bezier curves, and smooth camera physics.',
     category: 'visualization',
+    projectType: 'personal',
     status: 'completed',
     featured: true,
     technologies: ['React 19', 'TypeScript', 'HTML5 Canvas', '3D Geometry', 'Vite'],
@@ -153,16 +168,95 @@ export const projects: Project[] = [
     longDescription:
       'Built a structured exploratory data analysis pipeline using Python, pandas, and visualization libraries. The project walks through data loading, cleaning, statistical summaries, distribution analysis, correlation exploration, and visual storytelling.',
     category: 'data-analysis',
-    status: 'in-progress',
+    projectType: 'personal',
+    status: 'completed',
     featured: false,
     technologies: ['Python', 'pandas', 'NumPy', 'Matplotlib', 'Seaborn'],
     date: '2024',
+  },
+
+  /* ────────────────────────────────────────────────────────────
+   * 2. ACADEMIC PROJECTS (FAST-NUCES Coursework)
+   * ──────────────────────────────────────────────────────────── */
+  {
+    id: 'bank-management-system',
+    title: 'Bank Management System (C & Raylib)',
+    shortDescription:
+      'Interactive graphical Bank Management System developed in C utilizing Raylib for UI rendering, account records management, transaction processing, and file persistence.',
+    longDescription:
+      'Developed for the Programming Fundamentals course at FAST-NUCES Karachi. Designed with modular procedural C architecture, implementing account creation, deposit/withdrawal validation, PIN security, transaction ledger logging, and dynamic 2D GUI elements rendered in Raylib.',
+    category: 'systems',
+    projectType: 'academic',
+    course: 'Programming Fundamentals',
+    status: 'completed',
+    featured: true,
+    technologies: ['C', 'Raylib', 'File Handling', 'Data Structures', 'Procedural C'],
+    github: 'https://github.com/Naresh-Kumar17/Bank-Management-System-C-Raylib',
+    insights: [
+      'Engineered binary file handling mechanisms to persist user accounts and balance state across application restarts',
+      'Custom Raylib event loop decoupled state updates from 60 FPS graphics rendering',
+    ],
+    learnings: [
+      'Low-level memory management and pointer arithmetic in C',
+      'File streams, buffer allocation, and atomic write operations for financial records',
+      'Implementing event-driven GUI buttons and input fields without high-level frameworks',
+    ],
+    date: '2024',
+  },
+  {
+    id: 'cricket-match-management-system',
+    title: 'Cricket Match Management System',
+    shortDescription:
+      'Comprehensive cricket scoring and tournament simulation platform architected with strict Object-Oriented Programming principles in C++.',
+    longDescription:
+      'Coursework project for Object-Oriented Programming (OOP) at FAST-NUCES Karachi. Built using advanced C++ object hierarchies: abstract base classes, operator overloading, run-time polymorphism for innings calculations, bowler spell tracking, and real-time commentary logs.',
+    category: 'systems',
+    projectType: 'academic',
+    course: 'Object-Oriented Programming (OOP)',
+    status: 'completed',
+    featured: true,
+    technologies: ['C++', 'OOP', 'Inheritance', 'Polymorphism', 'File I/O'],
+    github: 'https://github.com/Naresh-Kumar17/Cricket-Match-Management-System',
+    insights: [
+      'Hierarchical class structure separating Player, Batsman, Bowler, Team, and Match models ensures high cohesion and loose coupling',
+      'Automated run-rate, extras, and strike-rate calculations updated dynamically ball-by-ball',
+    ],
+    learnings: [
+      'Mastery of OOP tenets: Encapsulation, Abstraction, Inheritance, and Polymorphism in C++',
+      'Destructors and dynamic memory allocation to prevent memory leaks during extended match tournaments',
+      'Operator overloading for intuitive score and team comparisons',
+    ],
+    date: '2025',
+  },
+  {
+    id: '2048-assembly-game',
+    title: '2048 Game (x86 Assembly)',
+    shortDescription:
+      'Hardware-level implementation of the classic 2048 tile-sliding game written in x86 Assembly utilizing BIOS/DOS interrupts and direct register manipulation.',
+    longDescription:
+      'Developed for the Computer Organization & Assembly Language (COAL) course at FAST-NUCES Karachi. Features direct CPU register memory operations (AX, BX, CX, DX, SI, DI), 4x4 matrix shift-and-merge algorithms, keyboard scan-code polling via INT 16h, color video buffer manipulation via INT 10h, and high-score tracking.',
+    category: 'gaming',
+    projectType: 'academic',
+    course: 'Computer Organization & Assembly Language (COAL)',
+    status: 'completed',
+    featured: true,
+    technologies: ['x86 Assembly', 'COAL', 'BIOS Interrupts', 'Hardware Registers', 'Low-Level Graphics'],
+    github: 'https://github.com/Naresh-Kumar17/2048-Game',
+    insights: [
+      'Shift and merge matrix traversal written purely in x86 instructions with zero high-level language abstractions',
+      'Optimized register usage minimizing memory bus read/write cycles',
+    ],
+    learnings: [
+      'Low-level x86 instruction set architecture, addressing modes, and flag registers',
+      'Hardware interrupts for real-time keyboard input polling and video display modes',
+      'Debugging assembly memory offsets, stack frames, and segment registers',
+    ],
+    date: '2025',
   },
 ];
 
 /**
  * Get related projects based on shared technologies and categories.
- * Returns genuinely related projects, not artificial recommendations.
  */
 export function getRelatedProjects(
   projectId: string,
@@ -175,6 +269,8 @@ export function getRelatedProjects(
 
   const scored = others.map((p) => {
     let score = 0;
+    // Same project type (academic vs personal)
+    if (p.projectType === current.projectType) score += 2;
     // Same category
     if (p.category === current.category) score += 3;
     // Shared technologies
@@ -187,7 +283,6 @@ export function getRelatedProjects(
 
   scored.sort((a, b) => b.score - a.score);
 
-  // Only return projects with meaningful connection (score > 0)
   return scored
     .filter((s) => s.score > 0)
     .slice(0, maxResults)
@@ -197,6 +292,10 @@ export function getRelatedProjects(
 export function getProjectsByCategory(category?: ProjectCategory): Project[] {
   if (!category) return projects;
   return projects.filter((p) => p.category === category);
+}
+
+export function getProjectsByType(type: ProjectType): Project[] {
+  return projects.filter((p) => p.projectType === type);
 }
 
 export function getFeaturedProjects(): Project[] {
