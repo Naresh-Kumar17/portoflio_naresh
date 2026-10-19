@@ -18,7 +18,7 @@ const NARESH_DB = {
       links: [
         ["Explore Academic Education · FAST-NUCES", "#/education"],
         ["GitHub · Naresh-Kumar17", "https://github.com/Naresh-Kumar17"],
-        ["Portfolio Repository", "https://github.com/Naresh-Kumar17/protoflio_naresh"]
+        ["Portfolio Repository", "https://github.com/Naresh-Kumar17/portoflio_naresh"]
       ],
       sum: "Data Science undergraduate at FAST-NUCES Karachi turning statistical pipelines and machine learning algorithms into empirical decisions.",
       body: "Pursuing BS Data Science at National University of Computer and Emerging Sciences (FAST-NUCES) Karachi (2025–2029). Passionate about machine learning pipelines, time-series forecasting, statistical modeling, and interactive visual computing. Focused on mastering foundational theory first, then engineering reproducible computational systems that solve real-world problems.",
@@ -75,7 +75,7 @@ const NARESH_DB = {
       links: [
         ["Email · wdnaresh@gmail.com", "mailto:wdnaresh@gmail.com"],
         ["GitHub · Naresh-Kumar17", "https://github.com/Naresh-Kumar17"],
-        ["Portfolio Repository", "https://github.com/Naresh-Kumar17/protoflio_naresh"],
+        ["Portfolio Repository", "https://github.com/Naresh-Kumar17/portoflio_naresh"],
         ["FAST-NUCES Karachi", "https://khi.nu.edu.pk/"]
       ]
     },
@@ -186,7 +186,7 @@ const NARESH_DB = {
       kicker: "Domain ② · Exploratory Analysis & Forecasting",
       links: [
         ["Air Quality Forecasting Repository", "https://github.com/Naresh-Kumar17/Air_Quality_Forcasating-"],
-        ["Portfolio Repository", "https://github.com/Naresh-Kumar17/protoflio_naresh"]
+        ["Portfolio Repository", "https://github.com/Naresh-Kumar17/portoflio_naresh"]
       ],
       sum: "Raw data in; verified distributions, clean features, and confident forecasting out.",
       body: "Deep exploratory data analysis using Python, pandas, NumPy, Matplotlib, and Seaborn. Systematic profiling of distributions, correlations, outliers, missing value patterns, and time-series behavior.",
@@ -237,7 +237,7 @@ const NARESH_DB = {
       sum: "A comprehensive exploratory data analysis workflow analyzing real-world datasets.",
       body: "Built a structured exploratory data analysis pipeline using Python, pandas, and visualization libraries. The project walks through automated data ingestion, cleaning, missing value profiling, statistical summaries, distribution analysis, and correlation exploration.",
       cap: "EDA Pipeline Architecture",
-      url: "https://github.com/Naresh-Kumar17/protoflio_naresh",
+      url: "https://github.com/Naresh-Kumar17/portoflio_naresh",
       urlLabel: "View on GitHub ↗",
       role: "Lead Developer",
       duration: "2024 · Active",
@@ -286,7 +286,7 @@ const NARESH_DB = {
       z: -0.2,
       kicker: "Domain ③ · Software & Applied Machine Learning",
       links: [
-        ["Portfolio Repository", "https://github.com/Naresh-Kumar17/protoflio_naresh"],
+        ["Portfolio Repository", "https://github.com/Naresh-Kumar17/portoflio_naresh"],
         ["GitHub Profile", "https://github.com/Naresh-Kumar17"]
       ],
       sum: "Fullstack data science applications, interactive 3D visualizations, and SQL intelligence.",
@@ -313,7 +313,7 @@ const NARESH_DB = {
       sum: "Custom mathematical 3D constellation cosmos engine built with React 19, TypeScript, and HTML5 Canvas.",
       body: "Designed and developed this portfolio to showcase data science research and software projects. Implemented a custom 3D perspective projection engine on HTML5 Canvas, Box-Muller Gaussian volumetric nebula haze, travelling photon bezier curves, and smooth camera physics.",
       cap: "Interactive 3D Cosmos Portfolio",
-      url: "https://github.com/Naresh-Kumar17/protoflio_naresh",
+      url: "https://github.com/Naresh-Kumar17/portoflio_naresh",
       urlLabel: "View GitHub Repository ↗",
       role: "Frontend & Canvas Architect",
       duration: "2026 · Active",

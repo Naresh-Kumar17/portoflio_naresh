@@ -134,7 +134,7 @@ export const projects: Project[] = [
     status: 'completed',
     featured: true,
     technologies: ['React 19', 'TypeScript', 'HTML5 Canvas', '3D Geometry', 'Vite'],
-    github: 'https://github.com/Naresh-Kumar17/protoflio_naresh',
+    github: 'https://github.com/Naresh-Kumar17/portoflio_naresh',
     insights: [
       'Vanilla Canvas 2D engine with hardware-accelerated CSS glassmorphism offers superior framerates and memory efficiency over heavy WebGL frameworks',
       'Selective progressive disclosure of labels creates a clean astronomical aesthetic without cognitive visual clutter',

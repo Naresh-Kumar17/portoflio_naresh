@@ -10,7 +10,25 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
+# Environment variables & secrets
+.env
+.env.*
+*.env
+*.env.*
 *.local
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+!.env.example
+
+# Private keys and certificates
+*.pem
+*.key
+*.cert
+*.crt
+*.pfx
+*.p12
 
 # Editor directories and files
 .vscode/*

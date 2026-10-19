@@ -4,7 +4,7 @@
 Generated: 2026-10-18
 Project: Naresh Kumar Portfolio (FAST-NUCES Karachi)
 Target Reference: https://nicoborja.com/
-GitHub Repository: https://github.com/Naresh-Kumar17/protoflio_naresh.git
+GitHub Repository: https://github.com/Naresh-Kumar17/portoflio_naresh.git
 Working Directory: f:\Portfolio
 
 ================================================================================
@@ -17,7 +17,9 @@ TABLE OF CONTENTS
 5. INTERACTIVE SUBSYSTEMS & USER INTERFACE
 6. ROOT CAUSE ANALYSES (RCAS) & CRITICAL BUG RESOLUTIONS
 7. GIT REPOSITORY SETUP & COMMIT CHRONOLOGY
-8. PRODUCTION BUILD, BENCHMARKS & CURRENT PROJECT STATUS
+8. USER PROJECTS & PROFILE PERSONALIZATION
+9. PRODUCTION BUILD, BENCHMARKS & CURRENT PROJECT STATUS
+10. PLANNED ROADMAP & AGENDA: THINGS TO WORK ON TOMORROW
 
 ================================================================================
 1. EXECUTIVE SUMMARY & OBJECTIVES
@@ -228,7 +230,7 @@ Bug 5: Constellation Visual Clutter, Overlapping Text Labels & Compressed Layout
 ================================================================================
 7. GIT REPOSITORY SETUP & COMMIT CHRONOLOGY
 ================================================================================
-Remote URL: https://github.com/Naresh-Kumar17/protoflio_naresh.git
+Remote URL: https://github.com/Naresh-Kumar17/portoflio_naresh.git
 Primary Branch: main
 
 Commit History & Milestones:
@@ -239,7 +241,8 @@ Commit History & Milestones:
 - Commit `aa0ed5d`: Fix category navigation crash and enhance interactive drawer.
 - Commit `89bacf2`: Fix main canvas display (remove opaque WebGL glass) and activate vibrant category navbar.
 - Commit `4d4aee7`: Fix page overlay blockage, top navbar spacing, and canvas interaction.
-- Working (Local): Declutter constellation universe, integrate authentic projects (SVM Digits, Air Quality, Accident Severity), remove Mathematics domain, rename FAST-NUCES to Education, integrate profile.png portrait, update email to wdnaresh@gmail.com.
+- Commit `5bee8e3`: Add user projects (SVM, Air Quality, Accident Severity), remove math domain, rename FAST-NUCES to Education, embed profile photo, update email to wdnaresh@gmail.com.
+- Remote Status: Fully synchronized with `https://github.com/Naresh-Kumar17/portoflio_naresh.git` on branch `main`.
 
 ================================================================================
 8. USER PROJECTS & PROFILE PERSONALIZATION (OCTOBER 2026 UPDATE)
@@ -283,7 +286,41 @@ Commit History & Milestones:
 - Local Dev Server:
   * Running at: http://localhost:5173/ (Task 15)
   * Vite Fast Refresh (HMR): Active & fully synchronized.
-- Repository Status: Built and verified locally. Ready for user confirmation to commit and push to GitHub.
+- Repository Status: Clean working tree, fully committed and pushed to GitHub `origin/main`.
+
+================================================================================
+10. PLANNED ROADMAP & AGENDA: THINGS TO WORK ON TOMORROW
+================================================================================
+The following high-priority milestones are queued for execution tomorrow:
+
+1. Interactive Project Previews & Model Showcase:
+   - Embed interactive modal cards or live demo sandboxes for:
+     * SVM Handwritten Digits (canvas drawing pad to classify digits on-screen).
+     * Air Quality Forecasting (interactive time-series line chart with Prophet forecast).
+     * Road Accident Severity (feature importance radar chart using SHAP values).
+   - Add screenshots and architecture flowcharts directly into project detail views.
+
+2. Mobile & Touch Screen Interaction Polish:
+   - Enhance pinch-to-zoom and two-finger pan responsiveness on smartphones.
+   - Adjust bottom cluster navigation badges for narrow touch screens (<400px width).
+   - Implement subtle haptic vibration triggers on mobile node tap.
+
+3. Live Deployment Pipeline (Vercel / GitHub Pages):
+   - Configure a zero-config automated deployment workflow using GitHub Actions or Vercel.
+   - Ensure clean client-side routing, base paths, and asset caching headers.
+   - Link custom domain if desired (e.g. `nareshkumar.dev` or `naresh.me`).
+
+4. Resume / CV Interactive Download Node:
+   - Add a dedicated constellation node or header button to view and download Naresh's
+     latest Data Science resume (PDF) with in-modal PDF previewer.
+
+5. Direct Contact Submission Form:
+   - Integrate a serverless form handler (e.g., Formspree / EmailJS / Resend) so recruiters
+     and collaborators can message `wdnaresh@gmail.com` directly from the cosmos interface.
+
+6. SEO, OpenGraph & Social Share Cards:
+   - Configure dynamic OpenGraph meta tags (`og:image`, `og:title`, `og:description`).
+   - Add Twitter card metadata and rich JSON-LD schema for Google Search indexing.
 
 ================================================================================
 END OF AUDIT & IMPLEMENTATION REPORT

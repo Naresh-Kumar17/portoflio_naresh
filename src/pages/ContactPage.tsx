@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react';
+import { useState, type FormEvent, type ChangeEvent } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Mail, Send, CheckCircle2, AlertCircle, MapPin, ExternalLink } from 'lucide-react';
 import { ScrollReveal, StaggerItem } from '../components/ScrollReveal';
@@ -6,6 +6,7 @@ import { GithubIcon, LinkedinIcon } from '../components/SocialIcons';
 import { TextReveal } from '../components/TextReveal';
 import { useI18n } from '../contexts/I18nContext';
 import { profile } from '../data/profile';
+import { sanitizeText, sanitizeHeader, validateEmail, checkRateLimit } from '../utils/security';
 import './ContactPage.css';
 
 export function ContactPage() {
@@ -16,6 +17,7 @@ export function ContactPage() {
     email: '',
     subject: '',
     message: '',
+    honeypot: '', // Hidden bot trap field
   });
 
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
@@ -24,34 +26,57 @@ export function ContactPage() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
+    // 1. Honeypot check: If a bot filled out the hidden field, drop quietly
+    if (formState.honeypot) {
+      setStatus('success');
+      return;
+    }
+
+    // 2. Client-side rate limiting: Max 3 submissions per minute
+    const rateCheck = checkRateLimit('contact_form', 3, 60000);
+    if (!rateCheck.allowed) {
+      setStatus('error');
+      setErrorMessage(`Rate limit reached. Please wait ${rateCheck.remainingCooldownSec}s before sending another message.`);
+      return;
+    }
+
+    // 3. Required fields validation
     if (!formState.name.trim() || !formState.email.trim() || !formState.message.trim()) {
       setStatus('error');
       setErrorMessage('Please fill in all required fields.');
       return;
     }
 
-    // Basic email validation regex
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formState.email)) {
+    // 4. Strict email format validation
+    const emailResult = validateEmail(formState.email);
+    if (!emailResult.isValid) {
       setStatus('error');
-      setErrorMessage('Please enter a valid email address.');
+      setErrorMessage('Please enter a valid, well-formed email address.');
       return;
     }
 
+    // 5. Input sanitization & bounds enforcement (prepared for backend webhook or API dispatch)
+    const _sanitizedPayload = {
+      name: sanitizeText(formState.name, 100),
+      email: emailResult.sanitized,
+      subject: sanitizeHeader(formState.subject || 'Portfolio Inquiry', 150),
+      message: sanitizeText(formState.message, 3000),
+    };
+    void _sanitizedPayload;
+
     setStatus('submitting');
 
-    // Simulate an honest client-side submission with realistic response
-    // If user has provided a backend or Formspree endpoint, it would submit there.
+    // Simulate honest submission with sanitized values
     setTimeout(() => {
       setStatus('success');
-      setFormState({ name: '', email: '', subject: '', message: '' });
+      setFormState({ name: '', email: '', subject: '', message: '', honeypot: '' });
     }, 1000);
   };
 
   const mailtoHref = `mailto:${profile.contact.email || 'your-email@example.com'}?subject=${encodeURIComponent(
-    formState.subject || 'Portfolio Inquiry'
+    sanitizeHeader(formState.subject) || 'Portfolio Inquiry'
   )}&body=${encodeURIComponent(
-    `Hello ${profile.name},\n\n${formState.message}\n\nFrom: ${formState.name} (${formState.email})`
+    `Hello ${profile.name},\n\n${sanitizeText(formState.message, 2000)}\n\nFrom: ${sanitizeText(formState.name, 100)} (${validateEmail(formState.email).sanitized})`
   )}`;
 
   return (
@@ -258,10 +283,24 @@ export function ContactPage() {
                       )}
                     </AnimatePresence>
 
+                    {/* Anti-bot Honeypot field (hidden from legitimate users) */}
+                    <div style={{ position: 'absolute', opacity: 0, zIndex: -1, width: 0, height: 0, overflow: 'hidden' }} aria-hidden="true">
+                      <label htmlFor="hp_field">Do not fill this field</label>
+                      <input
+                        id="hp_field"
+                        type="text"
+                        name="hp_field"
+                        tabIndex={-1}
+                        autoComplete="off"
+                        value={formState.honeypot}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => setFormState({ ...formState, honeypot: e.target.value })}
+                      />
+                    </div>
+
                     {[
-                      { id: 'contact-name', label: t('contact.name'), type: 'text', required: true, placeholder: 'Jane Doe', field: 'name' as const },
-                      { id: 'contact-email', label: t('contact.email'), type: 'email', required: true, placeholder: 'jane@example.com', field: 'email' as const },
-                      { id: 'contact-subject', label: 'Subject', type: 'text', required: false, placeholder: 'Project inquiry or question', field: 'subject' as const },
+                      { id: 'contact-name', label: t('contact.name'), type: 'text', required: true, placeholder: 'Jane Doe', field: 'name' as const, maxLength: 100 },
+                      { id: 'contact-email', label: t('contact.email'), type: 'email', required: true, placeholder: 'jane@example.com', field: 'email' as const, maxLength: 100 },
+                      { id: 'contact-subject', label: 'Subject', type: 'text', required: false, placeholder: 'Project inquiry or question', field: 'subject' as const, maxLength: 150 },
                     ].map((input, idx) => (
                       <motion.div
                         key={input.id}
@@ -282,9 +321,10 @@ export function ContactPage() {
                           id={input.id}
                           type={input.type}
                           required={input.required}
+                          maxLength={input.maxLength}
                           placeholder={input.placeholder}
                           value={formState[input.field]}
-                          onChange={(e) => setFormState({ ...formState, [input.field]: e.target.value })}
+                          onChange={(e: ChangeEvent<HTMLInputElement>) => setFormState({ ...formState, [input.field]: e.target.value })}
                           className="form-input"
                           whileFocus={{ boxShadow: '0 0 0 2px var(--accent-primary), 0 0 20px rgba(139,92,246,0.1)' }}
                         />
@@ -309,9 +349,10 @@ export function ContactPage() {
                         id="contact-message"
                         required
                         rows={5}
+                        maxLength={3000}
                         placeholder="Write your message here..."
                         value={formState.message}
-                        onChange={(e) => setFormState({ ...formState, message: e.target.value })}
+                        onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setFormState({ ...formState, message: e.target.value })}
                         className="form-input form-textarea"
                         whileFocus={{ boxShadow: '0 0 0 2px var(--accent-primary), 0 0 20px rgba(139,92,246,0.1)' }}
                       />
