@@ -61,7 +61,7 @@ export const profile = {
   /** Site-level SEO & deployment config */
   site: {
     /** Your deployed URL (update before deployment) */
-    url: 'https://your-portfolio.netlify.app',
+    url: 'https://nareshkumar17.netlify.app',
     title: 'Data Science Portfolio',
     description:
       'Personal portfolio of a Data Science student at FAST-NUCES Karachi — turning data into decisions through analysis, visualization, and machine learning.',
