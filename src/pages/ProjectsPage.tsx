@@ -58,135 +58,83 @@ export function ProjectsPage() {
     <main className="page projects-page">
       <div className="container">
         <ScrollReveal variant="blur">
-          <div className="section__header">
-            <span className="section__label">{t('projects.title')}</span>
-            <TextReveal text={t('projects.subtitle')} as="h1" className="section__title" />
-            <motion.p
-              className="section__subtitle"
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, type: 'spring', stiffness: 120, damping: 18 }}
-            >
-              Explore predictive machine learning models, time-series data science pipelines, and interactive web applications.
-            </motion.p>
-          </div>
+          <header className="page__header">
+            <span className="section__label">{t('projects.label')}</span>
+            <TextReveal as="h1" className="page__title">
+              {t('projects.title')}
+            </TextReveal>
+            <p className="page__description">{t('projects.subtitle')}</p>
+          </header>
         </ScrollReveal>
 
-        {/* Filter & Search Controls */}
-        <ScrollReveal delay={100} variant="slide" direction="up">
+        {/* Filter controls */}
+        <ScrollReveal delay={0.1}>
           <div className="projects-controls">
-            {/* Search */}
+            {/* Search bar */}
             <div className="projects-search">
               <Search size={18} className="projects-search__icon" />
               <input
                 type="text"
-                placeholder="Search projects by title, tech stack, or topic..."
+                placeholder={t('projects.searchPlaceholder')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="projects-search__input"
-                aria-label="Search projects"
+                aria-label={t('projects.searchPlaceholder')}
               />
-              {searchQuery && (
-                <motion.button
-                  type="button"
-                  initial={{ scale: 0, rotate: -90 }}
-                  animate={{ scale: 1, rotate: 0 }}
-                  exit={{ scale: 0 }}
-                  onClick={() => setSearchQuery('')}
-                  className="projects-search__clear"
-                  aria-label="Clear search"
-                  whileHover={{ scale: 1.2 }}
-                  whileTap={{ scale: 0.9 }}
-                >
-                  ✕
-                </motion.button>
-              )}
             </div>
 
-            <div className="projects-filters-row">
-              {/* Category Pills */}
-              <LayoutGroup>
-                <div className="projects-pills" role="tablist" aria-label="Filter by category">
-                  {categories.map((cat) => (
-                    <motion.button
-                      key={cat.value}
-                      role="tab"
-                      aria-selected={selectedCategory === cat.value}
-                      className={`projects-pill ${selectedCategory === cat.value ? 'projects-pill--active' : ''}`}
-                      onClick={() => setSelectedCategory(cat.value)}
-                      whileHover={{ scale: 1.06 }}
-                      whileTap={{ scale: 0.95 }}
-                      transition={{ type: 'spring', stiffness: 400, damping: 17 }}
-                      layout
-                    >
-                      {cat.label}
-                      {selectedCategory === cat.value && (
-                        <motion.div
-                          layoutId="category-pill-bg"
-                          className="projects-pill__active-bg"
-                          transition={{ type: 'spring', stiffness: 350, damping: 30 }}
-                        />
-                      )}
-                    </motion.button>
-                  ))}
-                </div>
-              </LayoutGroup>
-
-              {/* Status Select */}
-              <div className="projects-status-select-wrap">
-                <Filter size={15} className="projects-filter-icon" />
-                <select
-                  value={selectedStatus}
-                  onChange={(e) => setSelectedStatus(e.target.value)}
-                  className="projects-status-select"
-                  aria-label="Filter by project status"
-                >
-                  {statuses.map((st) => (
-                    <option key={st.value} value={st.value}>
-                      {st.label}
-                    </option>
-                  ))}
-                </select>
+            {/* Category tabs */}
+            <LayoutGroup id="project-categories">
+              <div className="filter-group filter-group--categories" role="tablist">
+                {categories.map((cat) => (
+                  <button
+                    key={cat.value}
+                    role="tab"
+                    aria-selected={selectedCategory === cat.value}
+                    className={`filter-btn ${selectedCategory === cat.value ? 'filter-btn--active' : ''}`}
+                    onClick={() => setSelectedCategory(cat.value)}
+                  >
+                    <span>{cat.label}</span>
+                    {selectedCategory === cat.value && (
+                      <motion.div
+                        layoutId="active-category"
+                        className="filter-btn__indicator"
+                        transition={{ type: 'spring', stiffness: 500, damping: 35 }}
+                      />
+                    )}
+                  </button>
+                ))}
               </div>
+            </LayoutGroup>
+
+            {/* Status dropdown / pills */}
+            <div className="filter-group filter-group--status">
+              <Filter size={14} className="filter-icon" />
+              {statuses.map((st) => (
+                <button
+                  key={st.value}
+                  className={`filter-pill ${selectedStatus === st.value ? 'filter-pill--active' : ''}`}
+                  onClick={() => setSelectedStatus(st.value)}
+                >
+                  {st.label}
+                </button>
+              ))}
             </div>
           </div>
         </ScrollReveal>
 
-        {/* Project Grid */}
-        <AnimatePresence mode="wait">
-          {filteredProjects.length === 0 ? (
-            <motion.div
-              key="empty"
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ type: 'spring', stiffness: 200, damping: 20 }}
-              className="projects-empty card"
-            >
-              <p className="projects-empty__text">{t('projects.noResults')}</p>
-              <motion.button
-                type="button"
-                className="btn btn--outline"
-                whileHover={{ scale: 1.06 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => {
-                  setSelectedCategory('all');
-                  setSelectedStatus('all');
-                  setSearchQuery('');
-                }}
-              >
-                Reset All Filters
-              </motion.button>
-            </motion.div>
-          ) : (
-            <motion.div
-              key={`${selectedCategory}-${selectedStatus}-${searchQuery}`}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="projects-grid"
-            >
+        {/* Results count */}
+        <div className="projects-count">
+          <span>
+            {t('projects.showing')} <strong>{filteredProjects.length}</strong>{' '}
+            {filteredProjects.length === 1 ? t('projects.project') : t('projects.projectsPlural')}
+          </span>
+        </div>
+
+        {/* Projects grid */}
+        {filteredProjects.length > 0 ? (
+          <div className="projects-grid">
+            <AnimatePresence mode="popLayout">
               {filteredProjects.map((project, index) => (
                 <motion.div
                   key={project.id}
@@ -206,9 +154,16 @@ export function ProjectsPage() {
                         <span className="project-card__category">
                           {project.category.replace('-', ' ')}
                         </span>
-                        <span className={`project-status-badge project-status-badge--${project.status}`}>
-                          {t(`projects.status.${project.status}` as any) || project.status}
-                        </span>
+                        <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+                          {project.demo && (
+                            <span style={{ fontSize: '10px', padding: '2px 8px', borderRadius: '999px', background: 'rgba(16,185,129,0.15)', color: '#10B981', border: '1px solid rgba(16,185,129,0.3)', fontFamily: 'var(--mono)', fontWeight: 600 }}>
+                              LIVE APP
+                            </span>
+                          )}
+                          <span className={`project-status-badge project-status-badge--${project.status}`}>
+                            {t(`projects.status.${project.status}` as any) || project.status}
+                          </span>
+                        </div>
                       </div>
 
                       <h2 className="project-card__title">
@@ -274,9 +229,23 @@ export function ProjectsPage() {
                   </MagneticCard>
                 </motion.div>
               ))}
-            </motion.div>
-          )}
-        </AnimatePresence>
+            </AnimatePresence>
+          </div>
+        ) : (
+          <div className="projects-empty">
+            <p>{t('projects.noResults')}</p>
+            <button
+              className="btn btn--secondary btn--sm"
+              onClick={() => {
+                setSelectedCategory('all');
+                setSelectedStatus('all');
+                setSearchQuery('');
+              }}
+            >
+              {t('projects.resetFilters')}
+            </button>
+          </div>
+        )}
       </div>
     </main>
   );
