@@ -141,28 +141,44 @@ $$Z_0 = \sqrt{-2 \ln U_1} \cos(2\pi U_2), \quad Z_1 = \sqrt{-2 \ln U_1} \sin(2\p
 
 ## 🗺️ Constellation Spatial Graph
 
-Every milestone and project is assigned deterministic coordinates with generous spacing fanning out from center node **Naresh** at $(0, 0, 0)$ to ensure maximum clarity on the main screen:
+Every milestone and project is assigned deterministic spatial coordinates with generous spacing fanning out from anchor node **Naresh** at \((-12.0, 8.0)\) and **Projects** at \((12.0, -6.0)\) with over 300px visual separation:
 
 ```
-                                      [Dataset Doctor] (40.5, 18.0)
-                                            │
-                                    [Data Science] (29.0, 12.0)
-                                            │
-                                      [Air Quality] (40.5, 8.0)
-       [Skills Hub]                         │
-      (-18.0, 8.5)                          │
-            \                               │
-             \--- [About] (-8.0, 4.5)       │
-              \                             │
-               \─── [NARESH (0, 0, 0)] ──────── [Projects Hub] (18.0, 0.0)
-              /     Center Origin           │          \
-             /--- [Contact] (-8.0,-4.5)     │           \--- [Machine Learning] (30.0, -2.5)
-            /                               │                     ├── [SVM Digits] (41.0, 4.0)
-       [Resume Hub]                         │                     └── [Accident Risk] (41.5, -7.0)
-      (-18.0, -8.5)                 [Web Development] (29.0, -12.0)
-                                            │
-                                    [3D Cosmos Engine] (40.5, -13.0)
+               [Skills Hub] (-32, 22)           [Resume Hub] (6, 22)
+                     \                               /
+  [About Me] (-34, 8) ─── [NARESH] (-12, 8)         /
+                     /        \                    /
+[Let's Connect] (-32,-6)       \                  /
+                                \                /
+                            (Distance > 300px)  /
+                                  \            /
+                                   \          /
+                                  [PROJECTS] (12, -6) ──── [Web Development] (30, -6) ──── [3D Cosmos Portfolio] (44, -6)
+                                   /      \
+                                  /        \──── [Machine Learning] (28, -19) ─┬── [SVM Digits Recognition] (41, -14.5)
+                                 /                                              └── [Road Accident Severity] (41, -24.5)
+                                /
+                       [Data Science] (12, -23)
+                        /                  \
+   [Dataset Doctor] (4, -34.5)       [Air Quality Forecasting] (20, -34.5)
 ```
+
+| Node | Identifier | Spatial Position \((X, Y, Z)\) | Hub Connection |
+| :--- | :--- | :--- | :--- |
+| **Naresh** | `naresh` | \((-12.0, 8.0, 0.0)\) | Anchor Node (Karachi, Pakistan) |
+| **Skills** | `skills_hub` | \((-32.0, 22.0, 0.15)\) | Radiates Up-Left from Naresh |
+| **About Me** | `about_me` | \((-34.0, 8.0, 0.1)\) | Radiates Straight Left from Naresh |
+| **Let's Connect** | `contacto` | \((-32.0, -6.0, -0.1)\) | Radiates Down-Left from Naresh |
+| **Resume** | `resume_hub` | \((6.0, 22.0, 0.15)\) | Radiates Up-Right from Naresh |
+| **Projects** | `growth` | \((12.0, -6.0, 0.1)\) | Radiates Down-Right from Naresh (>300px) |
+| **Web Development** | `web_category` | \((30.0, -6.0, 0.15)\) | Radiates Straight Right from Projects |
+| **3D Cosmos Portfolio** | `cosmos_portfolio` | \((44.0, -6.0, 0.2)\) | Connects to Web Development |
+| **Machine Learning** | `ml_category` | \((28.0, -19.0, 0.15)\) | Radiates Down-Right from Projects |
+| **SVM Digits** | `svm_digits` | \((41.0, -14.5, 0.2)\) | Connects to Machine Learning |
+| **Road Accident Risk** | `accident_severity` | \((41.0, -24.5, 0.2)\) | Connects to Machine Learning |
+| **Data Science** | `ds_category` | \((12.0, -23.0, 0.15)\) | Radiates Straight Down from Projects |
+| **Dataset Doctor** | `dataset_doctor` | \((4.0, -34.5, 0.25)\) | Connects to Data Science |
+| **Air Quality** | `air_quality` | \((20.0, -34.5, 0.25)\) | Connects to Data Science |
 
 ---
 
