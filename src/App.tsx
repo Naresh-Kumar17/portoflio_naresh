@@ -65,6 +65,7 @@ function AppContent() {
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
   const location = useLocation();
   const isHome = location.pathname === '/';
+  const isResume = location.pathname === '/resume';
 
   // Global keyboard shortcut for Command Palette (Ctrl+K or Cmd+K)
   useEffect(() => {
@@ -83,13 +84,13 @@ function AppContent() {
     <div className={`app ${isHome ? 'app--map-active' : ''}`}>
       <ScrollToTop />
       <CursorGlow />
-      {!isHome && <Navbar onOpenCommandPalette={() => setCommandPaletteOpen(true)} />}
+      {!isHome && !isResume && <Navbar onOpenCommandPalette={() => setCommandPaletteOpen(true)} />}
 
       <div className={isHome ? 'main-content main-content--fullscreen' : 'main-content'}>
         {isHome ? <HomePage /> : <AnimatedRoutes />}
       </div>
 
-      {!isHome && <Footer />}
+      {!isHome && !isResume && <Footer />}
 
       <CommandPalette
         isOpen={commandPaletteOpen}

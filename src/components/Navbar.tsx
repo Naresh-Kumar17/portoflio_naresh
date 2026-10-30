@@ -38,13 +38,10 @@ export function Navbar({ onOpenCommandPalette }: NavbarProps) {
   }, [mobileOpen]);
 
   const navLinks = [
-    { to: '/', label: t('nav.home') },
-    { to: '/about', label: t('nav.about') },
-    { to: '/skills', label: t('nav.skills') },
-    { to: '/projects', label: t('nav.projects') },
-    { to: '/education', label: t('nav.education') },
-    { to: '/resume', label: t('nav.resume') },
-    { to: '/contact', label: t('nav.contact') },
+    { to: '/', label: 'Naresh' },
+    { to: '/skills', label: 'Skills' },
+    { to: '/projects', label: 'Projects' },
+    { to: '/resume', label: 'Resume' },
   ];
 
   return (
