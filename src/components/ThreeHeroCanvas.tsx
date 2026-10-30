@@ -45,7 +45,7 @@ export function ThreeHeroCanvas() {
     const rootGroup = new THREE.Group();
     scene.add(rootGroup);
 
-    // Color definitions (Nico Borja Obsidian, Lavender & Citron Palette)
+    // Color definitions (Obsidian, Lavender & Citron Palette)
     const isDark = theme === 'dark';
     const primaryColor = new THREE.Color(isDark ? 0x9b8fff : 0x705eff); // Electric Iris / Lavender (#9b8fff)
     const accentColor = new THREE.Color(isDark ? 0xcfff04 : 0x566800);  // Cyber Citron / Acid Lime (#cfff04)

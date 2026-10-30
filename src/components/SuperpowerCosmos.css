@@ -1,4 +1,4 @@
-.nico-universe-wrapper{position:fixed;inset:0;width:100vw;height:100vh;overflow:hidden;background:var(--bg);z-index:1}
+.superpower-cosmos-wrapper{position:fixed;inset:0;width:100vw;height:100vh;overflow:hidden;background:var(--bg);z-index:1}
 
 /* Origin — brand typeface. Text (body) + Display (large titles). Origin type-system v1. */
 /* Origin Text — body + UI. Light end (200/300) powers the light all-caps + paragraph system. */
@@ -42,7 +42,7 @@
 .t-body strong,.t-strong{font-weight:var(--w-reg)}
 .macro{font-family:var(--display);font-weight:var(--w-black);line-height:.8;display:inline-block;user-select:none}
 .macro.ast{font-weight:var(--w-bold)}
-*{box-sizing:border-box}html,body{margin:0;height:100%;overflow:hidden;background:var(--bg);color:var(--ink);font-family:var(--sans)}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans)}
 #c{position:fixed;inset:0;width:100vw!important;height:100vh!important;display:block;cursor:crosshair;z-index:1;touch-action:none}
 #glass{display:none!important}
 #vig{position:fixed;inset:0;pointer-events:none;z-index:2;background:radial-gradient(120% 120% at 50% 46%,transparent 55%,rgba(5,6,10,.5))}
@@ -458,4 +458,26 @@ body.origen #gallery,body.origen #page{opacity:0!important;transform:translateX(
     border-left: none;
     padding-left: 0;
   }
+}
+
+/* ── Skills Case Study Styling ── */
+.skills-case-study {
+  margin: 16px 0 10px;
+}
+.sc-card {
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+.sc-card:hover {
+  transform: translateX(2px);
+  background: rgba(255, 255, 255, 0.055) !important;
+}
+.sc-tag {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: var(--ink2);
+  letter-spacing: 0.02em;
 }
