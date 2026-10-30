@@ -1,5 +1,5 @@
 /* ============================================================
-   DESIGN SYSTEM — Nico Borja Architectural & Data Aesthetics
+   DESIGN SYSTEM — Antigravity Architectural & Data Aesthetics
    ============================================================
    Deep Obsidian Midnight canvas (#100E1A) with soft radial vignette,
    Electric Iris / Soft Lavender focal highlights (#9B8FFF),
@@ -12,7 +12,7 @@
 
 /* ── CSS Custom Properties (Design Tokens) ── */
 :root {
-  /* ── Nico Borja Signature Palette ── */
+  /* ── Antigravity Signature Palette ── */
   --obsidian-950: #07060c;
   --obsidian-900: #100e1a;
   --obsidian-850: #141222;
@@ -170,6 +170,7 @@
   --nav-border: rgba(16, 14, 26, 0.08);
 
   --card-bg: rgba(255, 255, 255, 0.82);
+  --bg-card: rgba(255, 255, 255, 0.82);
   --card-border: rgba(16, 14, 26, 0.1);
   --card-hover-border: rgba(112, 94, 255, 0.4);
   --card-shadow: 0 4px 16px rgba(16, 14, 26, 0.04);
@@ -201,7 +202,7 @@
   --mesh-3: rgba(255, 106, 61, 0.02);
 }
 
-/* ── DARK THEME (Nico Borja Signature Aesthetic — Default) ── */
+/* ── DARK THEME (Antigravity Signature Cosmic Dark — Default) ── */
 [data-theme='dark'],
 :root {
   --bg-primary: #100e1a;
@@ -232,6 +233,7 @@
   --nav-border: rgba(255, 255, 255, 0.09);
 
   --card-bg: rgba(16, 14, 26, 0.65);
+  --bg-card: rgba(16, 14, 26, 0.65);
   --card-border: rgba(255, 255, 255, 0.12);
   --card-hover-border: rgba(155, 143, 255, 0.4);
   --card-shadow: 0 14px 40px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.14);
@@ -322,7 +324,7 @@ body::before {
   100% { background-position: 10% 50%, 90% 20%, 60% 90%; }
 }
 
-/* Animated mesh gradient background with Nico Borja vignette */
+/* Animated mesh gradient background with Cosmic Dark vignette */
 body::before {
   content: '';
   position: fixed;

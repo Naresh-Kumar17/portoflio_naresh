@@ -9,7 +9,7 @@
   padding-bottom: var(--space-16);
 }
 
-/* ── Ambient Illumination Orbs (Nico Borja Iris & Deep Obsidian Warmth) ── */
+/* ── Ambient Illumination Orbs ── */
 .hero__orb {
   position: absolute;
   border-radius: 50%;
@@ -67,7 +67,7 @@
   flex-direction: column;
 }
 
-/* Status Badge (Nico Borja Frosted Pill Capsule) */
+/* Status Badge */
 .hero__status-badge {
   display: inline-flex;
   align-items: center;
