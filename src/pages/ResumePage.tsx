@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Download, FileText, Printer, GraduationCap, Briefcase, Code } from 'lucide-react';
-import { ScrollReveal } from '../components/ScrollReveal';
+import { Link } from 'react-router-dom';
+import { ArrowLeft, Download, FileText, Printer, GraduationCap, Briefcase, Code } from 'lucide-react';
 import { useI18n } from '../contexts/I18nContext';
 import { profile } from '../data/profile';
 import { skillCategories } from '../data/skills';
@@ -25,38 +25,58 @@ export function ResumePage() {
   };
 
   return (
-    <main className="page resume-page">
-      <div className="container">
-        {/* Header with actions */}
-        <ScrollReveal>
-          <div className="resume-header-bar">
-            <div>
-              <span className="section__label">{t('resume.title')}</span>
-              <h1 className="resume-page__title">Curriculum Vitae</h1>
-            </div>
+    <main className="page resume-page" style={{ paddingTop: '2.5rem', paddingBottom: '4rem' }}>
+      <div className="container container--narrow">
+        {/* Dedicated Back Navigation */}
+        <div style={{ marginBottom: '1.5rem' }}>
+          <Link
+            to="/"
+            className="btn btn--outline"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
+              padding: '8px 18px',
+              fontSize: '13px',
+              fontFamily: 'var(--mono)',
+              borderRadius: '999px',
+              textDecoration: 'none',
+              backdropFilter: 'blur(8px)',
+            }}
+          >
+            <ArrowLeft size={16} />
+            <span>← Back to Portfolio</span>
+          </Link>
+        </div>
 
-            <div className="resume-actions">
-              <button
-                type="button"
-                className="btn btn--outline"
-                onClick={handlePrint}
-                title="Print CV"
-              >
-                <Printer size={16} />
-                <span>Print</span>
-              </button>
-              <button
-                type="button"
-                className="btn btn--primary"
-                onClick={handleDownload}
-                title="Download PDF"
-              >
-                <Download size={16} />
-                <span>{t('resume.download')}</span>
-              </button>
-            </div>
+        {/* Header with actions */}
+        <div className="resume-header-bar">
+          <div>
+            <span className="section__label">{t('resume.title')}</span>
+            <h1 className="resume-page__title">Curriculum Vitae</h1>
           </div>
-        </ScrollReveal>
+
+          <div className="resume-actions">
+            <button
+              type="button"
+              className="btn btn--outline"
+              onClick={handlePrint}
+              title="Print CV"
+            >
+              <Printer size={16} />
+              <span>Print</span>
+            </button>
+            <button
+              type="button"
+              className="btn btn--primary"
+              onClick={handleDownload}
+              title="Download PDF"
+            >
+              <Download size={16} />
+              <span>{t('resume.download')}</span>
+            </button>
+          </div>
+        </div>
 
         {downloadNotice && (
           <div className="resume-notice alert alert--warning" role="alert">
@@ -66,8 +86,7 @@ export function ResumePage() {
         )}
 
         {/* Printable/Online CV Sheet */}
-        <ScrollReveal delay={100}>
-          <div className="resume-sheet card">
+        <div className="resume-sheet card">
             {/* CV Header */}
             <div className="cv-header">
               <div className="cv-header__info">
@@ -113,8 +132,9 @@ export function ResumePage() {
                 <FileText size={18} className="cv-section__icon" />
                 <span>Executive Summary</span>
               </h3>
-              <p className="cv-summary-text">{profile.bio[0]}</p>
-              <p className="cv-summary-text">{profile.bio[2]}</p>
+              <p className="cv-summary-text">
+                Data Science undergraduate at FAST-NUCES Karachi specializing in machine learning algorithms, statistical modeling, time-series forecasting, and interactive web applications. Experienced in designing end-to-end analytical pipelines from raw datasets to 60 FPS visual computing engines.
+              </p>
             </section>
 
             {/* Education */}
@@ -135,7 +155,7 @@ export function ResumePage() {
                   </span>
                 </div>
                 <p className="cv-entry__desc">
-                  Focused coursework in data structures, algorithms, probability and statistics, linear algebra, and data wrangling.
+                  Focused coursework in data structures, algorithms, probability and statistics, linear algebra, object-oriented programming (C++), and machine learning foundations.
                 </p>
               </div>
             </section>
@@ -163,7 +183,7 @@ export function ResumePage() {
             <section className="cv-section">
               <h3 className="cv-section__title">
                 <Briefcase size={18} className="cv-section__icon" />
-                <span>Selected Academic & Technical Projects</span>
+                <span>Technical Projects</span>
               </h3>
 
               {projects.map((proj) => (
@@ -189,7 +209,6 @@ export function ResumePage() {
               ))}
             </section>
           </div>
-        </ScrollReveal>
       </div>
     </main>
   );

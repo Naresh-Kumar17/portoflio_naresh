@@ -79,7 +79,7 @@
 
 .cv-title {
   font-size: var(--text-base);
-  color: var(--cyan-400);
+  color: var(--accent-primary, #9b8fff);
   font-weight: 600;
   margin-bottom: var(--space-1);
 }
@@ -122,7 +122,7 @@
 }
 
 .cv-section__icon {
-  color: var(--cyan-400);
+  color: var(--accent-primary, #9b8fff);
 }
 
 .cv-summary-text {
@@ -166,7 +166,7 @@
 
 .cv-entry__org {
   font-size: var(--text-sm);
-  color: var(--cyan-400);
+  color: var(--accent-primary, #9b8fff);
 }
 
 .cv-entry__tech-inline {
