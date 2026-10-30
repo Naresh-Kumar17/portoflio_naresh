@@ -2,21 +2,16 @@
  * ============================================================
  * PROJECTS CONFIGURATION
  * ============================================================
- * Categorized into Academic Coursework and Personal Projects.
- * status: 'completed' | 'in-progress' | 'planned'
- * projectType: 'personal' | 'academic'
+ * 3 Core Focused Categories:
+ * 1. Machine Learning (SVM, Road Accident Risk)
+ * 2. Data Science (Air Quality Forecasting, EDA Pipeline)
+ * 3. Web Development (Interactive 3D Cosmos Portfolio)
  * ============================================================
  */
 
 export type ProjectStatus = 'completed' | 'in-progress' | 'planned';
 export type ProjectType = 'personal' | 'academic';
-export type ProjectCategory =
-  | 'data-analysis'
-  | 'machine-learning'
-  | 'visualization'
-  | 'systems'
-  | 'gaming'
-  | 'other';
+export type ProjectCategory = 'machine-learning' | 'data-science' | 'web';
 
 export interface Project {
   id: string;
@@ -64,7 +59,7 @@ export interface Project {
 
 export const projects: Project[] = [
   /* ────────────────────────────────────────────────────────────
-   * 1. PERSONAL PROJECTS
+   * 1. MACHINE LEARNING
    * ──────────────────────────────────────────────────────────── */
   {
     id: 'svm-handwritten-digits',
@@ -92,29 +87,6 @@ export const projects: Project[] = [
     date: '2025',
   },
   {
-    id: 'air-quality-forecasting',
-    title: 'Air Quality Forecasting',
-    shortDescription:
-      'Time-series forecasting model analyzing particulate matter and meteorological trends to predict air quality indices with trend decomposition.',
-    longDescription:
-      'Developed an end-to-end time-series analysis framework predicting air quality and pollutant concentrations. Handled time-series interpolation, seasonal decomposition (STL), stationarity checks (ADF tests), and predictive regression modeling to forecast hazardous AQI episodes.',
-    category: 'data-analysis',
-    projectType: 'personal',
-    status: 'completed',
-    featured: true,
-    technologies: ['Python', 'pandas', 'Time-Series', 'Matplotlib', 'Predictive Modeling'],
-    github: 'https://github.com/Naresh-Kumar17/Air_Quality_Forcasating-',
-    insights: [
-      'Identified strong diurnal and seasonal cycles strongly correlated with temperature inversions',
-      'Lagged rolling window features significantly improved short-term particulate matter predictions',
-    ],
-    learnings: [
-      'Handling temporal data gaps, resampling frequencies, and rolling statistics',
-      'Time-series cross-validation without temporal data leakage',
-    ],
-    date: '2025',
-  },
-  {
     id: 'road-accident-severity',
     title: 'Road Accident Severity Prediction',
     shortDescription:
@@ -137,28 +109,32 @@ export const projects: Project[] = [
     ],
     date: '2025',
   },
+
+  /* ────────────────────────────────────────────────────────────
+   * 2. DATA SCIENCE & TIME-SERIES
+   * ──────────────────────────────────────────────────────────── */
   {
-    id: 'cosmos-portfolio',
-    title: 'Interactive 3D Cosmos Portfolio',
+    id: 'air-quality-forecasting',
+    title: 'Air Quality Forecasting',
     shortDescription:
-      'Custom mathematical 3D constellation cosmos engine built with React 19, TypeScript, and HTML5 Canvas with zero heavy engine overhead.',
+      'Time-series forecasting model analyzing particulate matter and meteorological trends to predict air quality indices with trend decomposition.',
     longDescription:
-      'Designed and developed this portfolio to showcase data science research and software projects. Implemented a custom 3D perspective projection engine on HTML5 Canvas, Box-Muller Gaussian volumetric nebula haze, travelling photon bezier curves, and smooth camera physics.',
-    category: 'visualization',
+      'Developed an end-to-end time-series analysis framework predicting air quality and pollutant concentrations. Handled time-series interpolation, seasonal decomposition (STL), stationarity checks (ADF tests), and predictive regression modeling to forecast hazardous AQI episodes.',
+    category: 'data-science',
     projectType: 'personal',
     status: 'completed',
     featured: true,
-    technologies: ['React 19', 'TypeScript', 'HTML5 Canvas', '3D Geometry', 'Vite'],
-    github: 'https://github.com/Naresh-Kumar17/portoflio_naresh',
+    technologies: ['Python', 'pandas', 'Time-Series', 'Matplotlib', 'Predictive Modeling'],
+    github: 'https://github.com/Naresh-Kumar17/Air_Quality_Forcasating-',
     insights: [
-      'Vanilla Canvas 2D engine with hardware-accelerated CSS glassmorphism offers superior framerates and memory efficiency over heavy WebGL frameworks',
-      'Selective progressive disclosure of labels creates a clean astronomical aesthetic without cognitive visual clutter',
+      'Identified strong diurnal and seasonal cycles strongly correlated with temperature inversions',
+      'Lagged rolling window features significantly improved short-term particulate matter predictions',
     ],
     learnings: [
-      '3D camera projection mathematics: yaw, pitch, perspective divide, and coordinate transformations',
-      'Optimizing canvas draw loops and avoiding garbage collection overhead during 60 FPS animation',
+      'Handling temporal data gaps, resampling frequencies, and rolling statistics',
+      'Time-series cross-validation without temporal data leakage',
     ],
-    date: '2026',
+    date: '2025',
   },
   {
     id: 'exploratory-data-analysis',
@@ -167,7 +143,7 @@ export const projects: Project[] = [
       'A comprehensive EDA workflow analyzing real-world datasets to uncover patterns, distributions, and relationships between variables.',
     longDescription:
       'Built a structured exploratory data analysis pipeline using Python, pandas, and visualization libraries. The project walks through data loading, cleaning, statistical summaries, distribution analysis, correlation exploration, and visual storytelling.',
-    category: 'data-analysis',
+    category: 'data-science',
     projectType: 'personal',
     status: 'completed',
     featured: false,
@@ -176,82 +152,31 @@ export const projects: Project[] = [
   },
 
   /* ────────────────────────────────────────────────────────────
-   * 2. ACADEMIC PROJECTS (FAST-NUCES Coursework)
+   * 3. WEB DEVELOPMENT
    * ──────────────────────────────────────────────────────────── */
   {
-    id: 'bank-management-system',
-    title: 'Bank Management System (C & Raylib)',
+    id: 'cosmos-portfolio',
+    title: 'Interactive 3D Cosmos Portfolio',
     shortDescription:
-      'Interactive graphical Bank Management System developed in C utilizing Raylib for UI rendering, account records management, transaction processing, and file persistence.',
+      'Custom mathematical 3D constellation cosmos engine built with React 19, TypeScript, and HTML5 Canvas, deployed on AWS Amplify with zero heavy engine overhead.',
     longDescription:
-      'Developed for the Programming Fundamentals course at FAST-NUCES Karachi. Designed with modular procedural C architecture, implementing account creation, deposit/withdrawal validation, PIN security, transaction ledger logging, and dynamic 2D GUI elements rendered in Raylib.',
-    category: 'systems',
-    projectType: 'academic',
-    course: 'Programming Fundamentals',
+      'Designed and developed this portfolio to showcase machine learning research, data science pipelines, and software projects. Implemented a custom 3D perspective projection engine on HTML5 Canvas, Box-Muller Gaussian volumetric nebula haze, travelling photon bezier curves, and smooth camera physics.',
+    category: 'web',
+    projectType: 'personal',
     status: 'completed',
     featured: true,
-    technologies: ['C', 'Raylib', 'File Handling', 'Data Structures', 'Procedural C'],
-    github: 'https://github.com/Naresh-Kumar17/Bank-Management-System-C-Raylib',
+    technologies: ['AWS Amplify', 'React 19', 'TypeScript', 'HTML5 Canvas', 'CI/CD', 'Vite'],
+    github: 'https://github.com/Naresh-Kumar17/portoflio_naresh',
     insights: [
-      'Engineered binary file handling mechanisms to persist user accounts and balance state across application restarts',
-      'Custom Raylib event loop decoupled state updates from 60 FPS graphics rendering',
+      'Continuous deployment via AWS Amplify Hosting with automated Git builds and edge CDN caching',
+      'Vanilla Canvas 2D engine with hardware-accelerated CSS glassmorphism offers superior framerates and memory efficiency over heavy WebGL frameworks',
+      'Selective progressive disclosure of labels creates a clean astronomical aesthetic without cognitive visual clutter',
     ],
     learnings: [
-      'Low-level memory management and pointer arithmetic in C',
-      'File streams, buffer allocation, and atomic write operations for financial records',
-      'Implementing event-driven GUI buttons and input fields without high-level frameworks',
+      '3D camera projection mathematics: yaw, pitch, perspective divide, and coordinate transformations',
+      'Optimizing canvas draw loops and avoiding garbage collection overhead during 60 FPS animation',
     ],
-    date: '2024',
-  },
-  {
-    id: 'cricket-match-management-system',
-    title: 'Cricket Match Management System',
-    shortDescription:
-      'Comprehensive cricket scoring and tournament simulation platform architected with strict Object-Oriented Programming principles in C++.',
-    longDescription:
-      'Coursework project for Object-Oriented Programming (OOP) at FAST-NUCES Karachi. Built using advanced C++ object hierarchies: abstract base classes, operator overloading, run-time polymorphism for innings calculations, bowler spell tracking, and real-time commentary logs.',
-    category: 'systems',
-    projectType: 'academic',
-    course: 'Object-Oriented Programming (OOP)',
-    status: 'completed',
-    featured: true,
-    technologies: ['C++', 'OOP', 'Inheritance', 'Polymorphism', 'File I/O'],
-    github: 'https://github.com/Naresh-Kumar17/Cricket-Match-Management-System',
-    insights: [
-      'Hierarchical class structure separating Player, Batsman, Bowler, Team, and Match models ensures high cohesion and loose coupling',
-      'Automated run-rate, extras, and strike-rate calculations updated dynamically ball-by-ball',
-    ],
-    learnings: [
-      'Mastery of OOP tenets: Encapsulation, Abstraction, Inheritance, and Polymorphism in C++',
-      'Destructors and dynamic memory allocation to prevent memory leaks during extended match tournaments',
-      'Operator overloading for intuitive score and team comparisons',
-    ],
-    date: '2025',
-  },
-  {
-    id: '2048-assembly-game',
-    title: '2048 Game (x86 Assembly)',
-    shortDescription:
-      'Hardware-level implementation of the classic 2048 tile-sliding game written in x86 Assembly utilizing BIOS/DOS interrupts and direct register manipulation.',
-    longDescription:
-      'Developed for the Computer Organization & Assembly Language (COAL) course at FAST-NUCES Karachi. Features direct CPU register memory operations (AX, BX, CX, DX, SI, DI), 4x4 matrix shift-and-merge algorithms, keyboard scan-code polling via INT 16h, color video buffer manipulation via INT 10h, and high-score tracking.',
-    category: 'gaming',
-    projectType: 'academic',
-    course: 'Computer Organization & Assembly Language (COAL)',
-    status: 'completed',
-    featured: true,
-    technologies: ['x86 Assembly', 'COAL', 'BIOS Interrupts', 'Hardware Registers', 'Low-Level Graphics'],
-    github: 'https://github.com/Naresh-Kumar17/2048-Game',
-    insights: [
-      'Shift and merge matrix traversal written purely in x86 instructions with zero high-level language abstractions',
-      'Optimized register usage minimizing memory bus read/write cycles',
-    ],
-    learnings: [
-      'Low-level x86 instruction set architecture, addressing modes, and flag registers',
-      'Hardware interrupts for real-time keyboard input polling and video display modes',
-      'Debugging assembly memory offsets, stack frames, and segment registers',
-    ],
-    date: '2025',
+    date: '2026',
   },
 ];
 
@@ -269,11 +194,7 @@ export function getRelatedProjects(
 
   const scored = others.map((p) => {
     let score = 0;
-    // Same project type (academic vs personal)
-    if (p.projectType === current.projectType) score += 2;
-    // Same category
     if (p.category === current.category) score += 3;
-    // Shared technologies
     const shared = p.technologies.filter((t) =>
       current.technologies.includes(t),
     );

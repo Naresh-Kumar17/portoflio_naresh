@@ -2,8 +2,10 @@
  * ============================================================
  * SKILLS CONFIGURATION
  * ============================================================
- * Categorized skills with honest status labels.
- * status: 'learned' | 'learning' | 'planned'
+ * Focused exclusively on:
+ * 1. Python with Machine Learning Libraries
+ * 2. C++ & Systems Programming
+ * 3. Web Development
  * ============================================================
  */
 
@@ -25,58 +27,36 @@ export interface SkillCategory {
 
 export const skillCategories: SkillCategory[] = [
   {
-    id: 'languages',
-    title: 'Programming Languages',
-    icon: '⟨/⟩',
+    id: 'python-ml',
+    title: 'Python & Machine Learning Libraries',
+    icon: '🐍',
     skills: [
-      { name: 'Python', status: 'learned', description: 'Primary language for data analysis and scripting' },
-      { name: 'SQL', status: 'learning', description: 'Database queries and data manipulation' },
-      { name: 'JavaScript', status: 'learning', description: 'Web development and visualization' },
-      { name: 'R', status: 'planned', description: 'Statistical computing and graphics' },
+      { name: 'Python', status: 'learned', description: 'Primary language for machine learning, data processing, and scripting' },
+      { name: 'scikit-learn', status: 'learned', description: 'Supervised/unsupervised algorithms, SVMs, hyperparameter tuning' },
+      { name: 'pandas', status: 'learned', description: 'Data wrangling, cleaning, transformation, and series analysis' },
+      { name: 'NumPy', status: 'learned', description: 'High-performance vector operations, matrix math, and arrays' },
+      { name: 'Matplotlib & Seaborn', status: 'learned', description: 'Statistical data visualization and scientific distribution plotting' },
     ],
   },
   {
-    id: 'data-analysis',
-    title: 'Data Analysis & Visualization',
-    icon: '📊',
+    id: 'cpp-systems',
+    title: 'C++ & Systems Programming',
+    icon: '⚡',
     skills: [
-      { name: 'pandas', status: 'learned', description: 'Data manipulation and analysis' },
-      { name: 'NumPy', status: 'learned', description: 'Numerical computing and array operations' },
-      { name: 'Matplotlib', status: 'learned', description: 'Static visualizations and plots' },
-      { name: 'Seaborn', status: 'learned', description: 'Statistical data visualization' },
-      { name: 'Plotly', status: 'planned', description: 'Interactive web-based visualizations' },
+      { name: 'C++', status: 'learned', description: 'Object-Oriented Programming, memory management, and low-level performance' },
+      { name: 'OOP Architecture', status: 'learned', description: 'Inheritance, polymorphism, encapsulation, and modular class design' },
+      { name: 'Data Structures & Algorithms', status: 'learned', description: 'Efficient algorithmic problem solving, trees, graphs, and memory optimization' },
     ],
   },
   {
-    id: 'ml-ai',
-    title: 'Machine Learning & AI',
-    icon: '🤖',
+    id: 'web-dev',
+    title: 'Web Development',
+    icon: '🌐',
     skills: [
-      { name: 'scikit-learn', status: 'learning', description: 'Machine learning algorithms and tools' },
-      { name: 'TensorFlow', status: 'planned', description: 'Deep learning framework' },
-      { name: 'Statistics', status: 'learning', description: 'Statistical methods and hypothesis testing' },
-    ],
-  },
-  {
-    id: 'tools',
-    title: 'Tools & Platforms',
-    icon: '🛠️',
-    skills: [
-      { name: 'Git & GitHub', status: 'learned', description: 'Version control and collaboration' },
-      { name: 'Jupyter Notebooks', status: 'learned', description: 'Interactive computing and analysis' },
-      { name: 'VS Code', status: 'learned', description: 'Code editor and development environment' },
-      { name: 'Data Cleaning', status: 'learned', description: 'Handling missing values, outliers, and inconsistencies' },
-    ],
-  },
-  {
-    id: 'fundamentals',
-    title: 'Core Fundamentals',
-    icon: '📐',
-    skills: [
-      { name: 'Linear Algebra', status: 'learning', description: 'Mathematical foundation for ML' },
-      { name: 'Probability', status: 'learning', description: 'Probabilistic reasoning and distributions' },
-      { name: 'Data Structures', status: 'learned', description: 'Efficient data organization and access' },
-      { name: 'Algorithms', status: 'learning', description: 'Problem-solving techniques and optimization' },
+      { name: 'React 19 & TypeScript', status: 'learned', description: 'Modern typed frontend component architectures and responsive SPAs' },
+      { name: 'JavaScript (ES6+)', status: 'learned', description: 'Modern asynchronous programming, DOM interactions, and web APIs' },
+      { name: 'HTML5 Canvas & 3D Math', status: 'learned', description: 'Custom mathematical projection rendering, 60 FPS animation loops' },
+      { name: 'AWS Amplify Hosting', status: 'learned', description: 'Continuous deployment, Git CI/CD pipelines, and cloud edge delivery' },
     ],
   },
 ];
