@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Search, ArrowRight, Moon, Sun, Globe } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { Search, ArrowRight, Moon, Sun, Globe, ExternalLink } from 'lucide-react';
 import { useI18n } from '../contexts/I18nContext';
 import { useTheme } from '../contexts/ThemeContext';
 import { projects } from '../data/projects';
@@ -26,6 +26,7 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
+  const location = useLocation();
   const { t, locale, setLocale } = useI18n();
   const { theme, toggleTheme } = useTheme();
 
@@ -33,11 +34,38 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
     const navCommands: Command[] = [
       { id: 'nav-home', label: t('nav.home'), icon: <ArrowRight size={16} />, action: () => { navigate('/'); onClose(); }, category: 'Navigation' },
       { id: 'nav-about', label: t('nav.about'), icon: <ArrowRight size={16} />, action: () => { navigate('/about'); onClose(); }, category: 'Navigation' },
-      { id: 'nav-skills', label: t('nav.skills'), icon: <ArrowRight size={16} />, action: () => { navigate('/skills'); onClose(); }, category: 'Navigation' },
+      {
+        id: 'nav-skills',
+        label: t('nav.skills'),
+        icon: <ArrowRight size={16} />,
+        action: () => {
+          if (location.pathname === '/') {
+            window.dispatchEvent(new CustomEvent('cosmos-focus', { detail: 'skills_hub' }));
+          } else {
+            navigate('/skills');
+          }
+          onClose();
+        },
+        category: 'Navigation',
+      },
       { id: 'nav-projects', label: t('nav.projects'), icon: <ArrowRight size={16} />, action: () => { navigate('/projects'); onClose(); }, category: 'Navigation' },
       { id: 'nav-education', label: t('nav.education'), icon: <ArrowRight size={16} />, action: () => { navigate('/education'); onClose(); }, category: 'Navigation' },
       { id: 'nav-resume', label: t('nav.resume'), icon: <ArrowRight size={16} />, action: () => { navigate('/resume'); onClose(); }, category: 'Navigation' },
       { id: 'nav-contact', label: t('nav.contact'), icon: <ArrowRight size={16} />, action: () => { navigate('/contact'); onClose(); }, category: 'Navigation' },
+    ];
+
+    const liveDemoCommands: Command[] = [
+      {
+        id: 'live-dataset-doctor',
+        label: 'Dataset Doctor · Live on Render',
+        description: 'ML reliability and leak-free remediation web application',
+        icon: <ExternalLink size={16} />,
+        action: () => {
+          window.open('https://dataset-doctor-8c7b.onrender.com/', '_blank');
+          onClose();
+        },
+        category: 'Live Apps',
+      },
     ];
 
     const projectCommands: Command[] = projects.map((p) => ({
@@ -66,141 +94,132 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
       },
     ];
 
-    return [...navCommands, ...projectCommands, ...actionCommands];
-  }, [navigate, onClose, t, theme, toggleTheme, locale, setLocale]);
+    return [...navCommands, ...liveDemoCommands, ...projectCommands, ...actionCommands];
+  }, [navigate, location.pathname, onClose, t, theme, toggleTheme, locale, setLocale]);
 
-  const filtered = useMemo(() => {
+  const filteredCommands = useMemo(() => {
     if (!query.trim()) return commands;
     const q = query.toLowerCase();
     return commands.filter(
-      (c) =>
-        c.label.toLowerCase().includes(q) ||
-        c.description?.toLowerCase().includes(q) ||
-        c.category.toLowerCase().includes(q),
+      (cmd) =>
+        cmd.label.toLowerCase().includes(q) ||
+        cmd.description?.toLowerCase().includes(q) ||
+        cmd.category.toLowerCase().includes(q),
     );
   }, [commands, query]);
 
-  // Reset state when opened
-  const [prevIsOpen, setPrevIsOpen] = useState(isOpen);
-  if (prevIsOpen !== isOpen) {
-    setPrevIsOpen(isOpen);
+  useEffect(() => {
+    setSelectedIndex(0);
+  }, [query]);
+
+  useEffect(() => {
     if (isOpen) {
       setQuery('');
       setSelectedIndex(0);
-    }
-  }
-
-  // Focus input when opened
-  useEffect(() => {
-    if (isOpen) {
-      const timer = setTimeout(() => inputRef.current?.focus(), 50);
-      return () => clearTimeout(timer);
+      setTimeout(() => inputRef.current?.focus(), 50);
     }
   }, [isOpen]);
 
-  // Keyboard navigation
   useEffect(() => {
-    if (!isOpen) return;
-
     const handleKeyDown = (e: KeyboardEvent) => {
-      switch (e.key) {
-        case 'Escape':
-          onClose();
-          break;
-        case 'ArrowDown':
-          e.preventDefault();
-          setSelectedIndex((i) => Math.min(i + 1, filtered.length - 1));
-          break;
-        case 'ArrowUp':
-          e.preventDefault();
-          setSelectedIndex((i) => Math.max(i - 1, 0));
-          break;
-        case 'Enter':
-          e.preventDefault();
-          if (filtered[selectedIndex]) {
-            filtered[selectedIndex].action();
-          }
-          break;
+      if (!isOpen) return;
+
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        setSelectedIndex((prev) => (prev + 1) % filteredCommands.length);
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        setSelectedIndex((prev) => (prev - 1 + filteredCommands.length) % filteredCommands.length);
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        if (filteredCommands[selectedIndex]) {
+          filteredCommands[selectedIndex].action();
+        }
+      } else if (e.key === 'Escape') {
+        e.preventDefault();
+        onClose();
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, onClose, filtered, selectedIndex]);
+  }, [isOpen, filteredCommands, selectedIndex, onClose]);
 
-  // Scroll selected item into view
+  // Scroll active item into view
   useEffect(() => {
-    const list = listRef.current;
-    if (!list) return;
-    const selected = list.children[selectedIndex] as HTMLElement;
-    selected?.scrollIntoView({ block: 'nearest' });
+    if (!listRef.current) return;
+    const activeEl = listRef.current.querySelector('.command-item--active');
+    if (activeEl) {
+      activeEl.scrollIntoView({ block: 'nearest' });
+    }
   }, [selectedIndex]);
 
   if (!isOpen) return null;
 
   // Group commands by category
-  const grouped = filtered.reduce<Record<string, Command[]>>((acc, cmd) => {
-    if (!acc[cmd.category]) acc[cmd.category] = [];
-    acc[cmd.category].push(cmd);
-    return acc;
-  }, {});
+  const grouped: Record<string, Command[]> = {};
+  filteredCommands.forEach((cmd) => {
+    if (!grouped[cmd.category]) grouped[cmd.category] = [];
+    grouped[cmd.category].push(cmd);
+  });
 
-  let globalIndex = -1;
+  let flatIndex = 0;
 
   return (
-    <div className="cmd-palette" role="dialog" aria-modal="true" aria-label="Command palette">
-      <div className="cmd-palette__overlay" onClick={onClose} />
-      <div className="cmd-palette__panel">
-        <div className="cmd-palette__search">
-          <Search size={18} className="cmd-palette__search-icon" aria-hidden="true" />
+    <div className="command-palette-overlay" onClick={onClose} role="dialog" aria-modal="true" aria-label="Command Palette">
+      <div className="command-palette" onClick={(e) => e.stopPropagation()}>
+        <div className="command-palette__search">
+          <Search size={18} className="command-palette__search-icon" />
           <input
             ref={inputRef}
             type="text"
-            className="cmd-palette__input"
-            placeholder={t('cmd.placeholder')}
+            className="command-palette__input"
+            placeholder={t('search.placeholder')}
             value={query}
-            onChange={(e) => {
-              setQuery(e.target.value);
-              setSelectedIndex(0);
-            }}
-            aria-label="Search commands"
-            autoComplete="off"
+            onChange={(e) => setQuery(e.target.value)}
+            aria-label={t('search.placeholder')}
           />
-          <kbd className="cmd-palette__kbd" aria-hidden="true">ESC</kbd>
+          <kbd className="command-palette__kbd">ESC</kbd>
         </div>
 
-        <div className="cmd-palette__results" ref={listRef} role="listbox">
-          {filtered.length === 0 ? (
-            <div className="cmd-palette__empty">{t('cmd.noResults')}</div>
+        <div className="command-palette__list" ref={listRef} role="listbox">
+          {filteredCommands.length === 0 ? (
+            <div className="command-palette__empty">{t('search.noResults')}</div>
           ) : (
             Object.entries(grouped).map(([category, cmds]) => (
-              <div key={category} className="cmd-palette__group">
-                <div className="cmd-palette__group-label">{category}</div>
+              <div key={category} className="command-group">
+                <span className="command-group__label">{category}</span>
                 {cmds.map((cmd) => {
-                  globalIndex++;
-                  const index = globalIndex;
+                  const currentIndex = flatIndex++;
+                  const isSelected = currentIndex === selectedIndex;
                   return (
-                    <button
+                    <div
                       key={cmd.id}
-                      className={`cmd-palette__item ${index === selectedIndex ? 'cmd-palette__item--active' : ''}`}
-                      onClick={cmd.action}
-                      onMouseEnter={() => setSelectedIndex(index)}
                       role="option"
-                      aria-selected={index === selectedIndex}
+                      aria-selected={isSelected}
+                      className={`command-item ${isSelected ? 'command-item--active' : ''}`}
+                      onClick={() => cmd.action()}
+                      onMouseEnter={() => setSelectedIndex(currentIndex)}
                     >
-                      <span className="cmd-palette__item-icon">{cmd.icon}</span>
-                      <span className="cmd-palette__item-content">
-                        <span className="cmd-palette__item-label">{cmd.label}</span>
+                      <span className="command-item__icon">{cmd.icon}</span>
+                      <div className="command-item__content">
+                        <span className="command-item__label">{cmd.label}</span>
                         {cmd.description && (
-                          <span className="cmd-palette__item-desc">{cmd.description}</span>
+                          <span className="command-item__desc">{cmd.description}</span>
                         )}
-                      </span>
-                    </button>
+                      </div>
+                    </div>
                   );
                 })}
               </div>
             ))
           )}
+        </div>
+
+        <div className="command-palette__footer">
+          <span>↑↓ to navigate</span>
+          <span>↵ to select</span>
+          <span>esc to close</span>
         </div>
       </div>
     </div>
