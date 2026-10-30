@@ -26,10 +26,10 @@ export const profile = {
    * Write in first person. Keep it authentic.
    */
   bio: [
-    "I'm a Data Science student at FAST-NUCES Karachi with a deep curiosity for how data can reveal patterns, tell stories, and drive better decisions.",
-    "My journey started with an interest in programming and problem-solving. Over time, I discovered that the intersection of code, statistics, and domain knowledge is where the most impactful work happens.",
-    "I enjoy the entire data pipeline — from cleaning messy datasets to building visualizations that make complex information accessible. I'm currently deepening my skills in machine learning and statistical modeling.",
-    "When I'm not coding, I'm exploring new datasets, reading about emerging AI research, or working on side projects that challenge me to learn something new.",
+    "I'm a Data Science student at FAST-NUCES Karachi with a deep passion for turning statistical pipelines and machine learning algorithms into empirical decisions.",
+    "My focus spans applied machine learning, leak-free data remediation, environmental time-series forecasting, and interactive 3D visual computing.",
+    "I engineer reproducible computational systems, from building diagnostic platforms like Dataset Doctor to optimizing margin classifiers with Support Vector Machines.",
+    "When I'm not developing computational models, I study algorithmic complexity in C++, explore modern web engines, and contribute to open-source software.",
   ],
 
   /** Profile photo path (relative to /public) */
@@ -62,9 +62,9 @@ export const profile = {
   site: {
     /** Your deployed URL (update before deployment) */
     url: 'https://nareshkumar17.netlify.app',
-    title: 'Data Science Portfolio',
+    title: 'Naresh Kumar · Data Science & ML Portfolio',
     description:
-      'Personal portfolio of a Data Science student at FAST-NUCES Karachi — turning data into decisions through analysis, visualization, and machine learning.',
+      'Personal portfolio of Naresh Kumar, Data Science student at FAST-NUCES Karachi — turning data into decisions through machine learning, reliable remediation, and interactive computing.',
     /** Open Graph image path (relative to /public) */
     ogImage: '/og-image.png',
     /** Language */
