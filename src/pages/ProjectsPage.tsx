@@ -1,31 +1,23 @@
 import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence, LayoutGroup } from 'motion/react';
-import { Search, ExternalLink, ArrowRight, Filter, GraduationCap, Rocket, Sparkles } from 'lucide-react';
+import { Search, ExternalLink, ArrowRight, Filter } from 'lucide-react';
 import { ScrollReveal } from '../components/ScrollReveal';
 import { MagneticCard } from '../components/MagneticCard';
 import { GithubIcon } from '../components/SocialIcons';
 import { TextReveal } from '../components/TextReveal';
 import { useI18n } from '../contexts/I18nContext';
-import { projects, type ProjectType } from '../data/projects';
+import { projects } from '../data/projects';
 import './ProjectsPage.css';
 
 export function ProjectsPage() {
   const { t } = useI18n();
-  const [selectedType, setSelectedType] = useState<ProjectType | 'all'>('all');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedStatus, setSelectedStatus] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
 
-  const academicCount = useMemo(() => projects.filter((p) => p.projectType === 'academic').length, []);
-  const personalCount = useMemo(() => projects.filter((p) => p.projectType === 'personal').length, []);
-
   const filteredProjects = useMemo(() => {
     return projects.filter((project) => {
-      // Primary Project Track (Academic vs Personal)
-      if (selectedType !== 'all' && project.projectType !== selectedType) {
-        return false;
-      }
       // Category filter
       if (selectedCategory !== 'all' && project.category !== selectedCategory) {
         return false;
@@ -39,23 +31,20 @@ export function ProjectsPage() {
         const query = searchQuery.toLowerCase();
         const matchesTitle = project.title.toLowerCase().includes(query);
         const matchesDesc = project.shortDescription.toLowerCase().includes(query);
-        const matchesCourse = project.course?.toLowerCase().includes(query);
         const matchesTech = project.technologies.some((tech) =>
           tech.toLowerCase().includes(query)
         );
-        return matchesTitle || matchesDesc || matchesTech || !!matchesCourse;
+        return matchesTitle || matchesDesc || matchesTech;
       }
       return true;
     });
-  }, [selectedType, selectedCategory, selectedStatus, searchQuery]);
+  }, [selectedCategory, selectedStatus, searchQuery]);
 
   const categories: { label: string; value: string }[] = [
-    { label: t('projects.filter.all'), value: 'all' },
+    { label: 'All Projects', value: 'all' },
     { label: 'Machine Learning', value: 'machine-learning' },
-    { label: 'Data Analysis', value: 'data-analysis' },
-    { label: 'Systems & C/C++', value: 'systems' },
-    { label: 'Visualization', value: 'visualization' },
-    { label: 'Assembly & Gaming', value: 'gaming' },
+    { label: 'Data Science', value: 'data-science' },
+    { label: 'Web Development', value: 'web' },
   ];
 
   const statuses: { label: string; value: string }[] = [
@@ -78,98 +67,20 @@ export function ProjectsPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, type: 'spring', stiffness: 120, damping: 18 }}
             >
-              Explore independent research, data science models, and rigorous academic coursework projects from FAST-NUCES Karachi.
+              Explore predictive machine learning models, time-series data science pipelines, and interactive web applications.
             </motion.p>
           </div>
         </ScrollReveal>
 
-        {/* Primary Track Switcher: Academic vs Personal */}
-        <ScrollReveal delay={80} variant="slide" direction="up">
-          <div className="projects-type-switcher-container">
-            <div className="projects-type-switcher" role="tablist" aria-label="Select Project Track">
-              <button
-                type="button"
-                role="tab"
-                aria-selected={selectedType === 'all'}
-                className={`projects-type-btn ${selectedType === 'all' ? 'projects-type-btn--active' : ''}`}
-                onClick={() => setSelectedType('all')}
-              >
-                <Sparkles size={16} />
-                <span>All Projects</span>
-                <span className="projects-type-badge">{projects.length}</span>
-              </button>
-
-              <button
-                type="button"
-                role="tab"
-                aria-selected={selectedType === 'academic'}
-                className={`projects-type-btn ${selectedType === 'academic' ? 'projects-type-btn--active' : ''}`}
-                onClick={() => setSelectedType('academic')}
-              >
-                <GraduationCap size={17} />
-                <span>Academic Coursework</span>
-                <span className="projects-type-badge">{academicCount}</span>
-              </button>
-
-              <button
-                type="button"
-                role="tab"
-                aria-selected={selectedType === 'personal'}
-                className={`projects-type-btn ${selectedType === 'personal' ? 'projects-type-btn--active' : ''}`}
-                onClick={() => setSelectedType('personal')}
-              >
-                <Rocket size={16} />
-                <span>Personal Projects</span>
-                <span className="projects-type-badge">{personalCount}</span>
-              </button>
-            </div>
-
-            {/* Contextual Banner for Selected Track */}
-            <AnimatePresence mode="wait">
-              {selectedType === 'academic' && (
-                <motion.div
-                  key="academic-banner"
-                  initial={{ opacity: 0, y: -8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.2 }}
-                  className="projects-track-info-banner projects-track-info-banner--academic"
-                >
-                  <GraduationCap size={20} className="banner-icon" />
-                  <div>
-                    <strong>FAST-NUCES Karachi Coursework:</strong> Hands-on computational projects developed for university curriculum in <em>Programming Fundamentals (C & Raylib)</em>, <em>Object-Oriented Programming (C++)</em>, and <em>Computer Organization & Assembly Language (x86 Assembly)</em>.
-                  </div>
-                </motion.div>
-              )}
-
-              {selectedType === 'personal' && (
-                <motion.div
-                  key="personal-banner"
-                  initial={{ opacity: 0, y: -8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.2 }}
-                  className="projects-track-info-banner projects-track-info-banner--personal"
-                >
-                  <Rocket size={20} className="banner-icon" />
-                  <div>
-                    <strong>Independent Initiatives:</strong> Machine learning algorithms, time-series environmental forecasting, road safety risk classifiers, and interactive 3D Web graphics engines.
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-        </ScrollReveal>
-
         {/* Filter & Search Controls */}
-        <ScrollReveal delay={120} variant="slide" direction="up">
+        <ScrollReveal delay={100} variant="slide" direction="up">
           <div className="projects-controls">
             {/* Search */}
             <div className="projects-search">
               <Search size={18} className="projects-search__icon" />
               <input
                 type="text"
-                placeholder="Search projects by title, course, keyword, or tech..."
+                placeholder="Search projects by title, tech stack, or topic..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="projects-search__input"
@@ -259,7 +170,6 @@ export function ProjectsPage() {
                 whileHover={{ scale: 1.06 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => {
-                  setSelectedType('all');
                   setSelectedCategory('all');
                   setSelectedStatus('all');
                   setSearchQuery('');
@@ -270,7 +180,7 @@ export function ProjectsPage() {
             </motion.div>
           ) : (
             <motion.div
-              key={`${selectedType}-${selectedCategory}-${selectedStatus}-${searchQuery}`}
+              key={`${selectedCategory}-${selectedStatus}-${searchQuery}`}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -291,24 +201,11 @@ export function ProjectsPage() {
                   layout
                 >
                   <MagneticCard tiltIntensity={7}>
-                    <article className={`project-card ${project.projectType === 'academic' ? 'project-card--academic' : ''}`}>
+                    <article className="project-card">
                       <div className="project-card__header">
-                        <div className="project-card__badges-group">
-                          {project.projectType === 'academic' ? (
-                            <span className="project-tag-pill project-tag-pill--academic">
-                              <GraduationCap size={13} />
-                              <span>{project.course || 'Academic Coursework'}</span>
-                            </span>
-                          ) : (
-                            <span className="project-tag-pill project-tag-pill--personal">
-                              <Rocket size={13} />
-                              <span>Personal Project</span>
-                            </span>
-                          )}
-                          <span className="project-card__category">
-                            {project.category.replace('-', ' ')}
-                          </span>
-                        </div>
+                        <span className="project-card__category">
+                          {project.category.replace('-', ' ')}
+                        </span>
                         <span className={`project-status-badge project-status-badge--${project.status}`}>
                           {t(`projects.status.${project.status}` as any) || project.status}
                         </span>

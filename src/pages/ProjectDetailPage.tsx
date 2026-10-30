@@ -104,7 +104,7 @@ export function ProjectDetailPage() {
         </ScrollReveal>
 
         {/* Interactive Data Sandbox for visualization/data projects */}
-        {(project.category === 'data-analysis' || project.category === 'visualization') && (
+        {(project.category === 'data-science' || project.category === 'web') && (
           <ScrollReveal delay={150}>
             <section className="project-detail__section">
               <DataVisualizer />
