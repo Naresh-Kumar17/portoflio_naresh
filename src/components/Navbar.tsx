@@ -37,6 +37,13 @@ export function Navbar({ onOpenCommandPalette }: NavbarProps) {
     return () => { document.body.style.overflow = ''; };
   }, [mobileOpen]);
 
+  const handleNavLinkClick = (to: string, e: React.MouseEvent) => {
+    if (location.pathname === '/' && to === '/skills') {
+      e.preventDefault();
+      window.dispatchEvent(new CustomEvent('cosmos-focus', { detail: 'skills_hub' }));
+    }
+  };
+
   const navLinks = [
     { to: '/', label: 'Naresh' },
     { to: '/skills', label: 'Skills' },
@@ -66,6 +73,7 @@ export function Navbar({ onOpenCommandPalette }: NavbarProps) {
                 <Link
                   to={link.to}
                   className={`navbar__link ${isActive ? 'navbar__link--active' : ''}`}
+                  onClick={(e) => handleNavLinkClick(link.to, e)}
                 >
                   {link.label}
                   {isActive && (
@@ -137,7 +145,7 @@ export function Navbar({ onOpenCommandPalette }: NavbarProps) {
                 <Link
                   to={link.to}
                   className={`navbar__mobile-link ${location.pathname === link.to ? 'navbar__mobile-link--active' : ''}`}
-                  onClick={() => setMobileOpen(false)}
+                  onClick={(e) => { handleNavLinkClick(link.to, e); setMobileOpen(false); }}
                 >
                   {link.label}
                 </Link>

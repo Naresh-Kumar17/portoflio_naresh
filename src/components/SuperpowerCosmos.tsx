@@ -5,14 +5,14 @@ import './SuperpowerCosmos.css';
 /* ── Naresh Kumar Data Science Constellation Dataset ── */
 const NARESH_DB = {
   N: [
-        /* ── CENTER HUB: NARESH ── */
+    /* ── UPPER-LEFT ANCHOR: NARESH ── */
     {
       id: "naresh",
       name: "Naresh",
       region: "entry",
-      x: 0,
-      y: 0,
-      r: 1.8,
+      x: -12.0,
+      y: 8.0,
+      r: 1.85,
       z: 0,
       kicker: "Data Science Student & ML Practitioner",
       links: [
@@ -37,14 +37,40 @@ const NARESH_DB = {
       ],
       story: "My journey started with a fascination for patterns in data and algorithmic logic. Studying Data Science at FAST-NUCES provides the rigorous mathematical backing, empirical experimentation, and software design skills needed to build production-grade intelligent systems."
     },
+
+    /* ── SPOKE 1: UP-LEFT → SKILLS (IN-PAGE CASE STUDY) ── */
+    {
+      id: "skills_hub",
+      name: "Skills",
+      region: "skills",
+      x: -32.0,
+      y: 22.0,
+      r: 1.5,
+      z: 0.15,
+      kicker: "Core Competencies & Case Studies",
+      links: [],
+      sum: "In-page technical case study covering Python ML, C++ systems, and modern Web engineering.",
+      body: "In-depth case study of computational capabilities: 1. Python with Machine Learning Libraries (scikit-learn, pandas, NumPy, Matplotlib, Seaborn, SMOTE, FastAPI). 2. C++ & Systems Programming (OOP Architecture, Data Structures & Algorithms, Memory Efficiency). 3. Web Development & Cloud Deployment (React 19, TypeScript, HTML5 Canvas 2D perspective engine, AWS Amplify Hosting). 4. Environmental Time-Series Forecasting (Air Quality, STL decomposition).",
+      cap: "Technical Superpowers",
+      role: "Core Capabilities",
+      duration: "Continual Mastery",
+      skills: [
+        ["Python & ML Ecosystem", "core"],
+        ["C++ & OOP Architecture", "core"],
+        ["React 19 & TypeScript", "core"],
+        ["AWS Amplify Hosting", "core"]
+      ]
+    },
+
+    /* ── SPOKE 2: STRAIGHT LEFT → ABOUT ── */
     {
       id: "about_me",
       name: "About Naresh",
       region: "entry",
-      x: -8.0,
-      y: 4.5,
-      r: 0.95,
-      z: 0.2,
+      x: -34.0,
+      y: 8.0,
+      r: 1.05,
+      z: 0.1,
       kicker: "Background & Aspirations",
       sum: "Data Science undergraduate, machine learning developer, and computational thinker.",
       body: "I am an undergraduate student in Data Science at FAST-NUCES Karachi. My focus spans applied machine learning, time-series environmental forecasting, road safety risk prediction, and fullstack interactive data applications.",
@@ -60,14 +86,16 @@ const NARESH_DB = {
         ["FAST-NUCES Karachi", "core"]
       ]
     },
+
+    /* ── SPOKE 3: DOWN-LEFT → LET'S CONNECT ── */
     {
       id: "contacto",
       name: "Let's Connect",
       region: "entry",
-      x: -8.0,
-      y: -4.5,
-      r: 0.9,
-      z: -0.15,
+      x: -32.0,
+      y: -6.0,
+      r: 1.0,
+      z: -0.1,
       kicker: "Open for Opportunities",
       sum: "Get in touch for internships, data science research, and software collaborations.",
       links: [
@@ -81,15 +109,15 @@ const NARESH_DB = {
       skills: [["Collaborative Research", "core"], ["Open Source", "core"]]
     },
 
-    /* ── RESUME HUB ── */
+    /* ── SPOKE 4: UP-RIGHT → RESUME ── */
     {
       id: "resume_hub",
       name: "Resume",
       region: "entry",
-      x: -18.0,
-      y: -8.5,
+      x: 6.0,
+      y: 22.0,
       r: 1.45,
-      z: 0.25,
+      z: 0.15,
       kicker: "Curriculum Vitae",
       links: [
         ["View Full CV Page", "/resume"]
@@ -107,45 +135,22 @@ const NARESH_DB = {
         ["AWS Amplify Hosting", "core"]
       ]
     },
-    /* ── SKILLS & SUPERPOWERS HUB ── */
-    {
-      id: "skills_hub",
-      name: "Skills",
-      region: "skills",
-      x: -18.0,
-      y: 8.5,
-      r: 1.5,
-      z: 0.25,
-      kicker: "Core Competencies",
-      links: [],
-      sum: "Focused technical superpowers across Python ML, C++ systems, and modern Web engineering.",
-      body: "In-depth case study of computational capabilities: 1. Python with Machine Learning Libraries (scikit-learn, pandas, NumPy, Matplotlib, Seaborn, SMOTE). 2. C++ & Systems Programming (OOP Architecture, Data Structures & Algorithms, Memory Efficiency). 3. Web Development & Cloud Deployment (React 19, TypeScript, HTML5 Canvas 2D perspective engine, AWS Amplify Hosting).",
-      cap: "Technical Superpowers",
-      role: "Core Capabilities",
-      duration: "Continual Mastery",
-      skills: [
-        ["Python & ML Ecosystem", "core"],
-        ["C++ & OOP Architecture", "core"],
-        ["React 19 & TypeScript", "core"],
-        ["AWS Amplify Hosting", "core"]
-      ]
-    },
 
-    /* ── PROJECTS MAIN HUB ── */
+    /* ── SPOKE 5: DOWN-RIGHT → PROJECTS (MAIN PROJECT HUB) ── */
     {
       id: "growth",
       name: "Projects",
       region: "growth",
-      x: 18.0,
-      y: 0,
-      r: 1.65,
+      x: 12.0,
+      y: -6.0,
+      r: 1.75,
       z: 0.1,
       kicker: "Portfolio Showcase",
       links: [
         ["GitHub Repositories", "https://github.com/Naresh-Kumar17"]
       ],
-      sum: "Engineered projects categorized into Machine Learning, Data Science, and Web Development.",
-      body: "Unified showcase of projects spanning applied machine learning classifiers, environmental time-series forecasting, exploratory pipelines, and high-performance interactive 3D web applications.",
+      sum: "Engineered projects categorized into Web Development, Machine Learning, and Data Science.",
+      body: "Unified showcase of projects spanning applied machine learning classifiers, environmental time-series forecasting, automated data quality platforms, and high-performance interactive 3D web applications.",
       role: "Data Scientist & Software Developer",
       duration: "2024 → ongoing",
       impact: "Delivering end-to-end data systems and interactive 3D computing interfaces.",
@@ -156,16 +161,60 @@ const NARESH_DB = {
       ]
     },
 
-    /* ── 1. MACHINE LEARNING CATEGORY ── */
+    /* ── PROJECT SPOKE 1: STRAIGHT RIGHT → WEB DEVELOPMENT ── */
+    {
+      id: "web_category",
+      name: "Web Development",
+      region: "web",
+      x: 30.0,
+      y: -6.0,
+      r: 1.35,
+      z: 0.15,
+      kicker: "Project Category 01",
+      links: [
+        ["Interactive 3D Cosmos", "https://github.com/Naresh-Kumar17/portoflio_naresh"]
+      ],
+      sum: "High-performance interactive web computing, 3D math projection engines, and cloud hosting.",
+      body: "Modern web applications architected with React 19, TypeScript, HTML5 Canvas 2D math engines, and AWS Amplify CI/CD hosting.",
+      cap: "Web Development Projects",
+      role: "Web & Frontend Architect",
+      duration: "2026 · Active",
+      skills: [["React 19", "core"], ["TypeScript", "core"], ["HTML5 Canvas", "core"], ["AWS Amplify", "core"]]
+    },
+    {
+      id: "cosmos_portfolio",
+      name: "3D Cosmos Portfolio",
+      region: "web",
+      x: 44.0,
+      y: -6.0,
+      r: 1.05,
+      z: 0.2,
+      kicker: "Featured Project · Web Development",
+      sum: "Custom mathematical 3D constellation cosmos engine built with React 19, TypeScript, and HTML5 Canvas.",
+      body: "Designed and developed this portfolio to showcase machine learning research, data science pipelines, and software projects. Implemented a custom 3D perspective projection engine on HTML5 Canvas, Box-Muller Gaussian volumetric nebula haze, travelling photon bezier curves, and smooth camera physics.",
+      cap: "Interactive 3D Cosmos Portfolio",
+      url: "https://github.com/Naresh-Kumar17/portoflio_naresh",
+      urlLabel: "View GitHub Repository ↗",
+      role: "Frontend & Canvas Architect",
+      duration: "2026 · Active",
+      skills: [
+        ["React 19 & TypeScript", "core"],
+        ["HTML5 Canvas 2D Engine", "core"],
+        ["3D Perspective Geometry", "core"],
+        ["AWS Amplify Hosting", "core"]
+      ]
+    },
+
+    /* ── PROJECT SPOKE 2: DOWN-RIGHT → MACHINE LEARNING ── */
     {
       id: "ml_category",
       name: "Machine Learning",
       region: "ai",
-      x: 30.0,
-      y: -2.5,
+      x: 28.0,
+      y: -19.0,
       r: 1.35,
-      z: 0.2,
-      kicker: "Project Category 01",
+      z: 0.15,
+      kicker: "Project Category 02",
       links: [
         ["SVM Handwritten Digits", "https://github.com/Naresh-Kumar17/svm-handwritten-digits"],
         ["Road Accident Severity", "https://github.com/Naresh-Kumar17/Road-Accident-Severity"]
@@ -182,9 +231,9 @@ const NARESH_DB = {
       name: "SVM Digit Recognition",
       region: "ai",
       x: 41.0,
-      y: 4.0,
+      y: -14.5,
       r: 1.0,
-      z: 0.25,
+      z: 0.2,
       kicker: "Machine Learning Project",
       sum: "Support Vector Machine classifier for handwritten digit recognition with kernel optimization and ROC diagnostics.",
       body: "Trained and evaluated SVM models with RBF and polynomial kernels, tuning C and gamma regularization parameters to optimize digit boundary separation.",
@@ -199,10 +248,10 @@ const NARESH_DB = {
       id: "accident_severity",
       name: "Road Accident Risk",
       region: "ai",
-      x: 41.5,
-      y: -7.0,
+      x: 41.0,
+      y: -24.5,
       r: 1.0,
-      z: 0.25,
+      z: 0.2,
       kicker: "Machine Learning Project",
       sum: "Risk prediction pipeline predicting traffic collision injury severity with SMOTE class rebalancing.",
       body: "Tackled severe class imbalance using SMOTE and feature engineering across environmental and geometric conditions to maximize recall on critical incidents.",
@@ -214,50 +263,33 @@ const NARESH_DB = {
       skills: [["Python", "core"], ["pandas", "core"], ["SMOTE", "core"], ["Risk Classification", "core"]]
     },
 
-    /* ── 2. DATA SCIENCE CATEGORY ── */
+    /* ── PROJECT SPOKE 3: STRAIGHT DOWN → DATA SCIENCE ── */
     {
       id: "ds_category",
       name: "Data Science",
       region: "data",
-      x: 29.0,
-      y: 12.0,
+      x: 12.0,
+      y: -23.0,
       r: 1.35,
-      z: 0.2,
-      kicker: "Project Category 02",
+      z: 0.15,
+      kicker: "Project Category 03",
       links: [
+        ["Dataset Doctor", "https://github.com/Naresh-Kumar17/Dataset-Doctor"],
         ["Air Quality Forecasting", "https://github.com/Naresh-Kumar17/Air_Quality_Forcasating-"]
       ],
-      sum: "Time-series forecasting, trend decomposition, stationarity validation, and exploratory pipelines.",
-      body: "Data science workflows analyzing particulate matter, meteorological variables, and distributions.",
+      sum: "Time-series forecasting, leak-free ML remediation, trend decomposition, and automated quality platforms.",
+      body: "Data science workflows analyzing particulate matter, meteorological variables, and leak-free remediation algorithms.",
       cap: "Data Science Projects",
       role: "Data Scientist",
-      duration: "2024–2025 · Active",
-      skills: [["Time-Series Forecasting", "core"], ["pandas", "core"], ["Statistical Modeling", "core"]]
-    },
-    {
-      id: "air_quality",
-      name: "Air Quality Forecasting",
-      region: "data",
-      x: 39.0,
-      y: 8.0,
-      r: 1.0,
-      z: 0.25,
-      kicker: "Data Science Project",
-      sum: "Time-series forecasting model analyzing particulate matter and meteorological trends to forecast AQI episodes.",
-      body: "Developed an end-to-end framework handling temporal gaps, seasonal decomposition (STL), and lagged rolling features for air quality predictions.",
-      cap: "Air Quality Forecasting",
-      url: "https://github.com/Naresh-Kumar17/Air_Quality_Forcasating-",
-      urlLabel: "View on GitHub ↗",
-      role: "Lead Researcher",
-      duration: "2025 · Completed",
-      skills: [["Python", "core"], ["pandas", "core"], ["Time-Series", "core"], ["Predictive Modeling", "core"]]
+      duration: "2024–2026 · Active",
+      skills: [["Time-Series Forecasting", "core"], ["pandas", "core"], ["Statistical Modeling", "core"], ["Leak-Free ML", "core"]]
     },
     {
       id: "dataset_doctor",
       name: "Dataset Doctor",
       region: "data",
-      x: 39.0,
-      y: 18.0,
+      x: 4.0,
+      y: -34.5,
       r: 1.15,
       z: 0.25,
       kicker: "ML Reliability & Remediation Platform",
@@ -281,79 +313,48 @@ const NARESH_DB = {
         ["117 Tests Passing", "core"]
       ]
     },
-
-    /* ── 3. WEB DEVELOPMENT CATEGORY ── */
     {
-      id: "web_category",
-      name: "Web Development",
-      region: "web",
-      x: 29.0,
-      y: -12.0,
-      r: 1.35,
-      z: 0.2,
-      kicker: "Project Category 03",
-      links: [
-        ["Interactive 3D Cosmos", "https://github.com/Naresh-Kumar17/portoflio_naresh"]
-      ],
-      sum: "High-performance interactive web computing, 3D math projection engines, and cloud hosting.",
-      body: "Modern web applications architected with React 19, TypeScript, HTML5 Canvas 2D math engines, and AWS Amplify CI/CD hosting.",
-      cap: "Web Development Projects",
-      role: "Web & Frontend Architect",
-      duration: "2026 · Active",
-      skills: [["React 19", "core"], ["TypeScript", "core"], ["HTML5 Canvas", "core"], ["AWS Amplify", "core"]]
-    },
-    {
-      id: "cosmos_portfolio",
-      name: "3D Cosmos Portfolio",
-      region: "web",
-      x: 21.5,
-      y: -10.5,
-      r: 1.05,
+      id: "air_quality",
+      name: "Air Quality Forecasting",
+      region: "data",
+      x: 20.0,
+      y: -34.5,
+      r: 1.0,
       z: 0.25,
-      kicker: "Featured Project · Web Development",
-      sum: "Custom mathematical 3D constellation cosmos engine built with React 19, TypeScript, and HTML5 Canvas.",
-      body: "Designed and developed this portfolio to showcase machine learning research, data science pipelines, and software projects. Implemented a custom 3D perspective projection engine on HTML5 Canvas, Box-Muller Gaussian volumetric nebula haze, travelling photon bezier curves, and smooth camera physics.",
-      cap: "Interactive 3D Cosmos Portfolio",
-      url: "https://github.com/Naresh-Kumar17/portoflio_naresh",
-      urlLabel: "View GitHub Repository ↗",
-      role: "Frontend & Canvas Architect",
-      duration: "2026 · Active",
-      skills: [
-        ["React 19 & TypeScript", "core"],
-        ["HTML5 Canvas 2D Engine", "core"],
-        ["3D Perspective Geometry", "core"],
-        ["AWS Amplify Hosting", "core"]
-      ]
+      kicker: "Data Science Project",
+      sum: "Time-series forecasting model analyzing particulate matter and meteorological trends to forecast AQI episodes.",
+      body: "Developed an end-to-end framework handling temporal gaps, seasonal decomposition (STL), and lagged rolling features for air quality predictions.",
+      cap: "Air Quality Forecasting",
+      url: "https://github.com/Naresh-Kumar17/Air_Quality_Forcasating-",
+      urlLabel: "View on GitHub ↗",
+      role: "Lead Researcher",
+      duration: "2025 · Completed",
+      skills: [["Python", "core"], ["pandas", "core"], ["Time-Series", "core"], ["Predictive Modeling", "core"]]
     }
   ],
   E: [
+    /* ── Naresh spokes (5 edges to 5 surrounding nodes) ── */
+    ["naresh", "skills_hub"],
     ["naresh", "about_me"],
     ["naresh", "contacto"],
-    ["naresh", "skills_hub"],
     ["naresh", "resume_hub"],
     ["naresh", "growth"],
 
-    // Projects connects to 3 categories ONLY:
+    /* ── Projects spokes (3 edges to 3 category nodes) ── */
+    ["growth", "web_category"],
     ["growth", "ml_category"],
     ["growth", "ds_category"],
-    ["growth", "web_category"],
 
-    // ML category:
-    ["ml_category", "svm_digits"],
-    ["ml_category", "accident_severity"],
-    ["svm_digits", "accident_severity"],
-
-    // Data Science category:
-    ["ds_category", "air_quality"],
-    ["ds_category", "dataset_doctor"],
-    ["air_quality", "dataset_doctor"],
-
-    // Web category:
+    /* ── Web category branch ── */
     ["web_category", "cosmos_portfolio"],
 
-    // Cross-links:
-    ["skills_hub", "growth"],
-    ["naresh", "growth"]
+    /* ── Machine Learning category branch ── */
+    ["ml_category", "svm_digits"],
+    ["ml_category", "accident_severity"],
+
+    /* ── Data Science category branch ── */
+    ["ds_category", "dataset_doctor"],
+    ["ds_category", "air_quality"]
   ]
 };
 
@@ -385,28 +386,31 @@ const REGION_TO_HUB: Record<string, string> = {
 };
 
 const CATEGORY_MAP: Record<string, string[]> = {
-  growth: ['ml_category', 'ds_category', 'web_category'],
+  growth: ['web_category', 'ml_category', 'ds_category'],
+  web_category: ['cosmos_portfolio'],
   ml_category: ['svm_digits', 'accident_severity'],
   ds_category: ['dataset_doctor', 'air_quality'],
-  web_category: ['cosmos_portfolio'],
-  skills_hub: ['naresh', 'growth', 'resume_hub'],
-  resume_hub: ['naresh', 'growth', 'skills_hub'],
-  naresh: ['skills_hub', 'growth', 'resume_hub', 'about_me', 'contacto'],
+  skills_hub: ['naresh'],
+  resume_hub: ['naresh'],
+  about_me: ['naresh'],
+  contacto: ['naresh'],
+  naresh: ['skills_hub', 'about_me', 'contacto', 'resume_hub', 'growth'],
 };
 
 const PARENT_MAP: Record<string, string> = {
+  web_category: 'growth',
   ml_category: 'growth',
   ds_category: 'growth',
-  web_category: 'growth',
+  cosmos_portfolio: 'web_category',
   svm_digits: 'ml_category',
   accident_severity: 'ml_category',
-  air_quality: 'ds_category',
   dataset_doctor: 'ds_category',
-  cosmos_portfolio: 'web_category',
-  about_me: 'naresh',
-  contacto: 'naresh',
+  air_quality: 'ds_category',
   skills_hub: 'naresh',
   resume_hub: 'naresh',
+  about_me: 'naresh',
+  contacto: 'naresh',
+  growth: 'naresh',
 };
 
 export interface SuperpowerCosmosProps {
@@ -477,14 +481,14 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
     let SC = 1, LBL = 1;
 
     // Origin center: Centered directly on Naresh at (0, 0)
-    const cx0 = 0;
-    const cy0 = 0;
-    const orgR = 42;
+    const cx0 = 5.0;
+    const cy0 = -6.0;
+    const orgR = 46.0;
 
     function resize() {
       W = c.width = window.innerWidth;
       H = c.height = window.innerHeight;
-      const span = W <= 760 ? 1.55 : 2.05;
+      const span = W <= 760 ? 1.6 : 2.15;
       SC = Math.min(W, H) / (orgR * span);
       LBL = W <= 760 ? 1.2 : 1;
     }
@@ -551,6 +555,8 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
     let galNode: string | null = null;
 
     let curRot = 0, curBr = 1, lastTs = 0;
+    let autoRotateElapsed = 0;
+    const AUTO_ROTATE_MAX_SECS = 2.0;
     let fieldCX = 0.5, fieldCXt = 0.5;
     let userZoom = 1, viewRot = 0, viewTiltX = 0, userInteracted = false;
 
@@ -670,7 +676,7 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
         '<span class="tdot" style="background:' + col + ';box-shadow:0 0 8px ' + col + '"></span>' + n.name;
       tip.querySelector('.kc')!.textContent = n.kicker || '';
       let cta = 'EXPLORE · click to inspect →';
-      if (n.id === 'skills_hub') cta = 'DOCUMENTATION · click to open full page →';
+      if (n.id === 'skills_hub') cta = 'SKILLS · click to view case study →';
       else if (n.id === 'resume_hub') cta = 'RESUME · click to view full CV →';
       tip.querySelector('.go')!.textContent = cta;
       tip.style.borderColor = col;
@@ -744,6 +750,17 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
       }
     };
     window.addEventListener('keydown', handleKeyDown);
+
+    const handleCosmosFocus = (e: Event) => {
+      const detail = (e as CustomEvent).detail;
+      if (detail && byId[detail]) {
+        hoverId = null;
+        hideTip();
+        userInteracted = true;
+        setFieldFocus(detail);
+      }
+    };
+    window.addEventListener('cosmos-focus', handleCosmosFocus);
 
     // ── Build Category Tabs ──
     const COSMOS_TABS = [
@@ -1026,10 +1043,14 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
         camZoom = 1;
       }
 
-      if ((mode === 'field' || mode === 'cold') && !userInteracted) {
-        curRot += dt * 0.035;
-      } else if (mode === 'page') {
-        curRot += dt * 0.01;
+      // Automatically stop continuous 3D rotation after 2.0 seconds intro
+      autoRotateElapsed += dt;
+      if (autoRotateElapsed < AUTO_ROTATE_MAX_SECS && !userInteracted) {
+        const decay = Math.max(0, 1 - (autoRotateElapsed / AUTO_ROTATE_MAX_SECS));
+        curRot += dt * 0.045 * (decay * decay);
+      } else {
+        // Smoothly settle curRot to 0 so nodes remain stationary in the hand-drawn view
+        curRot += (0 - curRot) * Math.min(1, dt * 4.0);
       }
       curBr = 1 + Math.sin(t * 0.5) * 0.02;
 
@@ -1293,6 +1314,7 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
       cancelAnimationFrame(animId);
       window.removeEventListener('resize', resize);
       window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('cosmos-focus', handleCosmosFocus);
     };
   }, [theme]);
 
