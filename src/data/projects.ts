@@ -137,18 +137,30 @@ export const projects: Project[] = [
     date: '2025',
   },
   {
-    id: 'exploratory-data-analysis',
-    title: 'Exploratory Data Analysis Pipeline',
+    id: 'dataset-doctor',
+    title: 'Dataset Doctor',
     shortDescription:
-      'A comprehensive EDA workflow analyzing real-world datasets to uncover patterns, distributions, and relationships between variables.',
+      'The Data-to-Model Quality, ML Reliability & Leak-Free Remediation Platform with train-only 5-fold cross-validation and zero test snooping.',
     longDescription:
-      'Built a structured exploratory data analysis pipeline using Python, pandas, and visualization libraries. The project walks through data loading, cleaning, statistical summaries, distribution analysis, correlation exploration, and visual storytelling.',
+      'Dataset Doctor is an enterprise-grade data quality, ML reliability, and leak-free remediation platform. It uncovers silent data traps including target leakage, impossible boundaries, sentinels, and extreme class imbalance. Enforces the non-negotiable invariant: Split first, lock test partition immediately, benchmark all repairs with 5-fold CV strictly on train data, and export standalone reproduce.py scripts. Validated with 117 passing pytest tests (Gate 8 PASS) and deployed live on Render.',
     category: 'data-science',
     projectType: 'personal',
     status: 'completed',
-    featured: false,
-    technologies: ['Python', 'pandas', 'NumPy', 'Matplotlib', 'Seaborn'],
-    date: '2024',
+    featured: true,
+    technologies: ['Python 3.11+', 'FastAPI', 'scikit-learn', 'imbalanced-learn', 'pandas', 'NumPy', 'pytest'],
+    github: 'https://github.com/Naresh-Kumar17/Dataset-Doctor',
+    demo: 'https://dataset-doctor-8c7b.onrender.com/',
+    insights: [
+      'Split first, fix training data only: locking test partition immediately eliminates the dangerous illusion of inflated synthetic accuracy',
+      'Evidence-backed remediation compares median vs mean vs mode imputation using 5-fold CV deltas with simplicity tie-breaking',
+      'Protects legitimate rare-class extreme values in minority outcomes from harmful row-dropping',
+    ],
+    learnings: [
+      'Architecting deterministic leak-free transformers for production machine learning pipelines',
+      'Building test-driven verification suites achieving 100% defect recall on planted benchmarks',
+      'Designing clean FastAPI REST backends with standalone reproduce.py script generation',
+    ],
+    date: '2026',
   },
 
   /* ────────────────────────────────────────────────────────────

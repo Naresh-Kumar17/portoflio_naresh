@@ -141,25 +141,27 @@ $$Z_0 = \sqrt{-2 \ln U_1} \cos(2\pi U_2), \quad Z_1 = \sqrt{-2 \ln U_1} \sin(2\p
 
 ## 🗺️ Constellation Spatial Graph
 
-Every milestone and project is assigned deterministic coordinates fanning out from center node **Naresh** at $(0, 0, 0)$:
+Every milestone and project is assigned deterministic coordinates with generous spacing fanning out from center node **Naresh** at $(0, 0, 0)$ to ensure maximum clarity on the main screen:
 
 ```
-                                  [Air Quality] (22.0, 9.5)
-                                        │
-                                [Data Science] (15.0, 6.5)
-       [Skills Hub]                     │
-      (-11.0, 5.5)               [EDA Pipeline] (22.0, 4.0)
-            \                           │
-             \--- [About] (-5.5, 3.5)   │
-              \                         │
-               \─── [NARESH (0, 0, 0)] ──── [Projects Hub] (8.5, 0.0)
-              /     Center Origin       │          \
-             /--- [Contact] (-5.5,-3.5) │           \--- [Machine Learning] (15.0, -0.5)
-            /                           │                     ├── [SVM Digits] (22.0, 1.8)
-       [Resume Hub]                     │                     └── [Accident Risk] (23.5, -3.2)
-      (-11.0, -5.5)             [Web Development] (15.0, -7.0)
-                                        │
-                                [3D Cosmos Engine] (22.0, -7.0)
+                                      [Dataset Doctor] (40.5, 18.0)
+                                            │
+                                    [Data Science] (29.0, 12.0)
+                                            │
+                                      [Air Quality] (40.5, 8.0)
+       [Skills Hub]                         │
+      (-18.0, 8.5)                          │
+            \                               │
+             \--- [About] (-8.0, 4.5)       │
+              \                             │
+               \─── [NARESH (0, 0, 0)] ──────── [Projects Hub] (18.0, 0.0)
+              /     Center Origin           │          \
+             /--- [Contact] (-8.0,-4.5)     │           \--- [Machine Learning] (30.0, -2.5)
+            /                               │                     ├── [SVM Digits] (41.0, 4.0)
+       [Resume Hub]                         │                     └── [Accident Risk] (41.5, -7.0)
+      (-18.0, -8.5)                 [Web Development] (29.0, -12.0)
+                                            │
+                                    [3D Cosmos Engine] (40.5, -13.0)
 ```
 
 ---
@@ -183,18 +185,23 @@ The portfolio categorizes verified work into **three distinct engineering tracks
     └── Source: https://github.com/Naresh-Kumar17/Road-Accident-Severity
 ```
 
-### 📈 Track 02 · Data Science & Time-Series Analytics
-*Focus: Environmental time-series forecasting and reproducible statistical pipelines.*
+### 📈 Track 02 · Data Science & ML Reliability
+*Focus: Data-to-model quality platforms, leak-free pipelines, and time-series analytics.*
 
 ```
-├── Air Quality Forecasting Model
-│   ├── Methodology: STL Decomposition (Seasonal-Trend decomposition using LOESS)
-│   ├── Features: Rolling lagged statistical windows for particulate matter (PM2.5/PM10)
-│   └── Source: https://github.com/Naresh-Kumar17/Air_Quality_Forcasating-
+├── Dataset Doctor (Flagship Platform)
+│   ├── Architecture: Data-to-model quality, ML reliability & leak-free remediation
+│   ├── Non-Negotiable Invariant: Split first, lock test partition immediately (0% test leakage)
+│   ├── Evidence Engine: 5-fold CV comparisons strictly on train data (median vs mean vs mode)
+│   ├── Test Suite: 117 Pytest tests passing (Gate 8 PASS)
+│   ├── Tech: Python 3.11+, FastAPI, Uvicorn, scikit-learn, imbalanced-learn, pandas, NumPy
+│   ├── Live Web App: https://dataset-doctor-8c7b.onrender.com/
+│   └── Source: https://github.com/Naresh-Kumar17/Dataset-Doctor
 │
-└── Exploratory Data Analysis Pipeline
-    ├── Methodology: Automated distribution assessment, anomaly detection & correlation matrices
-    └── Tooling: pandas, NumPy, Matplotlib, Seaborn
+└── Air Quality Forecasting Model
+    ├── Methodology: STL Decomposition (Seasonal-Trend decomposition using LOESS)
+    ├── Features: Rolling lagged statistical windows for particulate matter (PM2.5/PM10)
+    └── Source: https://github.com/Naresh-Kumar17/Air_Quality_Forcasating-
 ```
 
 ### 🌐 Track 03 · Web Development & 3D Visual Computing

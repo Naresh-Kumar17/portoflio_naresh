@@ -41,9 +41,9 @@ const NARESH_DB = {
       id: "about_me",
       name: "About Naresh",
       region: "entry",
-      x: -5.5,
-      y: 3.5,
-      r: 0.9,
+      x: -8.0,
+      y: 4.5,
+      r: 0.95,
       z: 0.2,
       kicker: "Background & Aspirations",
       sum: "Data Science undergraduate, machine learning developer, and computational thinker.",
@@ -64,9 +64,9 @@ const NARESH_DB = {
       id: "contacto",
       name: "Let's Connect",
       region: "entry",
-      x: -5.5,
-      y: -3.5,
-      r: 0.85,
+      x: -8.0,
+      y: -4.5,
+      r: 0.9,
       z: -0.15,
       kicker: "Open for Opportunities",
       sum: "Get in touch for internships, data science research, and software collaborations.",
@@ -86,9 +86,9 @@ const NARESH_DB = {
       id: "resume_hub",
       name: "Resume",
       region: "entry",
-      x: -11.0,
-      y: -5.5,
-      r: 1.4,
+      x: -18.0,
+      y: -8.5,
+      r: 1.45,
       z: 0.25,
       kicker: "Curriculum Vitae",
       links: [
@@ -112,9 +112,9 @@ const NARESH_DB = {
       id: "skills_hub",
       name: "Skills",
       region: "skills",
-      x: -11.0,
-      y: 5.5,
-      r: 1.45,
+      x: -18.0,
+      y: 8.5,
+      r: 1.5,
       z: 0.25,
       kicker: "Core Competencies",
       links: [],
@@ -136,9 +136,9 @@ const NARESH_DB = {
       id: "growth",
       name: "Projects",
       region: "growth",
-      x: 7.5,
+      x: 18.0,
       y: 0,
-      r: 1.6,
+      r: 1.65,
       z: 0.1,
       kicker: "Portfolio Showcase",
       links: [
@@ -161,9 +161,9 @@ const NARESH_DB = {
       id: "ml_category",
       name: "Machine Learning",
       region: "ai",
-      x: 16.5,
-      y: -0.5,
-      r: 1.3,
+      x: 30.0,
+      y: -2.5,
+      r: 1.35,
       z: 0.2,
       kicker: "Project Category 01",
       links: [
@@ -181,9 +181,9 @@ const NARESH_DB = {
       id: "svm_digits",
       name: "SVM Digit Recognition",
       region: "ai",
-      x: 23.5,
-      y: 1.8,
-      r: 0.95,
+      x: 41.0,
+      y: 4.0,
+      r: 1.0,
       z: 0.25,
       kicker: "Machine Learning Project",
       sum: "Support Vector Machine classifier for handwritten digit recognition with kernel optimization and ROC diagnostics.",
@@ -199,9 +199,9 @@ const NARESH_DB = {
       id: "accident_severity",
       name: "Road Accident Risk",
       region: "ai",
-      x: 23.5,
-      y: -3.2,
-      r: 0.95,
+      x: 41.5,
+      y: -7.0,
+      r: 1.0,
       z: 0.25,
       kicker: "Machine Learning Project",
       sum: "Risk prediction pipeline predicting traffic collision injury severity with SMOTE class rebalancing.",
@@ -219,9 +219,9 @@ const NARESH_DB = {
       id: "ds_category",
       name: "Data Science",
       region: "data",
-      x: 15.0,
-      y: 6.5,
-      r: 1.3,
+      x: 29.0,
+      y: 12.0,
+      r: 1.35,
       z: 0.2,
       kicker: "Project Category 02",
       links: [
@@ -238,9 +238,9 @@ const NARESH_DB = {
       id: "air_quality",
       name: "Air Quality Forecasting",
       region: "data",
-      x: 22.0,
-      y: 9.5,
-      r: 0.95,
+      x: 39.0,
+      y: 8.0,
+      r: 1.0,
       z: 0.25,
       kicker: "Data Science Project",
       sum: "Time-series forecasting model analyzing particulate matter and meteorological trends to forecast AQI episodes.",
@@ -253,20 +253,33 @@ const NARESH_DB = {
       skills: [["Python", "core"], ["pandas", "core"], ["Time-Series", "core"], ["Predictive Modeling", "core"]]
     },
     {
-      id: "eda_pipeline",
-      name: "EDA Pipeline",
+      id: "dataset_doctor",
+      name: "Dataset Doctor",
       region: "data",
-      x: 22.0,
-      y: 4.0,
-      r: 0.95,
+      x: 39.0,
+      y: 18.0,
+      r: 1.15,
       z: 0.25,
-      kicker: "Data Science Project",
-      sum: "Comprehensive exploratory data analysis workflow uncovering distributions, anomalies, and correlations.",
-      body: "Structured analysis pipeline using pandas, Seaborn, and Matplotlib to clean datasets, test distributions, and build visual summaries.",
-      cap: "Exploratory Data Analysis",
-      role: "Data Scientist",
-      duration: "2024 · Completed",
-      skills: [["pandas", "core"], ["Seaborn", "core"], ["Data Cleaning", "core"], ["Statistical Summaries", "core"]]
+      kicker: "ML Reliability & Remediation Platform",
+      sum: "The Data-to-Model Quality, ML Reliability & Leak-Free Remediation Platform with train-only 5-fold CV benchmarks and 117 passing tests.",
+      body: "Upload raw tabular data, uncover silent data traps (target leaks, sentinels, impossible boundaries, class imbalance), and benchmark candidate repairs with 5-fold cross-validation strictly on training data. Enforces the non-negotiable invariant: Split first, lock test partition immediately with zero leakage, and export standalone reproduce.py scripts. Validated with 117 passing pytest tests (Gate 8 PASS) and live on Render.",
+      cap: "Dataset Doctor Platform",
+      url: "https://github.com/Naresh-Kumar17/Dataset-Doctor",
+      urlLabel: "View on GitHub ↗",
+      links: [
+        ["Live App on Render", "https://dataset-doctor-8c7b.onrender.com/"],
+        ["GitHub Repository", "https://github.com/Naresh-Kumar17/Dataset-Doctor"]
+      ],
+      role: "Architect & Lead Creator",
+      duration: "2026 · Live on Render",
+      skills: [
+        ["Python 3.11+", "core"],
+        ["FastAPI & Uvicorn", "core"],
+        ["scikit-learn", "core"],
+        ["imbalanced-learn", "core"],
+        ["Zero Leakage", "core"],
+        ["117 Tests Passing", "core"]
+      ]
     },
 
     /* ── 3. WEB DEVELOPMENT CATEGORY ── */
@@ -274,9 +287,9 @@ const NARESH_DB = {
       id: "web_category",
       name: "Web Development",
       region: "web",
-      x: 14.5,
-      y: -7.5,
-      r: 1.3,
+      x: 29.0,
+      y: -12.0,
+      r: 1.35,
       z: 0.2,
       kicker: "Project Category 03",
       links: [
@@ -332,8 +345,8 @@ const NARESH_DB = {
 
     // Data Science category:
     ["ds_category", "air_quality"],
-    ["ds_category", "eda_pipeline"],
-    ["air_quality", "eda_pipeline"],
+    ["ds_category", "dataset_doctor"],
+    ["air_quality", "dataset_doctor"],
 
     // Web category:
     ["web_category", "cosmos_portfolio"],
@@ -374,7 +387,7 @@ const REGION_TO_HUB: Record<string, string> = {
 const CATEGORY_MAP: Record<string, string[]> = {
   growth: ['ml_category', 'ds_category', 'web_category'],
   ml_category: ['svm_digits', 'accident_severity'],
-  ds_category: ['air_quality', 'eda_pipeline'],
+  ds_category: ['dataset_doctor', 'air_quality'],
   web_category: ['cosmos_portfolio'],
   skills_hub: ['naresh', 'growth', 'resume_hub'],
   resume_hub: ['naresh', 'growth', 'skills_hub'],
@@ -388,7 +401,7 @@ const PARENT_MAP: Record<string, string> = {
   svm_digits: 'ml_category',
   accident_severity: 'ml_category',
   air_quality: 'ds_category',
-  eda_pipeline: 'ds_category',
+  dataset_doctor: 'ds_category',
   cosmos_portfolio: 'web_category',
   about_me: 'naresh',
   contacto: 'naresh',
@@ -463,19 +476,15 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
     let H = (c.height = window.innerHeight);
     let SC = 1, LBL = 1;
 
-    // Origin center
-    const cx0 = N.reduce((a, n) => a + n.x, 0) / N.length;
-    const cy0 = N.reduce((a, n) => a + n.y, 0) / N.length;
-    let orgR = 1;
-    for (const n of N) {
-      const d = Math.hypot(n.x - cx0, n.y - cy0);
-      if (d > orgR) orgR = d;
-    }
+    // Origin center: Centered directly on Naresh at (0, 0)
+    const cx0 = 0;
+    const cy0 = 0;
+    const orgR = 42;
 
     function resize() {
       W = c.width = window.innerWidth;
       H = c.height = window.innerHeight;
-      const span = W <= 760 ? 1.7 : 2.35;
+      const span = W <= 760 ? 1.55 : 2.05;
       SC = Math.min(W, H) / (orgR * span);
       LBL = W <= 760 ? 1.2 : 1;
     }
@@ -641,10 +650,6 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
         const hitR = Math.max(32, N[i].r * 22 * userZoom);
                 if (Math.hypot(clientX - sx, clientY - sy) <= hitR) {
           const clickedNode = N[i];
-          if (clickedNode.id === 'skills_hub') {
-            window.location.assign('/skills');
-            return;
-          }
           if (clickedNode.id === 'resume_hub') {
             window.location.assign('/resume');
             return;
@@ -743,7 +748,7 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
     // ── Build Category Tabs ──
     const COSMOS_TABS = [
       { id: 'naresh', label: 'NARESH', col: '#9B8FFF', action: () => setFieldFocus('naresh') },
-      { id: 'skills', label: 'SKILLS', col: '#00B0CD', action: () => { window.location.assign('/skills'); } },
+      { id: 'skills', label: 'SKILLS', col: '#00B0CD', action: () => setFieldFocus('skills_hub') },
       { id: 'projects', label: 'PROJECTS', col: '#FFAA00', action: () => setFieldFocus('growth') },
       { id: 'resume', label: 'RESUME', col: '#E84FD0', action: () => { window.location.assign('/resume'); } },
     ];
@@ -783,7 +788,7 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
       tabsEl.querySelectorAll('.t').forEach((t: any) => {
         const id = t.dataset.tabId;
         const col = t.dataset.col || '#FAFAF7';
-        const isProjectActive = (fieldSel === 'growth' || fieldSel === 'ml_category' || fieldSel === 'ds_category' || fieldSel === 'web_category' || fieldSel === 'svm_digits' || fieldSel === 'accident_severity' || fieldSel === 'air_quality' || fieldSel === 'eda_pipeline' || fieldSel === 'cosmos_portfolio');
+        const isProjectActive = (fieldSel === 'growth' || fieldSel === 'ml_category' || fieldSel === 'ds_category' || fieldSel === 'web_category' || fieldSel === 'svm_digits' || fieldSel === 'accident_severity' || fieldSel === 'air_quality' || fieldSel === 'dataset_doctor' || fieldSel === 'cosmos_portfolio');
         const isSkillsActive = fieldSel === 'skills_hub';
         const isNareshActive = !fieldSel || fieldSel === 'naresh' || fieldSel === 'about_me' || fieldSel === 'contacto';
 
@@ -841,9 +846,59 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
         `;
       }
 
-      // Specialized Card for Naresh / About Me
+      // Specialized In-Page Case Study for Skills Hub & Naresh
       let customDossierHTML = '';
-      if (n.id === 'about_me' || n.id === 'naresh') {
+      if (n.id === 'skills_hub') {
+        customDossierHTML = `
+          <div style="margin:16px 0 10px;display:flex;flex-direction:column;gap:12px;">
+            <div style="padding:14px;border-radius:10px;background:rgba(0,176,205,0.06);border:1px solid rgba(0,176,205,0.3);">
+              <div style="font-family:var(--mono);font-size:11px;font-weight:700;color:#00B0CD;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;">
+                01 · Python with Machine Learning Libraries
+              </div>
+              <p style="font-size:12.5px;line-height:1.55;color:var(--ink2);margin:0 0 8px;">
+                Supervised classification, SVM kernel margin optimization, train-only 5-fold cross-validation, and class-imbalanced risk estimation.
+              </p>
+              <div style="display:flex;flex-wrap:wrap;gap:5px;">
+                <span style="font-family:var(--mono);font-size:10px;padding:2px 7px;border-radius:999px;background:rgba(255,255,255,0.06);color:var(--ink3);">scikit-learn</span>
+                <span style="font-family:var(--mono);font-size:10px;padding:2px 7px;border-radius:999px;background:rgba(255,255,255,0.06);color:var(--ink3);">pandas</span>
+                <span style="font-family:var(--mono);font-size:10px;padding:2px 7px;border-radius:999px;background:rgba(255,255,255,0.06);color:var(--ink3);">NumPy</span>
+                <span style="font-family:var(--mono);font-size:10px;padding:2px 7px;border-radius:999px;background:rgba(255,255,255,0.06);color:var(--ink3);">SMOTE</span>
+                <span style="font-family:var(--mono);font-size:10px;padding:2px 7px;border-radius:999px;background:rgba(255,255,255,0.06);color:var(--ink3);">FastAPI</span>
+              </div>
+            </div>
+
+            <div style="padding:14px;border-radius:10px;background:rgba(155,143,255,0.06);border:1px solid rgba(155,143,255,0.3);">
+              <div style="font-family:var(--mono);font-size:11px;font-weight:700;color:#9B8FFF;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;">
+                02 · C++ & Systems Programming
+              </div>
+              <p style="font-size:12.5px;line-height:1.55;color:var(--ink2);margin:0 0 8px;">
+                Memory hierarchy optimization, deterministic RAII lifecycles, and modular OOP software architectures at FAST-NUCES Karachi.
+              </p>
+              <div style="display:flex;flex-wrap:wrap;gap:5px;">
+                <span style="font-family:var(--mono);font-size:10px;padding:2px 7px;border-radius:999px;background:rgba(255,255,255,0.06);color:var(--ink3);">C++20</span>
+                <span style="font-family:var(--mono);font-size:10px;padding:2px 7px;border-radius:999px;background:rgba(255,255,255,0.06);color:var(--ink3);">Data Structures</span>
+                <span style="font-family:var(--mono);font-size:10px;padding:2px 7px;border-radius:999px;background:rgba(255,255,255,0.06);color:var(--ink3);">Algorithms</span>
+                <span style="font-family:var(--mono);font-size:10px;padding:2px 7px;border-radius:999px;background:rgba(255,255,255,0.06);color:var(--ink3);">Complexity</span>
+              </div>
+            </div>
+
+            <div style="padding:14px;border-radius:10px;background:rgba(56,189,248,0.06);border:1px solid rgba(56,189,248,0.3);">
+              <div style="font-family:var(--mono);font-size:11px;font-weight:700;color:#38BDF8;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;">
+                03 · Web Development & Visual Computing
+              </div>
+              <p style="font-size:12.5px;line-height:1.55;color:var(--ink2);margin:0 0 8px;">
+                Mathematical 3D perspective projection engines on HTML5 Canvas 2D, React 19, strict TypeScript, and continuous cloud delivery.
+              </p>
+              <div style="display:flex;flex-wrap:wrap;gap:5px;">
+                <span style="font-family:var(--mono);font-size:10px;padding:2px 7px;border-radius:999px;background:rgba(255,255,255,0.06);color:var(--ink3);">React 19</span>
+                <span style="font-family:var(--mono);font-size:10px;padding:2px 7px;border-radius:999px;background:rgba(255,255,255,0.06);color:var(--ink3);">TypeScript</span>
+                <span style="font-family:var(--mono);font-size:10px;padding:2px 7px;border-radius:999px;background:rgba(255,255,255,0.06);color:var(--ink3);">HTML5 Canvas</span>
+                <span style="font-family:var(--mono);font-size:10px;padding:2px 7px;border-radius:999px;background:rgba(255,255,255,0.06);color:var(--ink3);">AWS Amplify</span>
+              </div>
+            </div>
+          </div>
+        `;
+      } else if (n.id === 'about_me' || n.id === 'naresh') {
         customDossierHTML = `
           <div style="margin:16px 0 12px;display:flex;align-items:center;gap:16px;padding:14px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.12);">
             <img src="/profile.png" alt="Naresh Kumar" style="width:68px;height:68px;border-radius:50%;object-fit:cover;border:2px solid ${acc};box-shadow:0 0 14px ${acc}66;" />
@@ -908,10 +963,6 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
       galleryEl.querySelectorAll('[data-go]').forEach((card: any) => {
         card.onclick = () => {
           const target = card.dataset.go;
-          if (target === 'skills_hub') {
-            window.location.assign('/skills');
-            return;
-          }
           if (target === 'resume_hub') {
             window.location.assign('/resume');
             return;
