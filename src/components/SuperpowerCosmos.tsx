@@ -1515,6 +1515,52 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
         }
       }
 
+      // 4.5 Draw Visitor Stars ("Star Wala" Interactive Constellation)
+      ctx.globalCompositeOperation = LITE ? 'source-over' : 'lighter';
+      for (const vs of visitorStars) {
+        const [vsX, vsY, vsPersp] = proj(vs.x, vs.y, vs.z || 0.1);
+        const vsR = Math.max(4, 5.5 * camZoom * userZoom * vsPersp);
+        const isHoverStar = hoverStarId === vs.id;
+        const starCol = vs.color || '#9B8FFF';
+
+        // Outer glowing halo
+        const glowRad = isHoverStar ? vsR * 3.8 : (vs.isUserStar ? vsR * 3.0 : vsR * 2.0);
+        const grad = ctx.createRadialGradient(vsX, vsY, 0, vsX, vsY, glowRad);
+        grad.addColorStop(0, starCol);
+        grad.addColorStop(1, 'transparent');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(vsX, vsY, glowRad, 0, 6.283);
+        ctx.fill();
+
+        // 4-point sparkling star diamond
+        const starLen = isHoverStar ? vsR * 2.8 : vsR * 2.0;
+        ctx.fillStyle = starCol;
+        ctx.beginPath();
+        ctx.moveTo(vsX, vsY - starLen);
+        ctx.quadraticCurveTo(vsX, vsY, vsX + starLen, vsY);
+        ctx.quadraticCurveTo(vsX, vsY, vsX, vsY + starLen);
+        ctx.quadraticCurveTo(vsX, vsY, vsX - starLen, vsY);
+        ctx.quadraticCurveTo(vsX, vsY, vsX, vsY - starLen);
+        ctx.fill();
+
+        // Bright white core spark
+        ctx.beginPath();
+        ctx.arc(vsX, vsY, Math.max(2, vsR * 0.45), 0, 6.283);
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fill();
+
+        // High contrast Star label
+        ctx.save();
+        ctx.font = `600 ${Math.max(9, Math.round(10 * LBL))}px "Martian Mono", monospace`;
+        ctx.fillStyle = isHoverStar ? starCol : (vs.isUserStar ? '#CFFF04' : (LITE ? '#111827' : '#E2E8F0'));
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'bottom';
+        const labelText = vs.isUserStar ? `✦ ${vs.name} [YOU]` : `✦ ${vs.name}`;
+        ctx.fillText(labelText, vsX, vsY - starLen - 4);
+        ctx.restore();
+      }
+
       // 5. Draw Nodes & Labels with dynamic collision avoidance
       const HUB_IDS = new Set(Object.values(REGION_TO_HUB));
       const drawnLabels: DrawnLabelBox[] = [];
@@ -1885,15 +1931,15 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
         </div>
         <div className="hud-actions">
           <button
-            id="tour-toggle-btn"
-            className="tour-hud-btn"
+            id="star-map-toggle-btn"
+            className="star-map-hud-btn"
             type="button"
-            title="Take 60-Second Guided Flight Tour with Ambient Music"
-            aria-label="Take 60-Second Guided Flight Tour with Ambient Music"
+            title="Visitor Star Map · Explore and add stars"
+            aria-label="Visitor Star Map"
           >
-            <span className="tour-hud-pulse" />
-            <span className="tour-btn-icon">▶</span>
-            <span className="tour-btn-text">60s Tour</span>
+            <span className="star-sparkle-icon">✦</span>
+            <span className="star-btn-text">Visitor Stars</span>
+            <span id="star-count-badge" className="star-count-badge">8</span>
           </button>
           <button id="reset-orbit" type="button" title="Center View" aria-label="Center View">
             ⟲ Center
