@@ -643,6 +643,7 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
     const c = root.querySelector('#c') as HTMLCanvasElement;
     const ctx = c.getContext('2d')!;
     const mini = root.querySelector('#mini') as HTMLCanvasElement;
+    const minilbl = root.querySelector('#minilbl') as HTMLElement | null;
     const mctx = mini.getContext('2d')!;
     const tip = root.querySelector('#tip') as HTMLDivElement;
     const galleryBackdrop = root.querySelector('#gallery-backdrop') as HTMLElement;
@@ -1245,22 +1246,19 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
         `;
       } else if (n.id === 'resume_hub') {
         actionButtons = `
-          <div style="display:flex;gap:12px;flex-wrap:wrap;margin:18px 0 14px;">
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin:18px 0 10px;">
             <a href="/resume.pdf" download="Naresh_Kumar_Resume.pdf" class="genter" style="flex:1;min-width:160px;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;background:#E84FD0;color:#06070D;font-weight:700;padding:12px 18px;border-radius:12px;box-shadow:0 0 20px rgba(232,79,208,0.45);cursor:pointer;font-size:13.5px;">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
               <span>Download PDF</span>
             </a>
-            <button id="resume-preview-toggle-btn" type="button" class="genter" style="flex:1;min-width:160px;display:inline-flex;align-items:center;justify-content:center;gap:8px;background:rgba(232,79,208,0.16);border:1.5px solid #E84FD0;color:#FAFAF7;font-weight:600;padding:12px 18px;border-radius:12px;cursor:pointer;font-size:13.5px;">
+            <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" class="genter" style="flex:1;min-width:160px;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;background:rgba(232,79,208,0.14);border:1.5px solid #E84FD0;color:#FAFAF7;font-weight:600;padding:12px 18px;border-radius:12px;cursor:pointer;font-size:13.5px;transition:all 0.2s ease;">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-              <span id="resume-preview-btn-text">Preview PDF</span>
-            </button>
-          </div>
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-family:var(--mono);font-size:11px;">
-            <span style="color:var(--ink3);">Official 1-Page Curriculum Vitae</span>
-            <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" style="color:#E84FD0;text-decoration:none;display:inline-flex;align-items:center;gap:4px;font-weight:600;">
-              <span>Open PDF in new tab</span>
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              <span>Preview PDF ↗</span>
             </a>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font-family:var(--mono);font-size:11px;">
+            <span style="color:var(--ink3);">Official 1-Page Document · Naresh_Kumar_Resume.pdf</span>
+            <span style="color:#E84FD0;font-weight:600;">Opens preview in new tab ↗</span>
           </div>
         `;
       } else if (n.url) {
@@ -1338,27 +1336,46 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
         `;
       } else if (n.id === 'resume_hub') {
         customDossierHTML = `
-          <div id="resume-preview-container" style="display:none;margin:14px 0 16px;border-radius:14px;overflow:hidden;border:1px solid rgba(232,79,208,0.35);background:#12111d;box-shadow:0 12px 36px rgba(0,0,0,0.6);">
-            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:rgba(232,79,208,0.1);border-bottom:1px solid rgba(232,79,208,0.2);font-family:var(--mono);font-size:11px;">
-              <span style="color:#FAFAF7;font-weight:600;display:inline-flex;align-items:center;gap:7px;">
-                <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#E84FD0;box-shadow:0 0 8px #E84FD0;"></span>
-                Naresh_Kumar_Resume.pdf
-              </span>
-              <span style="font-size:10px;text-transform:uppercase;letter-spacing:0.05em;padding:2px 8px;border-radius:999px;background:rgba(232,79,208,0.22);color:#FAFAF7;">
-                Official PDF
-              </span>
+          <div style="margin:16px 0 12px;display:flex;flex-direction:column;gap:12px;">
+            <div style="padding:14px;border-radius:10px;background:rgba(232,79,208,0.06);border:1px solid rgba(232,79,208,0.28);">
+              <div style="font-family:var(--mono);font-size:11px;font-weight:700;color:#E84FD0;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;">
+                01 · Academic Degree & Education
+              </div>
+              <div style="font-size:13.5px;font-weight:600;color:var(--ink);margin-bottom:2px;">
+                Bachelor of Science in Data Science
+              </div>
+              <div style="font-size:12px;color:var(--ink2);margin-bottom:6px;font-family:var(--mono);">
+                FAST-NUCES Karachi · 2025 – 2029 (Expected)
+              </div>
+              <p style="font-size:12.5px;line-height:1.55;color:var(--ink2);margin:0;">
+                Rigorous coursework in Data Structures, Algorithms (C++), Probability & Statistics, Linear Algebra, and Machine Learning Foundations.
+              </p>
             </div>
-            <div style="position:relative;width:100%;height:520px;background:#1a1926;">
-              <object data="/resume.pdf#view=FitH" type="application/pdf" width="100%" height="520px" style="display:block;border:none;">
-                <iframe src="/resume.pdf#view=FitH" width="100%" height="520px" title="Resume PDF Preview" style="border:none;display:block;">
-                  <div style="padding:48px 20px;text-align:center;color:var(--ink2);">
-                    <p style="margin-bottom:14px;font-size:13px;">PDF inline preview not supported on this device.</p>
-                    <a href="/resume.pdf" download="Naresh_Kumar_Resume.pdf" class="genter" style="display:inline-block;text-decoration:none;background:#E84FD0;color:#06070D;font-weight:700;padding:8px 16px;border-radius:8px;">
-                      Download PDF Directly
-                    </a>
-                  </div>
-                </iframe>
-              </object>
+
+            <div style="padding:14px;border-radius:10px;background:rgba(0,176,205,0.06);border:1px solid rgba(0,176,205,0.28);">
+              <div style="font-family:var(--mono);font-size:11px;font-weight:700;color:#00B0CD;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;">
+                02 · Technical Competencies & Specializations
+              </div>
+              <p style="font-size:12.5px;line-height:1.55;color:var(--ink2);margin:0 0 8px;">
+                Supervised classification, margin-maximizing SVMs, leak-free data remediation, environmental forecasting, and interactive 3D web systems.
+              </p>
+              <div style="display:flex;flex-wrap:wrap;gap:5px;">
+                <span style="font-family:var(--mono);font-size:10px;padding:2px 7px;border-radius:999px;background:rgba(255,255,255,0.06);color:var(--ink3);">scikit-learn</span>
+                <span style="font-family:var(--mono);font-size:10px;padding:2px 7px;border-radius:999px;background:rgba(255,255,255,0.06);color:var(--ink3);">pandas</span>
+                <span style="font-family:var(--mono);font-size:10px;padding:2px 7px;border-radius:999px;background:rgba(255,255,255,0.06);color:var(--ink3);">NumPy</span>
+                <span style="font-family:var(--mono);font-size:10px;padding:2px 7px;border-radius:999px;background:rgba(255,255,255,0.06);color:var(--ink3);">C++20</span>
+                <span style="font-family:var(--mono);font-size:10px;padding:2px 7px;border-radius:999px;background:rgba(255,255,255,0.06);color:var(--ink3);">React 19 & TypeScript</span>
+                <span style="font-family:var(--mono);font-size:10px;padding:2px 7px;border-radius:999px;background:rgba(255,255,255,0.06);color:var(--ink3);">AWS Amplify</span>
+              </div>
+            </div>
+
+            <div style="padding:14px;border-radius:10px;background:rgba(255,170,0,0.06);border:1px solid rgba(255,170,0,0.28);">
+              <div style="font-family:var(--mono);font-size:11px;font-weight:700;color:#FFAA00;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;">
+                03 · Key Engineering Achievements
+              </div>
+              <p style="font-size:12.5px;line-height:1.55;color:var(--ink2);margin:0;">
+                Engineered Dataset Doctor for automated ML data validation; built handwritten digit classification engines; developed real-time 60 FPS perspective canvas experiences.
+              </p>
             </div>
           </div>
         `;
@@ -1419,22 +1436,6 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
       const closeBtn = galleryEl.querySelector('#gallery-close-btn') as HTMLElement | null;
       if (closeBtn) {
         closeBtn.onclick = () => goHome();
-      }
-
-      const previewToggleBtn = galleryEl.querySelector('#resume-preview-toggle-btn');
-      const previewContainer = galleryEl.querySelector('#resume-preview-container') as HTMLElement | null;
-      const previewBtnText = galleryEl.querySelector('#resume-preview-btn-text');
-
-      if (previewToggleBtn && previewContainer && previewBtnText) {
-        previewToggleBtn.addEventListener('click', () => {
-          const isClosed = previewContainer.style.display === 'none';
-          previewContainer.style.display = isClosed ? 'block' : 'none';
-          previewBtnText.textContent = isClosed ? 'Hide Preview' : 'Preview PDF';
-          (previewToggleBtn as HTMLElement).style.background = isClosed ? 'rgba(232,79,208,0.32)' : 'rgba(232,79,208,0.16)';
-          if (isClosed) {
-            previewContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-          }
-        });
       }
 
       galleryEl.querySelectorAll('[data-go]').forEach((card: any) => {
@@ -1809,6 +1810,14 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
       const isGalActive = mode === 'field' && !!galMode;
       galleryEl.classList.toggle('show', isGalActive);
       galleryBackdrop?.classList.toggle('show', isGalActive);
+      if (mini) {
+        mini.style.opacity = isGalActive ? '0' : '1';
+        mini.style.pointerEvents = isGalActive ? 'none' : 'auto';
+      }
+      if (minilbl) {
+        minilbl.style.opacity = isGalActive ? '0' : '1';
+        minilbl.style.pointerEvents = isGalActive ? 'none' : 'auto';
+      }
 
   animId = requestAnimationFrame(frame);
     }
