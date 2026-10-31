@@ -50,7 +50,20 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
       },
       { id: 'nav-projects', label: t('nav.projects'), icon: <ArrowRight size={16} />, action: () => { navigate('/projects'); onClose(); }, category: 'Navigation' },
       { id: 'nav-education', label: t('nav.education'), icon: <ArrowRight size={16} />, action: () => { navigate('/education'); onClose(); }, category: 'Navigation' },
-      { id: 'nav-resume', label: t('nav.resume'), icon: <ArrowRight size={16} />, action: () => { navigate('/resume'); onClose(); }, category: 'Navigation' },
+      {
+        id: 'nav-resume',
+        label: t('nav.resume'),
+        icon: <ArrowRight size={16} />,
+        action: () => {
+          if (location.pathname === '/') {
+            window.dispatchEvent(new CustomEvent('cosmos-focus', { detail: 'resume_hub' }));
+          } else {
+            navigate('/resume');
+          }
+          onClose();
+        },
+        category: 'Navigation',
+      },
       { id: 'nav-contact', label: t('nav.contact'), icon: <ArrowRight size={16} />, action: () => { navigate('/contact'); onClose(); }, category: 'Navigation' },
     ];
 

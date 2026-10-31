@@ -38,9 +38,14 @@ export function Navbar({ onOpenCommandPalette }: NavbarProps) {
   }, [mobileOpen]);
 
   const handleNavLinkClick = (to: string, e: React.MouseEvent) => {
-    if (location.pathname === '/' && to === '/skills') {
-      e.preventDefault();
-      window.dispatchEvent(new CustomEvent('cosmos-focus', { detail: 'skills_hub' }));
+    if (location.pathname === '/') {
+      if (to === '/skills') {
+        e.preventDefault();
+        window.dispatchEvent(new CustomEvent('cosmos-focus', { detail: 'skills_hub' }));
+      } else if (to === '/resume') {
+        e.preventDefault();
+        window.dispatchEvent(new CustomEvent('cosmos-focus', { detail: 'resume_hub' }));
+      }
     }
   };
 

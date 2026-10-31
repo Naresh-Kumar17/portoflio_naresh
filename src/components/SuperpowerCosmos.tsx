@@ -126,7 +126,7 @@ const NARESH_DB = {
     {
       id: "resume_hub",
       name: "Resume",
-      region: "entry",
+      region: "ai",
       x: 6.0,
       y: 28.0,
       r: 1.45,
@@ -134,9 +134,9 @@ const NARESH_DB = {
       labelPos: "top",
       kicker: "Curriculum Vitae",
       links: [
-        ["View Full CV Page", "/resume"]
+        ["Preview / Download PDF", "/resume.pdf"]
       ],
-      sum: "Data Science student at FAST-NUCES Karachi specializing in machine learning pipelines, time-series forecasting, and cloud-hosted web apps.",
+      sum: "Official Curriculum Vitae of Naresh Kumar — BS Data Science at FAST-NUCES Karachi.",
       body: "Curriculum Vitae overview covering academic degree at FAST-NUCES Karachi (BS Data Science 2025–2029), technical competencies (Python ML, C++, Web Dev, AWS Amplify), and key projects with quantitative validation.",
       cap: "Curriculum Vitae & Qualifications",
       role: "Data Scientist & ML Practitioner",
@@ -895,10 +895,6 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
         const hitR = Math.max(32, N[i].r * 22 * userZoom);
                 if (Math.hypot(clientX - sx, clientY - sy) <= hitR) {
           const clickedNode = N[i];
-          if (clickedNode.id === 'resume_hub') {
-            window.location.assign('/resume');
-            return;
-          }
           setFieldFocus(clickedNode.id);
           return;
         }
@@ -928,7 +924,7 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
       tip.querySelector('.kc')!.textContent = n.kicker || '';
       let cta = 'EXPLORE · click to inspect →';
       if (n.id === 'skills_hub') cta = 'SKILLS · click to view case study →';
-      else if (n.id === 'resume_hub') cta = 'RESUME · click to view full CV →';
+      else if (n.id === 'resume_hub') cta = 'RESUME · click to preview & download PDF →';
       tip.querySelector('.go')!.textContent = cta;
       tip.style.borderColor = col;
       tip.style.opacity = '1';
@@ -948,6 +944,10 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
       fieldSel = targetId;
       const i = idIndex[targetId];
       if (i === undefined) return;
+
+      targetCamX = n.x;
+      targetCamY = n.y;
+      targetCamZoom = 1.15;
 
       const children = CATEGORY_MAP[targetId] || [];
       const childrenIndices = children.map((cId: string) => idIndex[cId]).filter((idx: number | undefined) => idx !== undefined);
@@ -1151,7 +1151,7 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
       { id: 'naresh', label: 'NARESH', col: '#9B8FFF', action: () => setFieldFocus('naresh') },
       { id: 'skills', label: 'SKILLS', col: '#00B0CD', action: () => setFieldFocus('skills_hub') },
       { id: 'projects', label: 'PROJECTS', col: '#FFAA00', action: () => setFieldFocus('growth') },
-      { id: 'resume', label: 'RESUME', col: '#E84FD0', action: () => { window.location.assign('/resume'); } },
+      { id: 'resume', label: 'RESUME', col: '#E84FD0', action: () => setFieldFocus('resume_hub') },
     ];
 
     function buildTabs() {
@@ -1234,9 +1234,25 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
         `;
       } else if (n.id === 'resume_hub') {
         actionButtons = `
-          <a href="/resume" class="genter" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;margin:16px 0 10px;width:100%;text-align:center;background:#E84FD0;color:#06070D;font-weight:700;">
-            📄 Open Full Resume Sheet →
-          </a>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin:16px 0 10px;">
+            <a href="/resume.pdf" download="Naresh_Kumar_Resume.pdf" class="genter" style="flex:1;min-width:140px;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;background:#E84FD0;color:#06070D;font-weight:700;padding:11px 16px;border-radius:10px;box-shadow:0 0 18px rgba(232,79,208,0.45);cursor:pointer;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              <span>Download PDF</span>
+            </a>
+            <button id="resume-preview-toggle-btn" type="button" class="genter" style="flex:1;min-width:140px;display:inline-flex;align-items:center;justify-content:center;gap:8px;background:rgba(232,79,208,0.16);border:1px solid #E84FD0;color:#FAFAF7;font-weight:600;padding:11px 16px;border-radius:10px;cursor:pointer;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              <span id="resume-preview-btn-text">Hide PDF</span>
+            </button>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-family:var(--mono);font-size:11px;">
+            <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" style="color:#E84FD0;text-decoration:none;display:inline-flex;align-items:center;gap:4px;">
+              <span>Open in new tab</span>
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </a>
+            <a href="/resume" style="color:var(--ink3);text-decoration:none;">
+              Open full CV page →
+            </a>
+          </div>
         `;
       } else if (n.url) {
         actionButtons = `
@@ -1311,6 +1327,32 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
             </div>
           </div>
         `;
+      } else if (n.id === 'resume_hub') {
+        customDossierHTML = `
+          <div id="resume-preview-container" style="margin:12px 0 16px;border-radius:12px;overflow:hidden;border:1px solid rgba(232,79,208,0.35);background:#12111d;box-shadow:0 12px 36px rgba(0,0,0,0.6);">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:rgba(232,79,208,0.1);border-bottom:1px solid rgba(232,79,208,0.2);font-family:var(--mono);font-size:11px;">
+              <span style="color:#FAFAF7;font-weight:600;display:inline-flex;align-items:center;gap:7px;">
+                <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#E84FD0;box-shadow:0 0 8px #E84FD0;"></span>
+                Naresh_Kumar_Resume.pdf
+              </span>
+              <span style="font-size:10px;text-transform:uppercase;letter-spacing:0.05em;padding:2px 8px;border-radius:999px;background:rgba(232,79,208,0.22);color:#FAFAF7;">
+                Official PDF
+              </span>
+            </div>
+            <div style="position:relative;width:100%;height:490px;background:#1a1926;">
+              <object data="/resume.pdf#view=FitH" type="application/pdf" width="100%" height="490px" style="display:block;border:none;">
+                <iframe src="/resume.pdf#view=FitH" width="100%" height="490px" title="Resume PDF Preview" style="border:none;display:block;">
+                  <div style="padding:48px 20px;text-align:center;color:var(--ink2);">
+                    <p style="margin-bottom:14px;font-size:13px;">PDF inline preview not supported on this device.</p>
+                    <a href="/resume.pdf" download="Naresh_Kumar_Resume.pdf" class="genter" style="display:inline-block;text-decoration:none;background:#E84FD0;color:#06070D;font-weight:700;padding:8px 16px;border-radius:8px;">
+                      Download PDF Directly
+                    </a>
+                  </div>
+                </iframe>
+              </object>
+            </div>
+          </div>
+        `;
       }
 
       const skillsHTML = n.skills && n.skills.length > 0 && n.id !== 'skills_hub'
@@ -1362,13 +1404,25 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
         ${items.length > 0 ? `<div class="gcaplab">${sectionLabel} (${items.length})</div>${cardsHTML}` : ''}
       `;
 
+      const previewToggleBtn = galleryEl.querySelector('#resume-preview-toggle-btn');
+      const previewContainer = galleryEl.querySelector('#resume-preview-container') as HTMLElement | null;
+      const previewBtnText = galleryEl.querySelector('#resume-preview-btn-text');
+
+      if (previewToggleBtn && previewContainer && previewBtnText) {
+        previewToggleBtn.addEventListener('click', () => {
+          const isClosed = previewContainer.style.display === 'none';
+          previewContainer.style.display = isClosed ? 'block' : 'none';
+          previewBtnText.textContent = isClosed ? 'Hide PDF' : 'Preview PDF';
+          (previewToggleBtn as HTMLElement).style.background = isClosed ? 'rgba(232,79,208,0.28)' : 'rgba(232,79,208,0.16)';
+          if (isClosed) {
+            previewContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }
+        });
+      }
+
       galleryEl.querySelectorAll('[data-go]').forEach((card: any) => {
         card.onclick = () => {
           const target = card.dataset.go;
-          if (target === 'resume_hub') {
-            window.location.assign('/resume');
-            return;
-          }
           setFieldFocus(target);
         };
       });
