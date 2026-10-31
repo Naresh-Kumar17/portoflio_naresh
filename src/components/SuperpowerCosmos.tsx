@@ -435,6 +435,313 @@ const PARENT_MAP: Record<string, string> = {
   growth: 'naresh',
 };
 
+interface TourStop {
+  id: string;
+  nodeId: string;
+  stepNum: number;
+  durationSec: number;
+  camX: number;
+  camY: number;
+  camZoom: number;
+  badge: string;
+  badgeCol: string;
+  title: string;
+  subtitle: string;
+  story: string;
+  highlightSkills: string[];
+  actionLabel?: string;
+  actionUrl?: string;
+  isExternalUrl?: boolean;
+}
+
+const TOUR_STOPS: TourStop[] = [
+  {
+    id: 'origin',
+    nodeId: 'naresh',
+    stepNum: 1,
+    durationSec: 10,
+    camX: -16.0,
+    camY: 10.0,
+    camZoom: 1.45,
+    badge: 'THE ORIGIN',
+    badgeCol: '#9B8FFF',
+    title: 'Naresh Kumar',
+    subtitle: 'BS Data Science · FAST-NUCES Karachi',
+    story: 'Transforming empirical data pipelines into robust mathematical solutions. Specializing in machine learning classifiers, time-series forecasting, and interactive visual computing.',
+    highlightSkills: ['FAST-NUCES Karachi', 'Machine Learning', 'Statistical Pipelines'],
+    actionLabel: 'Explore Identity',
+    actionUrl: '#naresh'
+  },
+  {
+    id: 'doctor',
+    nodeId: 'dataset_doctor',
+    stepNum: 2,
+    durationSec: 10,
+    camX: 4.0,
+    camY: -41.0,
+    camZoom: 1.5,
+    badge: 'FLAGSHIP PLATFORM',
+    badgeCol: '#22C55E',
+    title: 'Dataset Doctor',
+    subtitle: 'The Data-to-Model Quality & ML Reliability Platform',
+    story: 'Catches silent data traps before model training: target leakage, sentinel values, and class imbalance. Enforces split-first zero leakage with 117 passing pytest tests.',
+    highlightSkills: ['117 Tests Passing', 'Train-Only 5-Fold CV', 'FastAPI', 'Zero Leakage'],
+    actionLabel: 'Launch App on Render ↗',
+    actionUrl: 'https://dataset-doctor-8c7b.onrender.com/',
+    isExternalUrl: true
+  },
+  {
+    id: 'ml_models',
+    nodeId: 'ml_category',
+    stepNum: 3,
+    durationSec: 10,
+    camX: 32.0,
+    camY: -24.0,
+    camZoom: 1.4,
+    badge: 'MACHINE LEARNING',
+    badgeCol: '#E84FD0',
+    title: 'Supervised Models & SMOTE',
+    subtitle: 'SVM Digit Classification & Road Accident Severity',
+    story: 'Maximizing non-linear hyperplane separation with RBF kernels for digit recognition, and balancing extreme casualty distributions via synthetic SMOTE sampling.',
+    highlightSkills: ['Support Vector Machines', 'SMOTE Resampling', 'scikit-learn', 'ROC-AUC'],
+    actionLabel: 'View GitHub Repos ↗',
+    actionUrl: 'https://github.com/Naresh-Kumar17/svm-handwritten-digits',
+    isExternalUrl: true
+  },
+  {
+    id: 'forecasting',
+    nodeId: 'air_quality',
+    stepNum: 4,
+    durationSec: 10,
+    camX: 24.0,
+    camY: -41.0,
+    camZoom: 1.5,
+    badge: 'DATA SCIENCE',
+    badgeCol: '#22C55E',
+    title: 'Air Quality Forecasting',
+    subtitle: 'Time-Series Decomposition & Environmental Prediction',
+    story: 'End-to-end framework predicting AQI spikes and particulate concentration. Features Seasonal-Trend Decomposition (STL), lagged temporal rolling windows, and meteorological covariates.',
+    highlightSkills: ['Time-Series Forecasting', 'STL Decomposition', 'Rolling Features', 'pandas'],
+    actionLabel: 'View Source Code ↗',
+    actionUrl: 'https://github.com/Naresh-Kumar17/Air_Quality_Forcasating-',
+    isExternalUrl: true
+  },
+  {
+    id: 'cosmos',
+    nodeId: 'cosmos_portfolio',
+    stepNum: 5,
+    durationSec: 10,
+    camX: 56.0,
+    camY: -4.0,
+    camZoom: 1.45,
+    badge: 'WEB COMPUTING',
+    badgeCol: '#38BDF8',
+    title: '3D Constellation Cosmos',
+    subtitle: 'Custom Perspective 3D Engine on HTML5 Canvas',
+    story: 'Engineered entirely from scratch with React 19 and Canvas 2D math without bulky 3D engines. Features Gaussian volumetric haze, travelling photon curves, and automated collision avoidance.',
+    highlightSkills: ['React 19', 'TypeScript', 'HTML5 Canvas 2D', 'AWS Amplify CI/CD'],
+    actionLabel: 'View Portfolio Repo ↗',
+    actionUrl: 'https://github.com/Naresh-Kumar17/portoflio_naresh',
+    isExternalUrl: true
+  },
+  {
+    id: 'resume',
+    nodeId: 'resume_hub',
+    stepNum: 6,
+    durationSec: 10,
+    camX: 6.0,
+    camY: 28.0,
+    camZoom: 1.45,
+    badge: 'QUALIFICATIONS',
+    badgeCol: '#FFAA00',
+    title: 'Curriculum Vitae',
+    subtitle: 'Academic Background, Research & Direct Contact',
+    story: 'Full qualifications, academic course history at FAST-NUCES Karachi, and open technical availability for Machine Learning and Data Science opportunities.',
+    highlightSkills: ['FAST-NUCES 2025–2029', 'Machine Learning', 'Available for Collaboration'],
+    actionLabel: 'Open Resume Sheet →',
+    actionUrl: '/resume',
+    isExternalUrl: false
+  }
+];
+
+class CelestialAudioEngine {
+  private ctx: AudioContext | null = null;
+  private masterGain: GainNode | null = null;
+  private filter: BiquadFilterNode | null = null;
+  private droneGain: GainNode | null = null;
+  private chordGain: GainNode | null = null;
+  private droneOsc1: OscillatorNode | null = null;
+  private droneOsc2: OscillatorNode | null = null;
+  private lfo: OscillatorNode | null = null;
+  private lfoGain: GainNode | null = null;
+  private isMuted: boolean = false;
+  private isRunning: boolean = false;
+
+  start() {
+    if (this.isRunning) return;
+    try {
+      const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
+      if (!AudioCtx) return;
+      this.ctx = new AudioCtx();
+      if (this.ctx.state === 'suspended') {
+        this.ctx.resume();
+      }
+
+      const now = this.ctx.currentTime;
+      this.masterGain = this.ctx.createGain();
+      this.masterGain.gain.setValueAtTime(0.001, now);
+      this.masterGain.gain.exponentialRampToValueAtTime(this.isMuted ? 0.0001 : 0.28, now + 1.5);
+      this.masterGain.connect(this.ctx.destination);
+
+      // Low pass filter with subtle resonance
+      this.filter = this.ctx.createBiquadFilter();
+      this.filter.type = 'lowpass';
+      this.filter.frequency.setValueAtTime(320, now);
+      this.filter.Q.setValueAtTime(2.5, now);
+      this.filter.connect(this.masterGain);
+
+      // LFO slowly sweeps filter cutoff (cosmic breathing effect)
+      this.lfo = this.ctx.createOscillator();
+      this.lfoGain = this.ctx.createGain();
+      this.lfo.frequency.setValueAtTime(0.12, now);
+      this.lfoGain.gain.setValueAtTime(120, now);
+      this.lfo.connect(this.lfoGain);
+      this.lfoGain.connect(this.filter.frequency);
+      this.lfo.start(now);
+
+      // Drone Oscillators (warm interstellar fundamental)
+      this.droneGain = this.ctx.createGain();
+      this.droneGain.gain.setValueAtTime(0.32, now);
+      this.droneGain.connect(this.filter);
+
+      // Oscillator 1: 55Hz (A1) sawtooth
+      this.droneOsc1 = this.ctx.createOscillator();
+      this.droneOsc1.type = 'sawtooth';
+      this.droneOsc1.frequency.setValueAtTime(55, now);
+      this.droneOsc1.connect(this.droneGain);
+      this.droneOsc1.start(now);
+
+      // Oscillator 2: 110.3Hz slightly detuned triangle for chorusing
+      this.droneOsc2 = this.ctx.createOscillator();
+      this.droneOsc2.type = 'triangle';
+      this.droneOsc2.frequency.setValueAtTime(110.3, now);
+      this.droneOsc2.connect(this.droneGain);
+      this.droneOsc2.start(now);
+
+      // Chord bus
+      this.chordGain = this.ctx.createGain();
+      this.chordGain.gain.setValueAtTime(0.2, now);
+      this.chordGain.connect(this.filter);
+
+      this.isRunning = true;
+    } catch (e) {
+      console.warn('AudioContext failed:', e);
+    }
+  }
+
+  playChordForStep(stepIndex: number) {
+    if (!this.ctx || !this.chordGain || this.isMuted) return;
+    try {
+      const chords = [
+        [220.00, 261.63, 329.63, 392.00], // Am7 (Stop 1: Origin)
+        [174.61, 220.00, 261.63, 349.23], // Fmaj7 (Stop 2: Dataset Doctor)
+        [146.83, 220.00, 261.63, 329.63], // Dm9 (Stop 3: ML)
+        [196.00, 246.94, 293.66, 392.00], // Gadd9 (Stop 4: Air Quality)
+        [261.63, 329.63, 392.00, 523.25], // Cmaj7 (Stop 5: 3D Cosmos)
+        [164.81, 246.94, 329.63, 392.00], // Em7 (Stop 6: Resume)
+      ];
+      const notes = chords[stepIndex % chords.length];
+      const now = this.ctx.currentTime;
+
+      notes.forEach((freq, i) => {
+        if (!this.ctx || !this.chordGain) return;
+        const osc = this.ctx.createOscillator();
+        const noteGain = this.ctx.createGain();
+        osc.type = i % 2 === 0 ? 'sine' : 'triangle';
+        osc.frequency.setValueAtTime(freq, now);
+
+        noteGain.gain.setValueAtTime(0.0001, now);
+        noteGain.gain.exponentialRampToValueAtTime(0.1 / notes.length, now + 1.2);
+        noteGain.gain.exponentialRampToValueAtTime(0.0001, now + 9.5);
+
+        osc.connect(noteGain);
+        noteGain.connect(this.chordGain);
+
+        osc.start(now);
+        osc.stop(now + 9.8);
+      });
+    } catch (_) {}
+  }
+
+  playChime(pitchMultiplier: number = 1.0) {
+    if (!this.ctx || this.isMuted) return;
+    try {
+      const now = this.ctx.currentTime;
+      const baseFreq = 523.25 * pitchMultiplier;
+      const freqs = [baseFreq, baseFreq * 1.5, baseFreq * 2.0, baseFreq * 2.25];
+
+      freqs.forEach((freq, idx) => {
+        if (!this.ctx || !this.masterGain) return;
+        const noteTime = now + idx * 0.08;
+        const osc = this.ctx.createOscillator();
+        const g = this.ctx.createGain();
+
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, noteTime);
+
+        g.gain.setValueAtTime(0.0001, noteTime);
+        g.gain.exponentialRampToValueAtTime(0.09, noteTime + 0.02);
+        g.gain.exponentialRampToValueAtTime(0.0001, noteTime + 1.8);
+
+        osc.connect(g);
+        g.connect(this.masterGain);
+
+        osc.start(noteTime);
+        osc.stop(noteTime + 1.9);
+      });
+    } catch (_) {}
+  }
+
+  toggleMute(): boolean {
+    this.isMuted = !this.isMuted;
+    if (this.masterGain && this.ctx) {
+      const now = this.ctx.currentTime;
+      try {
+        this.masterGain.gain.cancelScheduledValues(now);
+        if (this.isMuted) {
+          this.masterGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.25);
+        } else {
+          this.masterGain.gain.exponentialRampToValueAtTime(0.28, now + 0.4);
+        }
+      } catch (_) {}
+    }
+    return this.isMuted;
+  }
+
+  stop() {
+    if (!this.isRunning) return;
+    if (this.masterGain && this.ctx) {
+      const now = this.ctx.currentTime;
+      try {
+        this.masterGain.gain.cancelScheduledValues(now);
+        this.masterGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.8);
+      } catch (_) {}
+    }
+    setTimeout(() => {
+      try {
+        if (this.lfo) this.lfo.stop();
+        if (this.droneOsc1) this.droneOsc1.stop();
+        if (this.droneOsc2) this.droneOsc2.stop();
+        if (this.ctx && this.ctx.state !== 'closed') {
+          this.ctx.close();
+        }
+      } catch (_) {}
+      this.isRunning = false;
+      this.ctx = null;
+    }, 900);
+  }
+}
+
 export interface SuperpowerCosmosProps {
   onSwitchToList?: () => void;
 }
@@ -580,12 +887,26 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
     let fieldCX = 0.5, fieldCXt = 0.5;
     let userZoom = 1, viewRot = 0, viewTiltX = 0.18, userInteracted = false;
 
+    // ── 60-Second Guided Tour State & Web Audio Synthesizer ──
+    let isTourActive = false;
+    let isTourPaused = false;
+    let tourStopIndex = 0;
+    let tourStopElapsed = 0;
+    let tourTotalElapsed = 0;
+    let curCamX = cx0;
+    let curCamY = cy0;
+    let targetCamX = cx0;
+    let targetCamY = cy0;
+    let targetCamZoom = 1.0;
+
+    const audioEngine = new CelestialAudioEngine();
+
     const sat = (v: number) => Math.max(0, Math.min(1, v));
     const ease = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
     const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
     function proj(wx: number, wy: number, wz: number = 0): [number, number, number] {
-      const x = wx - cx0, y = wy - cy0, z = (wz || 0) * 1.3;
+      const x = wx - curCamX, y = wy - curCamY, z = (wz || 0) * 1.3;
       // Ambient slow yaw + user horizontal rotation (turntable)
       const totalYaw = curRot + viewRot;
       const cy = Math.cos(totalYaw), sy = Math.sin(totalYaw);
@@ -751,6 +1072,9 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
       viewTiltX = 0;
       userInteracted = false;
       fieldCX = fieldCXt = 0.5;
+      targetCamX = cx0;
+      targetCamY = cy0;
+      targetCamZoom = 1.0;
       setTabsOn();
       renderGallery();
     }
@@ -771,9 +1095,271 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
     backBtn.onclick = returnHome;
     if (spacer) spacer.onclick = returnHome;
 
+    const tourToggleBtn = root.querySelector('#tour-toggle-btn') as HTMLButtonElement | null;
+    const tourOverlay = root.querySelector('#cosmos-tour-overlay') as HTMLDivElement | null;
+    const tourStoryCard = root.querySelector('#tour-story-card') as HTMLDivElement | null;
+    const tourProgressFill = root.querySelector('#tour-progress-fill') as HTMLDivElement | null;
+    const tourTimeText = root.querySelector('#tour-time-text') as HTMLSpanElement | null;
+    const tourPrevBtn = root.querySelector('#tour-prev-btn') as HTMLButtonElement | null;
+    const tourPauseBtn = root.querySelector('#tour-pause-btn') as HTMLButtonElement | null;
+    const tourNextBtn = root.querySelector('#tour-next-btn') as HTMLButtonElement | null;
+    const tourSoundBtn = root.querySelector('#tour-sound-btn') as HTMLButtonElement | null;
+    const tourCloseBtn = root.querySelector('#tour-close-btn') as HTMLButtonElement | null;
+
+    function renderTourCard(stop: TourStop) {
+      if (!tourStoryCard) return;
+      tourStoryCard.innerHTML = `
+        <div class="tour-header">
+          <span class="tour-step-chip" style="background:${stop.badgeCol}1f;color:${stop.badgeCol};border:1px solid ${stop.badgeCol}55;">
+            <span class="tour-chip-dot" style="background:${stop.badgeCol};box-shadow:0 0 8px ${stop.badgeCol};"></span>
+            ${stop.badge} · STOP 0${stop.stepNum} OF 06
+          </span>
+        </div>
+        <h2 class="tour-title">${stop.title}</h2>
+        <h3 class="tour-subtitle" style="color:${stop.badgeCol}">${stop.subtitle}</h3>
+        <p class="tour-story">${stop.story}</p>
+        <div class="tour-skills">
+          ${stop.highlightSkills.map((sk: string) => `<span class="tour-skill-tag">${sk}</span>`).join('')}
+        </div>
+        ${stop.actionUrl ? `
+          <div class="tour-action-row">
+            <a href="${stop.actionUrl}" ${stop.isExternalUrl ? 'target="_blank" rel="noopener noreferrer"' : ''} class="tour-action-link" style="background:${stop.badgeCol};color:#06070D;">
+              ${stop.actionLabel || 'Explore More →'}
+            </a>
+          </div>
+        ` : ''}
+      `;
+
+      if (tourOverlay) {
+        tourOverlay.querySelectorAll('.tour-step-dot').forEach((dot: any) => {
+          const s = parseInt(dot.dataset.step, 10);
+          dot.classList.toggle('active', s === tourStopIndex);
+          if (s === tourStopIndex) {
+            dot.style.background = stop.badgeCol;
+            dot.style.borderColor = stop.badgeCol;
+            dot.style.color = '#06070D';
+          } else {
+            dot.style.background = '';
+            dot.style.borderColor = '';
+            dot.style.color = '';
+          }
+        });
+      }
+    }
+
+    function goToTourStop(index: number) {
+      tourStopIndex = Math.max(0, Math.min(TOUR_STOPS.length - 1, index));
+      tourStopElapsed = 0;
+      tourTotalElapsed = tourStopIndex * 10;
+      const stop = TOUR_STOPS[tourStopIndex];
+
+      targetCamX = stop.camX;
+      targetCamY = stop.camY;
+      targetCamZoom = stop.camZoom;
+
+      const nodeIdx = idIndex[stop.nodeId];
+      if (nodeIdx !== undefined) {
+        const children = CATEGORY_MAP[stop.nodeId] || [];
+        const childIndices = children.map((cId: string) => idIndex[cId]).filter((x: number | undefined) => x !== undefined);
+        focusSet = new Set([nodeIdx, ...childIndices]);
+        fieldSel = stop.nodeId;
+      }
+
+      audioEngine.playChime(1.0 + tourStopIndex * 0.08);
+      audioEngine.playChordForStep(tourStopIndex);
+      renderTourCard(stop);
+      updateTourUI();
+    }
+
+    function updateTourUI() {
+      if (!isTourActive) return;
+      const totalSec = Math.min(60, Math.floor(tourTotalElapsed));
+      const pct = Math.min(100, (tourTotalElapsed / 60) * 100);
+      if (tourProgressFill) {
+        tourProgressFill.style.width = `${pct.toFixed(1)}%`;
+      }
+      if (tourTimeText) {
+        const secStr = totalSec < 10 ? `0${totalSec}` : `${totalSec}`;
+        tourTimeText.textContent = `${secStr}s / 60s`;
+      }
+    }
+
+    function toggleTourPause() {
+      isTourPaused = !isTourPaused;
+      if (tourPauseBtn) {
+        tourPauseBtn.textContent = isTourPaused ? '▶' : '⏸';
+        tourPauseBtn.title = isTourPaused ? 'Resume Tour' : 'Pause Tour';
+      }
+    }
+
+    function startTour() {
+      isTourActive = true;
+      isTourPaused = false;
+      tourStopIndex = 0;
+      tourStopElapsed = 0;
+      tourTotalElapsed = 0;
+      userInteracted = true;
+
+      galMode = null;
+      galNode = null;
+      galleryEl.classList.remove('show');
+
+      if (tourToggleBtn) {
+        tourToggleBtn.classList.add('touring');
+        tourToggleBtn.innerHTML = '<span class="tour-btn-icon">⏹</span><span class="tour-btn-text">Exit Tour</span>';
+      }
+      if (tourOverlay) {
+        tourOverlay.classList.add('active');
+      }
+      if (tourPauseBtn) {
+        tourPauseBtn.textContent = '⏸';
+      }
+
+      audioEngine.start();
+      goToTourStop(0);
+    }
+
+    function stopTour() {
+      isTourActive = false;
+      isTourPaused = false;
+      tourStopElapsed = 0;
+      tourTotalElapsed = 0;
+
+      if (tourToggleBtn) {
+        tourToggleBtn.classList.remove('touring');
+        tourToggleBtn.innerHTML = '<span class="tour-hud-pulse"></span><span class="tour-btn-icon">▶</span><span class="tour-btn-text">60s Tour</span>';
+      }
+      if (tourOverlay) {
+        tourOverlay.classList.remove('active');
+      }
+
+      audioEngine.stop();
+      targetCamX = cx0;
+      targetCamY = cy0;
+      targetCamZoom = 1.0;
+      goHome();
+    }
+
+    function finishTour() {
+      isTourPaused = true;
+      if (tourProgressFill) tourProgressFill.style.width = '100%';
+      if (tourTimeText) tourTimeText.textContent = '60s / 60s';
+      audioEngine.playChime(1.5);
+
+      if (tourStoryCard) {
+        tourStoryCard.innerHTML = `
+          <div class="tour-header">
+            <span class="tour-step-chip" style="background:#22C55E22;color:#22C55E;border:1px solid #22C55E66;">
+              <span class="tour-chip-dot" style="background:#22C55E;box-shadow:0 0 8px #22C55E;"></span>
+              TOUR COMPLETE · 60s FLIGHT COMPLETED
+            </span>
+          </div>
+          <h2 class="tour-title">Flight Journey Complete</h2>
+          <h3 class="tour-subtitle" style="color:#22C55E;">Constellation Explored</h3>
+          <p class="tour-story">
+            You have explored the core data science platforms, machine learning models, and engineering architectures.
+            Feel free to orbit, zoom, or click any star cluster on the map to inspect in-depth case studies!
+          </p>
+          <div class="tour-action-row" style="gap:10px;">
+            <button id="tour-replay-btn" type="button" class="tour-action-link" style="background:#9B8FFF;color:#06070D;cursor:pointer;border:none;">
+              ⟲ Replay Tour
+            </button>
+            <button id="tour-finish-close-btn" type="button" class="tour-action-link" style="background:rgba(255,255,255,0.12);color:var(--ink);cursor:pointer;border:1px solid rgba(255,255,255,0.2);">
+              Explore Freely ↗
+            </button>
+          </div>
+        `;
+
+        const replayBtn = tourStoryCard.querySelector('#tour-replay-btn') as HTMLButtonElement | null;
+        if (replayBtn) {
+          replayBtn.onclick = () => {
+            isTourPaused = false;
+            goToTourStop(0);
+          };
+        }
+        const finishCloseBtn = tourStoryCard.querySelector('#tour-finish-close-btn') as HTMLButtonElement | null;
+        if (finishCloseBtn) {
+          finishCloseBtn.onclick = () => {
+            stopTour();
+          };
+        }
+      }
+    }
+
+    if (tourToggleBtn) {
+      tourToggleBtn.onclick = (e) => {
+        e.stopPropagation();
+        if (isTourActive) {
+          stopTour();
+        } else {
+          startTour();
+        }
+      };
+    }
+    if (tourPrevBtn) {
+      tourPrevBtn.onclick = (e) => {
+        e.stopPropagation();
+        if (tourStopIndex > 0) {
+          goToTourStop(tourStopIndex - 1);
+        }
+      };
+    }
+    if (tourNextBtn) {
+      tourNextBtn.onclick = (e) => {
+        e.stopPropagation();
+        if (tourStopIndex < TOUR_STOPS.length - 1) {
+          goToTourStop(tourStopIndex + 1);
+        } else {
+          finishTour();
+        }
+      };
+    }
+    if (tourPauseBtn) {
+      tourPauseBtn.onclick = (e) => {
+        e.stopPropagation();
+        toggleTourPause();
+      };
+    }
+    if (tourSoundBtn) {
+      tourSoundBtn.onclick = (e) => {
+        e.stopPropagation();
+        const muted = audioEngine.toggleMute();
+        tourSoundBtn.textContent = muted ? '🔇' : '🔊';
+        tourSoundBtn.title = muted ? 'Unmute Audio' : 'Mute Audio';
+      };
+    }
+    if (tourCloseBtn) {
+      tourCloseBtn.onclick = (e) => {
+        e.stopPropagation();
+        stopTour();
+      };
+    }
+    if (tourOverlay) {
+      tourOverlay.querySelectorAll('.tour-step-dot').forEach((pill: any) => {
+        pill.onclick = (e: MouseEvent) => {
+          e.stopPropagation();
+          const step = parseInt(pill.dataset.step, 10);
+          if (!isNaN(step)) {
+            if (!isTourActive) {
+              startTour();
+            }
+            goToTourStop(step);
+          }
+        };
+      });
+    }
+
+
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        returnHome();
+        if (isTourActive) {
+          stopTour();
+        } else {
+          returnHome();
+        }
+      } else if (e.code === 'Space' && isTourActive) {
+        e.preventDefault();
+        toggleTourPause();
       }
     };
     window.addEventListener('keydown', handleKeyDown);
@@ -784,6 +1370,7 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
         hoverId = null;
         hideTip();
         userInteracted = true;
+        if (isTourActive) stopTour();
         setFieldFocus(detail);
       }
     };
@@ -820,6 +1407,7 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
           hoverId = null;
           hideTip();
           userInteracted = true;
+          if (isTourActive) stopTour();
           tab.action();
         };
         tabsEl.appendChild(d);
@@ -1058,6 +1646,30 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
         }
       }
 
+      if (isTourActive) {
+        const easeSpeed = 2.8;
+        curCamX += (targetCamX - curCamX) * Math.min(1, dt * easeSpeed);
+        curCamY += (targetCamY - curCamY) * Math.min(1, dt * easeSpeed);
+        camZoom += (targetCamZoom - camZoom) * Math.min(1, dt * easeSpeed);
+
+        if (!isTourPaused) {
+          tourStopElapsed += dt;
+          tourTotalElapsed += dt;
+          updateTourUI();
+
+          if (tourStopElapsed >= TOUR_STOPS[tourStopIndex].durationSec) {
+            if (tourStopIndex < TOUR_STOPS.length - 1) {
+              goToTourStop(tourStopIndex + 1);
+            } else {
+              finishTour();
+            }
+          }
+        }
+      } else {
+        curCamX += (cx0 - curCamX) * Math.min(1, dt * 2.5);
+        curCamY += (cy0 - curCamY) * Math.min(1, dt * 2.5);
+      }
+
       if (mode === 'cold') {
         coldP += dt / 1.0;
         if (coldP >= 1) {
@@ -1066,7 +1678,7 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
           setFieldFocus('naresh');
         }
         camZoom = lerp(0.6, 1.0, ease(coldP));
-      } else {
+      } else if (!isTourActive) {
         camZoom = 1;
       }
 
@@ -1352,8 +1964,8 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
 
       // Nodes on minimap
       for (const n of N as any[]) {
-        const nx = cx + (n.x - cx0) * scale;
-        const ny = cy - (n.y - cy0) * scale;
+        const nx = cx + (n.x - curCamX) * scale;
+        const ny = cy - (n.y - curCamY) * scale;
         mctx.fillStyle = COLOR[n.region];
         mctx.beginPath();
         mctx.arc(nx, ny, n.r * 2.2, 0, 6.283);
@@ -1374,6 +1986,7 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
       window.removeEventListener('resize', resize);
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('cosmos-focus', handleCosmosFocus);
+      audioEngine.stop();
     };
   }, [theme]);
 
@@ -1444,6 +2057,57 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
         <div className="doc" id="doc" />
       </div>
 
+      {/* ── 60-Second Guided Flight Tour Overlay ── */}
+      <div id="cosmos-tour-overlay" className="cosmos-tour-overlay">
+        <div className="tour-card-container">
+          <div className="tour-timeline-wrap">
+            <div className="tour-timeline-bar">
+              <div id="tour-progress-fill" className="tour-progress-fill" style={{ width: '0%' }} />
+            </div>
+            <div className="tour-timeline-info">
+              <span id="tour-time-text" className="tour-time-text">00s / 60s</span>
+              <span className="tour-total-label">60s GUIDED FLIGHT TOUR</span>
+            </div>
+          </div>
+
+          <div id="tour-story-card" className="tour-story-card" />
+
+          <div className="tour-control-bar">
+            <div className="tour-step-pills" id="tour-step-pills">
+              {TOUR_STOPS.map((s, idx) => (
+                <button
+                  key={s.id}
+                  type="button"
+                  className={`tour-step-dot ${idx === 0 ? 'active' : ''}`}
+                  data-step={idx}
+                  title={`Stop ${idx + 1}: ${s.title}`}
+                >
+                  {idx + 1}
+                </button>
+              ))}
+            </div>
+
+            <div className="tour-nav-btns">
+              <button id="tour-prev-btn" className="tour-nav-btn" type="button" title="Previous Stop" aria-label="Previous Stop">
+                ◀
+              </button>
+              <button id="tour-pause-btn" className="tour-nav-btn tour-pause-btn" type="button" title="Pause / Resume" aria-label="Pause / Resume">
+                ⏸
+              </button>
+              <button id="tour-next-btn" className="tour-nav-btn" type="button" title="Next Stop" aria-label="Next Stop">
+                ▶
+              </button>
+              <button id="tour-sound-btn" className="tour-nav-btn tour-sound-btn" type="button" title="Mute / Unmute Audio" aria-label="Mute / Unmute Audio">
+                🔊
+              </button>
+              <button id="tour-close-btn" className="tour-nav-btn tour-exit-btn" type="button" title="Exit Tour" aria-label="Exit Tour">
+                ✕
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* ── Interactive HUD Controls (Easy to Use) ── */}
       <div className="cosmos-hud">
         <div className="hud-hint">
@@ -1454,6 +2118,17 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
           <span>Click node to inspect</span>
         </div>
         <div className="hud-actions">
+          <button
+            id="tour-toggle-btn"
+            className="tour-hud-btn"
+            type="button"
+            title="Take 60-Second Guided Flight Tour with Ambient Music"
+            aria-label="Take 60-Second Guided Flight Tour with Ambient Music"
+          >
+            <span className="tour-hud-pulse" />
+            <span className="tour-btn-icon">▶</span>
+            <span className="tour-btn-text">60s Tour</span>
+          </button>
           <button id="reset-orbit" type="button" title="Center View" aria-label="Center View">
             ⟲ Center
           </button>
