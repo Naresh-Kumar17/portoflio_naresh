@@ -18,7 +18,7 @@ const NARESH_DB = {
       id: "naresh",
       name: "Naresh",
       region: "entry",
-      x: -14.0,
+      x: -16.0,
       y: 10.0,
       r: 1.85,
       z: 0,
@@ -52,8 +52,8 @@ const NARESH_DB = {
       id: "skills_hub",
       name: "Skills",
       region: "skills",
-      x: -36.0,
-      y: 24.0,
+      x: -42.0,
+      y: 28.0,
       r: 1.5,
       z: 0.15,
       labelPos: "left",
@@ -77,7 +77,7 @@ const NARESH_DB = {
       id: "about_me",
       name: "About Naresh",
       region: "entry",
-      x: -38.0,
+      x: -42.0,
       y: 10.0,
       r: 1.05,
       z: 0.1,
@@ -103,8 +103,8 @@ const NARESH_DB = {
       id: "contacto",
       name: "Let's Connect",
       region: "entry",
-      x: -36.0,
-      y: -4.0,
+      x: -40.0,
+      y: -6.0,
       r: 1.0,
       z: -0.1,
       labelPos: "left",
@@ -126,8 +126,8 @@ const NARESH_DB = {
       id: "resume_hub",
       name: "Resume",
       region: "entry",
-      x: 4.0,
-      y: 24.0,
+      x: 6.0,
+      y: 28.0,
       r: 1.45,
       z: 0.15,
       labelPos: "top",
@@ -154,8 +154,8 @@ const NARESH_DB = {
       id: "growth",
       name: "Projects",
       region: "growth",
-      x: 12.0,
-      y: -8.0,
+      x: 14.0,
+      y: -10.0,
       r: 1.75,
       z: 0.1,
       labelPos: "bottom",
@@ -180,7 +180,7 @@ const NARESH_DB = {
       id: "web_category",
       name: "Web Development",
       region: "web",
-      x: 34.0,
+      x: 38.0,
       y: -4.0,
       r: 1.35,
       z: 0.15,
@@ -200,7 +200,7 @@ const NARESH_DB = {
       id: "cosmos_portfolio",
       name: "3D Cosmos Portfolio",
       region: "web",
-      x: 50.0,
+      x: 56.0,
       y: -4.0,
       r: 1.05,
       z: 0.2,
@@ -226,8 +226,8 @@ const NARESH_DB = {
       id: "ml_category",
       name: "Machine Learning",
       region: "ai",
-      x: 30.0,
-      y: -22.0,
+      x: 32.0,
+      y: -24.0,
       r: 1.35,
       z: 0.15,
       labelPos: "right",
@@ -247,8 +247,8 @@ const NARESH_DB = {
       id: "svm_digits",
       name: "SVM Digit Recognition",
       region: "ai",
-      x: 44.0,
-      y: -17.5,
+      x: 48.0,
+      y: -19.5,
       r: 1.0,
       z: 0.2,
       labelPos: "right",
@@ -266,8 +266,8 @@ const NARESH_DB = {
       id: "accident_severity",
       name: "Road Accident Risk",
       region: "ai",
-      x: 44.0,
-      y: -26.5,
+      x: 48.0,
+      y: -28.5,
       r: 1.0,
       z: 0.2,
       labelPos: "right",
@@ -287,8 +287,8 @@ const NARESH_DB = {
       id: "ds_category",
       name: "Data Science",
       region: "data",
-      x: 12.0,
-      y: -26.0,
+      x: 14.0,
+      y: -28.0,
       r: 1.35,
       z: 0.15,
       labelPos: "bottom",
@@ -308,8 +308,8 @@ const NARESH_DB = {
       id: "dataset_doctor",
       name: "Dataset Doctor",
       region: "data",
-      x: 3.0,
-      y: -38.5,
+      x: 4.0,
+      y: -41.0,
       r: 1.15,
       z: 0.25,
       labelPos: "bottom",
@@ -338,8 +338,8 @@ const NARESH_DB = {
       id: "air_quality",
       name: "Air Quality Forecasting",
       region: "data",
-      x: 21.0,
-      y: -38.5,
+      x: 24.0,
+      y: -41.0,
       r: 1.0,
       z: 0.25,
       labelPos: "bottom",
@@ -505,7 +505,7 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
     // Origin center: Centered directly on Naresh at (0, 0)
     const cx0 = 6.0;
     const cy0 = -7.0;
-    const orgR = 52.0;
+    const orgR = 56.0;
 
     function resize() {
       W = c.width = window.innerWidth;
@@ -585,7 +585,7 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
     const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
     function proj(wx: number, wy: number, wz: number = 0): [number, number, number] {
-      let x = wx - cx0, y = wy - cy0, z = (wz || 0) * 1.3;
+      const x = wx - cx0, y = wy - cy0, z = (wz || 0) * 1.3;
       // Ambient slow yaw + user horizontal rotation (turntable)
       const totalYaw = curRot + viewRot;
       const cy = Math.cos(totalYaw), sy = Math.sin(totalYaw);
@@ -599,8 +599,12 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
       let z2 = y * sax + z1 * cax;
 
       x1 *= curBr; y1 *= curBr;
-      const persp = 6.0 / (6.0 - z2 * 0.4);
-      const Z = camZoom * userZoom * persp;
+
+      // Mathematically bounded camera depth (never <= 0, never negative, never crashes)
+      const CAM_DIST = 140.0;
+      const depth = Math.max(30.0, CAM_DIST - z2);
+      const persp = CAM_DIST / depth;
+      const Z = Math.max(0.2, camZoom * userZoom * persp);
       return [W * fieldCX + x1 * SC * Z, H / 2 - y1 * SC * Z, persp];
     }
 
@@ -618,6 +622,9 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
       startRot = viewRot;
       startTilt = viewTiltX;
       userInteracted = true;
+      try {
+        c.setPointerCapture(e.pointerId);
+      } catch (_) {}
     });
 
     window.addEventListener('pointermove', (e: PointerEvent) => {
@@ -1152,7 +1159,7 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
       for (let i = 0; i < N.length; i++) {
         const n = N[i] as any;
         const [sx, sy, persp] = proj(n.x, n.y, n.z);
-        const R = n.r * 18 * camZoom * userZoom * persp;
+        const R = Math.max(4, n.r * 18 * camZoom * userZoom * persp);
         const col = COLOR[n.region];
         const isHover = hoverId === n.id;
         const isSel = fieldSel === n.id;
