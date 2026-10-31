@@ -1,6 +1,19 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Download, FileText, Printer, GraduationCap, Briefcase, Code } from 'lucide-react';
+import {
+  ArrowLeft,
+  Download,
+  FileText,
+  Printer,
+  GraduationCap,
+  Briefcase,
+  Code,
+  Eye,
+  EyeOff,
+  ExternalLink,
+  X,
+  FileCheck,
+} from 'lucide-react';
 import { useI18n } from '../contexts/I18nContext';
 import { profile } from '../data/profile';
 import { skillCategories } from '../data/skills';
@@ -9,16 +22,14 @@ import './ResumePage.css';
 
 export function ResumePage() {
   const { t } = useI18n();
-  const [downloadNotice, setDownloadNotice] = useState<string | null>(null);
+  const [showPreview, setShowPreview] = useState(false);
+  const previewRef = useRef<HTMLDivElement | null>(null);
 
-  const handleDownload = () => {
-    if (profile.resumePath) {
-      window.open(profile.resumePath, '_blank');
-    } else {
-      setDownloadNotice(t('resume.notAvailable'));
-      setTimeout(() => setDownloadNotice(null), 4000);
+  useEffect(() => {
+    if (showPreview && previewRef.current) {
+      previewRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
-  };
+  }, [showPreview]);
 
   const handlePrint = () => {
     window.print();
@@ -58,6 +69,27 @@ export function ResumePage() {
 
           <div className="resume-actions">
             <button
+              className={`btn btn--sm ${showPreview ? 'btn--accent-active' : 'btn--outline'}`}
+              onClick={() => setShowPreview((prev) => !prev)}
+              title={showPreview ? 'Hide PDF preview' : 'Preview official PDF document'}
+              aria-expanded={showPreview}
+            >
+              {showPreview ? <EyeOff size={16} /> : <Eye size={16} />}
+              <span>{showPreview ? 'Hide Preview' : 'Preview PDF'}</span>
+            </button>
+
+            <a
+              href="/resume.pdf"
+              download="Naresh_Kumar_Resume.pdf"
+              className="btn btn--primary btn--sm"
+              style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '8px' }}
+              title="Download official PDF to device"
+            >
+              <Download size={16} />
+              <span>Download PDF</span>
+            </a>
+
+            <button
               className="btn btn--outline btn--sm"
               onClick={handlePrint}
               title="Print CV"
@@ -65,24 +97,125 @@ export function ResumePage() {
               <Printer size={16} />
               <span>Print</span>
             </button>
-            <button
-              className="btn btn--primary btn--sm"
-              onClick={handleDownload}
-              title="Download PDF"
-            >
-              <Download size={16} />
-              <span>Download PDF</span>
-            </button>
           </div>
         </div>
 
-        {downloadNotice && (
-          <div className="notice notice--info" role="status" style={{ marginBottom: '1.5rem' }}>
-            <p>{downloadNotice}</p>
+        {/* Quick PDF Action Banner */}
+        {!showPreview && (
+          <div className="resume-pdf-banner">
+            <div className="resume-pdf-banner__left">
+              <FileCheck size={22} className="resume-pdf-banner__icon" />
+              <div>
+                <strong className="resume-pdf-banner__title">Official PDF Resume Available</strong>
+                <p className="resume-pdf-banner__sub">
+                  Looking for the formal 1-page document? Preview it directly here or download the PDF file.
+                </p>
+              </div>
+            </div>
+            <div className="resume-pdf-banner__right">
+              <button
+                type="button"
+                className="btn btn--outline btn--sm"
+                onClick={() => setShowPreview(true)}
+              >
+                <Eye size={15} />
+                <span>Preview PDF</span>
+              </button>
+              <a
+                href="/resume.pdf"
+                download="Naresh_Kumar_Resume.pdf"
+                className="btn btn--primary btn--sm"
+                style={{ textDecoration: 'none' }}
+              >
+                <Download size={15} />
+                <span>Download PDF</span>
+              </a>
+            </div>
           </div>
         )}
 
-        {/* The CV Sheet */}
+        {/* PDF Preview Container */}
+        {showPreview && (
+          <section
+            ref={previewRef}
+            className="resume-preview-container"
+            aria-label="Resume PDF Preview"
+          >
+            <div className="resume-preview-toolbar">
+              <div className="resume-preview-toolbar__meta">
+                <FileCheck size={18} className="resume-preview-icon" />
+                <span className="resume-preview-filename">Naresh_Kumar_Resume.pdf</span>
+                <span className="resume-preview-badge">Official PDF</span>
+              </div>
+              <div className="resume-preview-toolbar__actions">
+                <a
+                  href="/resume.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn--outline btn--sm"
+                  title="Open in new window or tab"
+                  style={{ textDecoration: 'none' }}
+                >
+                  <ExternalLink size={14} />
+                  <span>Open in Tab</span>
+                </a>
+                <a
+                  href="/resume.pdf"
+                  download="Naresh_Kumar_Resume.pdf"
+                  className="btn btn--primary btn--sm"
+                  title="Download PDF directly"
+                  style={{ textDecoration: 'none' }}
+                >
+                  <Download size={14} />
+                  <span>Download PDF</span>
+                </a>
+                <button
+                  type="button"
+                  className="btn btn--outline btn--sm resume-preview-close"
+                  onClick={() => setShowPreview(false)}
+                  title="Close Preview"
+                  aria-label="Close Preview"
+                >
+                  <X size={16} />
+                </button>
+              </div>
+            </div>
+
+            <div className="resume-preview-body">
+              <object
+                data="/resume.pdf#view=FitH"
+                type="application/pdf"
+                className="resume-preview-frame"
+                aria-label="Resume PDF Document"
+              >
+                <iframe
+                  src="/resume.pdf#view=FitH"
+                  className="resume-preview-frame"
+                  title="Resume PDF Viewer"
+                >
+                  <div className="resume-preview-fallback">
+                    <FileText size={42} style={{ color: 'var(--color-primary, #6366f1)' }} />
+                    <h3 style={{ margin: '8px 0', fontSize: '18px' }}>PDF Ready to Download</h3>
+                    <p style={{ margin: '0 0 16px', color: 'var(--text-secondary)' }}>
+                      Your browser does not support inline PDF rendering.
+                    </p>
+                    <a
+                      href="/resume.pdf"
+                      download="Naresh_Kumar_Resume.pdf"
+                      className="btn btn--primary btn--sm"
+                      style={{ textDecoration: 'none' }}
+                    >
+                      <Download size={16} />
+                      <span>Download Naresh_Kumar_Resume.pdf</span>
+                    </a>
+                  </div>
+                </iframe>
+              </object>
+            </div>
+          </section>
+        )}
+
+        {/* The Web CV Sheet */}
         <div className="cv-sheet" id="printable-cv">
           {/* Header */}
           <div className="cv-header">

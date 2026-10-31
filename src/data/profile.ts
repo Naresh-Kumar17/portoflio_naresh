@@ -42,8 +42,8 @@ export const profile = {
     linkedin: 'https://www.linkedin.com/in/naresh-kumar-ds',
   },
 
-  /** Resume file path (relative to /public) — set to null until provided */
-  resumePath: null as string | null,
+  /** Resume file path (relative to /public) */
+  resumePath: '/resume.pdf' as string | null,
 
   /** University / Education */
   university: {
