@@ -105,7 +105,7 @@ export function TextReveal({
         <motion.span
           key={`${piece}-${i}`}
           variants={variants}
-          style={{ display: 'inline-block', willChange: 'transform, opacity, filter' }}
+          style={{ display: 'inline-block', willChange: 'transform, opacity, filter', color: 'inherit' }}
         >
           {piece}
           {splitBy === 'char' && piece === ' ' ? '\u00A0' : ''}

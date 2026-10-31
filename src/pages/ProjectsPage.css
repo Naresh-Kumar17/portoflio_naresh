@@ -1,3 +1,27 @@
+
+/* ── Page Header Typography (High Contrast & Clear Visibility) ── */
+.page__header {
+  margin-bottom: var(--space-8);
+}
+
+.page__title {
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 800;
+  color: var(--text-primary) !important;
+  margin-top: var(--space-2);
+  margin-bottom: var(--space-3);
+  line-height: var(--leading-tight);
+  letter-spacing: -0.02em;
+}
+
+.page__description {
+  color: var(--text-secondary);
+  font-size: var(--text-lg);
+  line-height: var(--leading-relaxed);
+  max-width: 62ch;
+  margin-top: var(--space-2);
+}
+
 .projects-page {
   padding-top: calc(var(--nav-height) + var(--space-12));
   padding-bottom: var(--space-20);

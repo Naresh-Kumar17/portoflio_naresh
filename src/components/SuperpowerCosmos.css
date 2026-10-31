@@ -19,7 +19,7 @@
  --bg:#100E1A;--ink:rgba(255,255,255,.97);--ink2:rgba(255,255,255,.72);--ink3:rgba(255,255,255,.5);
  --mono:"Martian Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
  --sans:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,monospace;
- --display:"Cabinet Grotesk","Origin Display",-apple-system,sans-serif;--acc:#9B8FFF;
+ --display:"Cabinet Grotesk","Origin Display",-apple-system,sans-serif;--acc:#9B8FFF;--ag:linear-gradient(135deg, #9B8FFF 0%, #CFFF04 100%);
  /* ── ORIGIN type-system tokens ── */
  --track-block:-.045em; --track-tight:-.03em; --track-caps:.14em; --track-caps-lg:.04em;
  --lh-block:.88; --lh-tight:1.02;
@@ -258,9 +258,33 @@ body.light.noglass #gallery{position:fixed;top:0;right:0;bottom:0;width:50vw;min
  body.origen #origenback{top:auto;bottom:18px;right:16px}
 }
 /* ===== BUILD · L1/L2 layout overrides ===== */
-#gallery .gname{font-family:var(--display);font-weight:800;font-size:clamp(30px,4.4vw,60px);letter-spacing:-.03em;line-height:.9;overflow-wrap:break-word;background:var(--ag);-webkit-background-clip:text;background-clip:text;color:transparent;margin:6px 0 14px}
+#gallery .gname {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(28px, 4.4vw, 52px);
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  overflow-wrap: break-word;
+  color: #FAFAF7 !important;
+  margin: 8px 0 14px;
+}
+body.light #gallery .gname {
+  color: #06070D !important;
+}
 #gallery .ghead .gtag{font-family:var(--mono);color:var(--cc);letter-spacing:.14em}
-#page .title{font-family:var(--display);font-weight:800;font-size:clamp(40px,8vw,104px);letter-spacing:-.04em;line-height:.86;max-width:14ch;overflow-wrap:break-word;background:var(--ag);-webkit-background-clip:text;background-clip:text;color:transparent}
+#page .title {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(36px, 7vw, 84px);
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  max-width: 15ch;
+  overflow-wrap: break-word;
+  color: #FAFAF7 !important;
+}
+body.light #page .title {
+  color: #06070D !important;
+}
 #page .kicker{font-family:var(--mono);color:var(--cc)}
 #page .meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:14px 30px}
 /* cards: keep originals (thumb + area card) and add glass treatment */
