@@ -60,9 +60,7 @@ export function ProjectsPage() {
         <ScrollReveal variant="blur">
           <header className="page__header">
             <span className="section__label">{t('projects.label')}</span>
-            <TextReveal as="h1" className="page__title">
-              {t('projects.title')}
-            </TextReveal>
+            <TextReveal as="h1" className="page__title" text={t('projects.title')} />
             <p className="page__description">{t('projects.subtitle')}</p>
           </header>
         </ScrollReveal>
