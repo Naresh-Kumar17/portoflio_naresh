@@ -1,4 +1,3 @@
-import { getVisitorStars, saveVisitorStar, type VisitorStar } from '../data/visitorStars';
 import { useEffect, useRef } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 import './SuperpowerCosmos.css';
@@ -413,10 +412,6 @@ const CATEGORY_MAP: Record<string, string[]> = {
   web_category: ['cosmos_portfolio'],
   ml_category: ['svm_digits', 'accident_severity'],
   ds_category: ['dataset_doctor', 'air_quality'],
-  skills_hub: ['naresh'],
-  resume_hub: ['naresh'],
-  about_me: ['naresh'],
-  contacto: ['naresh'],
   naresh: ['skills_hub', 'about_me', 'contacto', 'resume_hub', 'growth'],
 };
 
@@ -778,11 +773,6 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
 
     const audioEngine = new CelestialAudioEngine();
 
-    // ── Visitor Star Map ("Star Wala") State ──
-    let visitorStars: VisitorStar[] = getVisitorStars();
-    let hoverStarId: string | null = null;
-    let selectedStarColor = '#9B8FFF';
-    let isStarMapOpen = false;
 
     const sat = (v: number) => Math.max(0, Math.min(1, v));
     const ease = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
@@ -853,25 +843,7 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
         }
         if (best !== hoverId) {
           hoverId = best ? best.id : null;
-          // Check visitor star hover
-        let bestStar: any = null, bestStarDist = 24;
-        for (const vs of visitorStars) {
-          const [vx, vy] = proj(vs.x, vs.y, vs.z || 0.1);
-          const d = Math.hypot(mouseX - vx, mouseY - vy);
-          if (d < Math.max(bestStarDist, 18 * userZoom)) {
-            bestStarDist = d;
-            bestStar = vs;
-          }
-        }
-        if (bestStar) {
-          hoverStarId = bestStar.id;
-          c.style.cursor = 'pointer';
-          showStarTip(bestStar, mouseX, mouseY);
-        } else if (hoverStarId) {
-          hoverStarId = null;
-          if (!best) hideTip();
-        }
-        c.style.cursor = isDragging ? 'grabbing' : (best || bestStar ? 'pointer' : 'grab');
+          c.style.cursor = isDragging ? 'grabbing' : (best ? 'pointer' : 'grab');
           if (best) showTip(best, mouseX, mouseY);
           else hideTip();
         } else if (best) {
@@ -915,17 +887,6 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
       }
     }
 
-    function showStarTip(star: VisitorStar, x: number, y: number) {
-      const col = star.color || '#9B8FFF';
-      tip.querySelector('.nm')!.innerHTML =
-        `<span class="tdot" style="background:${col};box-shadow:0 0 8px ${col}"></span>✦ ${star.name} <span style="font-size:10px;opacity:0.75;">(${star.location})</span>`;
-      tip.querySelector('.kc')!.textContent = `"${star.message || 'Placed a star in this cosmos'}"`;
-      tip.querySelector('.go')!.textContent = 'VISITOR STAR MAP · CLICK TO EXPLORE';
-      tip.style.borderColor = col;
-      tip.style.opacity = '1';
-      tip.style.left = x + 'px';
-      tip.style.top = y + 'px';
-    }
 
     function showTip(n: any, x: number, y: number) {
       const col = COLOR[n.region];
@@ -1008,138 +969,9 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
     backBtn.onclick = returnHome;
     if (spacer) spacer.onclick = returnHome;
 
-        // ── Visitor Star Map ("Star Wala") Drawer & Registry Controls ──
-    const starMapBtn = root.querySelector('#star-map-toggle-btn') as HTMLButtonElement | null;
-    const starMapDrawer = root.querySelector('#star-map-drawer') as HTMLDivElement | null;
-    const starMapCloseBtn = root.querySelector('#star-map-close-btn') as HTMLButtonElement | null;
-    const starMapForm = root.querySelector('#star-map-form') as HTMLFormElement | null;
-    const starRegistryList = root.querySelector('#star-registry-list') as HTMLDivElement | null;
-    const starCountBadge = root.querySelector('#star-count-badge') as HTMLSpanElement | null;
-    const starRegistryCount = root.querySelector('#star-registry-count') as HTMLSpanElement | null;
-
-    function renderStarRegistry() {
-      if (!starRegistryList) return;
-      starRegistryList.innerHTML = '';
-      if (starCountBadge) starCountBadge.textContent = String(visitorStars.length);
-      if (starRegistryCount) starRegistryCount.textContent = String(visitorStars.length);
-
-      visitorStars.slice().reverse().forEach((star) => {
-        const item = document.createElement('div');
-        item.className = 'star-entry-card';
-        item.innerHTML = `
-          <span class="star-entry-dot" style="background:${star.color};color:${star.color};"></span>
-          <div class="star-entry-content">
-            <div class="star-entry-top">
-              <span class="star-entry-name">${star.name} ${star.isUserStar ? '<span style="font-size:10px;color:#CFFF04;font-family:var(--mono);">[Your Star]</span>' : ''}</span>
-              <button class="star-entry-fly-btn" type="button" data-fly-id="${star.id}">Fly to Star ↗</button>
-            </div>
-            <span class="star-entry-loc">${star.location} · ${star.createdAt}</span>
-            <p class="star-entry-msg">"${star.message}"</p>
-          </div>
-        `;
-
-        const flyBtn = item.querySelector('[data-fly-id]') as HTMLButtonElement | null;
-        if (flyBtn) {
-          flyBtn.onclick = (e) => {
-            e.stopPropagation();
-            flyToVisitorStar(star);
-            closeStarMap();
-          };
-        }
-        starRegistryList.appendChild(item);
-      });
-    }
-
-    function openStarMap(focusStarId?: string) {
-      isStarMapOpen = true;
-      if (starMapDrawer) starMapDrawer.classList.add('show');
-      // Close side gallery if open to prevent collision
-      galMode = null;
-      galNode = null;
-      galleryEl.classList.remove('show');
-      renderStarRegistry();
-
-      if (focusStarId) {
-        const found = visitorStars.find((s) => s.id === focusStarId);
-        if (found) flyToVisitorStar(found);
-      }
-    }
-
-    function closeStarMap() {
-      isStarMapOpen = false;
-      if (starMapDrawer) starMapDrawer.classList.remove('show');
-    }
-
-    function flyToVisitorStar(star: VisitorStar) {
-      targetCamX = star.x;
-      targetCamY = star.y;
-      targetCamZoom = 1.45;
-      userInteracted = true;
-      audioEngine.playChime(1.15);
-    }
-
-    if (starMapBtn) {
-      starMapBtn.onclick = (e) => {
-        e.stopPropagation();
-        if (isStarMapOpen) closeStarMap();
-        else openStarMap();
-      };
-    }
-    if (starMapCloseBtn) {
-      starMapCloseBtn.onclick = (e) => {
-        e.stopPropagation();
-        closeStarMap();
-      };
-    }
-
-    // Color Swatch Selection
-    const colorSwatches = root.querySelectorAll('.star-color-swatch');
-    colorSwatches.forEach((swatch: any) => {
-      swatch.onclick = (e: MouseEvent) => {
-        e.stopPropagation();
-        colorSwatches.forEach((s: any) => s.classList.remove('selected'));
-        swatch.classList.add('selected');
-        selectedStarColor = swatch.dataset.hex || '#9B8FFF';
-      };
-    });
-
-    // Form Submission: Place Star in Constellation
-    if (starMapForm) {
-      starMapForm.onsubmit = (e) => {
-        e.preventDefault();
-        const nameInput = root.querySelector('#star-input-name') as HTMLInputElement | null;
-        const locInput = root.querySelector('#star-input-location') as HTMLInputElement | null;
-        const msgInput = root.querySelector('#star-input-message') as HTMLInputElement | null;
-
-        const name = nameInput ? nameInput.value.trim() : '';
-        const location = locInput ? locInput.value.trim() : '';
-        const message = msgInput ? msgInput.value.trim() : '';
-
-        if (!name || !location) return;
-
-        const newStar = saveVisitorStar({
-          name,
-          location,
-          message: message || 'Placed a star in this cosmos',
-          color: selectedStarColor,
-        });
-
-        visitorStars = getVisitorStars();
-        renderStarRegistry();
-        flyToVisitorStar(newStar);
-        audioEngine.playChime(1.25);
-
-        // Reset form & close drawer so visitor sees their star immediately!
-        starMapForm.reset();
-        closeStarMap();
-      };
-    }
-
-    renderStarRegistry();
-
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        if (isStarMapOpen) closeStarMap(); else returnHome();
+        returnHome();
       } 
     };
     window.addEventListener('keydown', handleKeyDown);
@@ -1150,7 +982,6 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
         hoverId = null;
         hideTip();
         userInteracted = true;
-        if (isStarMapOpen) closeStarMap();
         setFieldFocus(detail);
       }
     };
@@ -1187,7 +1018,6 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
           hoverId = null;
           hideTip();
           userInteracted = true;
-          if (isStarMapOpen) closeStarMap();
           tab.action();
         };
         tabsEl.appendChild(d);
@@ -1259,6 +1089,27 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font-family:var(--mono);font-size:11px;">
             <span style="color:var(--ink3);">Official 1-Page Document · Naresh_Kumar_Resume.pdf</span>
             <span style="color:#E84FD0;font-weight:600;">Opens preview in new tab ↗</span>
+          </div>
+        `;
+      } else if (n.id === 'contacto') {
+        actionButtons = `
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 10px;">
+            <a href="mailto:wdnaresh@gmail.com" class="genter" style="flex:1;min-width:140px;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;background:#06D6C4;color:#06070D;font-weight:700;padding:12px 18px;border-radius:12px;box-shadow:0 0 20px rgba(6,214,196,0.35);cursor:pointer;font-size:13.5px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              <span>Email Me</span>
+            </a>
+            <a href="https://github.com/Naresh-Kumar17" target="_blank" rel="noopener noreferrer" class="genter" style="flex:1;min-width:140px;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;background:rgba(255,255,255,0.06);border:1.5px solid rgba(255,255,255,0.22);color:#FAFAF7;font-weight:600;padding:12px 18px;border-radius:12px;cursor:pointer;font-size:13.5px;transition:all 0.2s ease;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+              <span>GitHub ↗</span>
+            </a>
+            <a href="https://www.linkedin.com/in/naresh-kumar-ds" target="_blank" rel="noopener noreferrer" class="genter" style="flex:1;min-width:140px;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;background:rgba(0,176,205,0.12);border:1.5px solid #00B0CD;color:#FAFAF7;font-weight:600;padding:12px 18px;border-radius:12px;cursor:pointer;font-size:13.5px;transition:all 0.2s ease;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+              <span>LinkedIn ↗</span>
+            </a>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font-family:var(--mono);font-size:11px;">
+            <span style="color:var(--ink3);">Direct Channels · wdnaresh@gmail.com</span>
+            <span style="color:#06D6C4;font-weight:600;">Immediate Availability</span>
           </div>
         `;
       } else if (n.url) {
@@ -1377,6 +1228,55 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
                 Engineered Dataset Doctor for automated ML data validation; built handwritten digit classification engines; developed real-time 60 FPS perspective canvas experiences.
               </p>
             </div>
+          </div>
+        `;
+      } else if (n.id === 'contacto') {
+        customDossierHTML = `
+          <div style="margin:16px 0 12px;display:flex;flex-direction:column;gap:12px;">
+            <a href="mailto:wdnaresh@gmail.com" style="text-decoration:none;display:block;padding:14px;border-radius:10px;background:rgba(6,214,196,0.06);border:1px solid rgba(6,214,196,0.28);transition:all 0.2s ease;">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+                <span style="font-family:var(--mono);font-size:11px;font-weight:700;color:#06D6C4;text-transform:uppercase;letter-spacing:0.1em;">
+                  01 · Direct Email Inquiries
+                </span>
+                <span style="font-family:var(--mono);font-size:10.5px;color:#06D6C4;font-weight:600;">Send Email ↗</span>
+              </div>
+              <div style="font-size:14px;font-weight:600;color:var(--ink);margin-bottom:3px;font-family:var(--mono);">
+                wdnaresh@gmail.com
+              </div>
+              <p style="font-size:12.5px;line-height:1.5;color:var(--ink2);margin:0;">
+                Reach out directly for internships, collaborative machine learning research, and software engineering opportunities.
+              </p>
+            </a>
+
+            <a href="https://github.com/Naresh-Kumar17" target="_blank" rel="noopener noreferrer" style="text-decoration:none;display:block;padding:14px;border-radius:10px;background:rgba(155,143,255,0.06);border:1px solid rgba(155,143,255,0.28);transition:all 0.2s ease;">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+                <span style="font-family:var(--mono);font-size:11px;font-weight:700;color:#9B8FFF;text-transform:uppercase;letter-spacing:0.1em;">
+                  02 · GitHub Code & Research Repositories
+                </span>
+                <span style="font-family:var(--mono);font-size:10.5px;color:#9B8FFF;font-weight:600;">Visit GitHub ↗</span>
+              </div>
+              <div style="font-size:14px;font-weight:600;color:var(--ink);margin-bottom:3px;font-family:var(--mono);">
+                github.com/Naresh-Kumar17
+              </div>
+              <p style="font-size:12.5px;line-height:1.5;color:var(--ink2);margin:0;">
+                Review complete open-source codebases for Dataset Doctor, SVM handwritten digit classification, and 60 FPS visual engines.
+              </p>
+            </a>
+
+            <a href="https://www.linkedin.com/in/naresh-kumar-ds" target="_blank" rel="noopener noreferrer" style="text-decoration:none;display:block;padding:14px;border-radius:10px;background:rgba(0,176,205,0.06);border:1px solid rgba(0,176,205,0.28);transition:all 0.2s ease;">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+                <span style="font-family:var(--mono);font-size:11px;font-weight:700;color:#00B0CD;text-transform:uppercase;letter-spacing:0.1em;">
+                  03 · Professional Network & Research
+                </span>
+                <span style="font-family:var(--mono);font-size:10.5px;color:#00B0CD;font-weight:600;">Connect ↗</span>
+              </div>
+              <div style="font-size:14px;font-weight:600;color:var(--ink);margin-bottom:3px;font-family:var(--mono);">
+                linkedin.com/in/naresh-kumar-ds
+              </div>
+              <p style="font-size:12.5px;line-height:1.5;color:var(--ink2);margin:0;">
+                Connect for academic discussions, engineering updates, and collaborative research in predictive machine learning.
+              </p>
+            </a>
           </div>
         `;
       }
@@ -1586,51 +1486,6 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
         }
       }
 
-      // 4.5 Draw Visitor Stars ("Star Wala" Interactive Constellation)
-      ctx.globalCompositeOperation = LITE ? 'source-over' : 'lighter';
-      for (const vs of visitorStars) {
-        const [vsX, vsY, vsPersp] = proj(vs.x, vs.y, vs.z || 0.1);
-        const vsR = Math.max(4, 5.5 * camZoom * userZoom * vsPersp);
-        const isHoverStar = hoverStarId === vs.id;
-        const starCol = vs.color || '#9B8FFF';
-
-        // Outer glowing halo
-        const glowRad = isHoverStar ? vsR * 3.8 : (vs.isUserStar ? vsR * 3.0 : vsR * 2.0);
-        const grad = ctx.createRadialGradient(vsX, vsY, 0, vsX, vsY, glowRad);
-        grad.addColorStop(0, starCol);
-        grad.addColorStop(1, 'transparent');
-        ctx.fillStyle = grad;
-        ctx.beginPath();
-        ctx.arc(vsX, vsY, glowRad, 0, 6.283);
-        ctx.fill();
-
-        // 4-point sparkling star diamond
-        const starLen = isHoverStar ? vsR * 2.8 : vsR * 2.0;
-        ctx.fillStyle = starCol;
-        ctx.beginPath();
-        ctx.moveTo(vsX, vsY - starLen);
-        ctx.quadraticCurveTo(vsX, vsY, vsX + starLen, vsY);
-        ctx.quadraticCurveTo(vsX, vsY, vsX, vsY + starLen);
-        ctx.quadraticCurveTo(vsX, vsY, vsX - starLen, vsY);
-        ctx.quadraticCurveTo(vsX, vsY, vsX, vsY - starLen);
-        ctx.fill();
-
-        // Bright white core spark
-        ctx.beginPath();
-        ctx.arc(vsX, vsY, Math.max(2, vsR * 0.45), 0, 6.283);
-        ctx.fillStyle = '#FFFFFF';
-        ctx.fill();
-
-        // High contrast Star label
-        ctx.save();
-        ctx.font = `600 ${Math.max(9, Math.round(10 * LBL))}px "Martian Mono", monospace`;
-        ctx.fillStyle = isHoverStar ? starCol : (vs.isUserStar ? '#CFFF04' : (LITE ? '#111827' : '#E2E8F0'));
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'bottom';
-        const labelText = vs.isUserStar ? `✦ ${vs.name} [YOU]` : `✦ ${vs.name}`;
-        ctx.fillText(labelText, vsX, vsY - starLen - 4);
-        ctx.restore();
-      }
 
       // 5. Draw Nodes & Labels with dynamic collision avoidance
       const HUB_IDS = new Set(Object.values(REGION_TO_HUB));
@@ -1936,73 +1791,6 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
         <div className="doc" id="doc" />
       </div>
 
-      {/* ── Visitor Star Map Drawer ("Star Wala") ── */}
-      <div id="star-map-drawer" className="star-map-drawer">
-        <div className="star-map-inner">
-          <div className="star-map-header">
-            <div className="star-map-title-row">
-              <span className="star-map-badge">✦ VISITOR STAR MAP</span>
-              <button id="star-map-close-btn" className="star-map-close" type="button" aria-label="Close Star Map">✕</button>
-            </div>
-            <h2 className="star-map-title">Leave Your Star in the Cosmos</h2>
-            <p className="star-map-desc">
-              Join visitors from around the world who have ignited a star in Naresh's celestial galaxy.
-            </p>
-          </div>
-
-          <form id="star-map-form" className="star-map-form">
-            <div className="star-form-grid">
-              <div className="star-form-field">
-                <label>YOUR NAME / HANDLE</label>
-                <input id="star-input-name" type="text" placeholder="e.g. Sarah M. / Tech Recruiter" required maxLength={30} />
-              </div>
-              <div className="star-form-field">
-                <label>LOCATION / CITY</label>
-                <input id="star-input-location" type="text" placeholder="e.g. London, UK / Karachi, PK" required maxLength={35} />
-              </div>
-            </div>
-            <div className="star-form-field">
-              <label>NOTE / GREETING</label>
-              <input id="star-input-message" type="text" placeholder="e.g. Loved the leak-free ML remediation platform!" required maxLength={80} />
-            </div>
-
-            <div className="star-form-field">
-              <label>STAR SPECTRAL COLOR</label>
-              <div className="star-color-picker" id="star-color-picker">
-                {[
-                  { name: 'Lavender', hex: '#9B8FFF' },
-                  { name: 'Solar Lime', hex: '#CFFF04' },
-                  { name: 'Sky Cyan', hex: '#00B0CD' },
-                  { name: 'Amber Gold', hex: '#FFAA00' },
-                  { name: 'Neural Magenta', hex: '#E84FD0' },
-                  { name: 'Emerald', hex: '#22C55E' }
-                ].map((c, i) => (
-                  <button
-                    key={c.hex}
-                    type="button"
-                    className={`star-color-swatch ${i === 0 ? 'selected' : ''}`}
-                    data-hex={c.hex}
-                    style={{ backgroundColor: c.hex }}
-                    title={c.name}
-                  />
-                ))}
-              </div>
-            </div>
-
-            <button type="submit" className="star-submit-btn">
-              ✦ Ignite Your Star in Cosmos
-            </button>
-          </form>
-
-          <div className="star-registry-section">
-            <div className="star-registry-head">
-              <span>EXPLORE VISITOR STARS (<span id="star-registry-count">0</span>)</span>
-            </div>
-            <div id="star-registry-list" className="star-registry-list" />
-          </div>
-        </div>
-      </div>
-
       {/* ── Interactive HUD Controls (Easy to Use) ── */}
       <div className="cosmos-hud">
         <div className="hud-hint">
@@ -2013,17 +1801,6 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
           <span>Click node to inspect</span>
         </div>
         <div className="hud-actions">
-          <button
-            id="star-map-toggle-btn"
-            className="star-map-hud-btn"
-            type="button"
-            title="Visitor Star Map · Explore and add stars"
-            aria-label="Visitor Star Map"
-          >
-            <span className="star-sparkle-icon">✦</span>
-            <span className="star-btn-text">Visitor Stars</span>
-            <span id="star-count-badge" className="star-count-badge">8</span>
-          </button>
           <button id="reset-orbit" type="button" title="Center View" aria-label="Center View">
             ⟲ Center
           </button>
