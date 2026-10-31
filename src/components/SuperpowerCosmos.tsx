@@ -1,3 +1,4 @@
+import { getVisitorStars, saveVisitorStar, type VisitorStar } from '../data/visitorStars';
 import { useEffect, useRef } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 import './SuperpowerCosmos.css';
@@ -435,135 +436,6 @@ const PARENT_MAP: Record<string, string> = {
   growth: 'naresh',
 };
 
-interface TourStop {
-  id: string;
-  nodeId: string;
-  stepNum: number;
-  durationSec: number;
-  camX: number;
-  camY: number;
-  camZoom: number;
-  badge: string;
-  badgeCol: string;
-  title: string;
-  subtitle: string;
-  story: string;
-  highlightSkills: string[];
-  actionLabel?: string;
-  actionUrl?: string;
-  isExternalUrl?: boolean;
-}
-
-const TOUR_STOPS: TourStop[] = [
-  {
-    id: 'origin',
-    nodeId: 'naresh',
-    stepNum: 1,
-    durationSec: 10,
-    camX: -16.0,
-    camY: 10.0,
-    camZoom: 1.45,
-    badge: 'THE ORIGIN',
-    badgeCol: '#9B8FFF',
-    title: 'Naresh Kumar',
-    subtitle: 'BS Data Science · FAST-NUCES Karachi',
-    story: 'Transforming empirical data pipelines into robust mathematical solutions. Specializing in machine learning classifiers, time-series forecasting, and interactive visual computing.',
-    highlightSkills: ['FAST-NUCES Karachi', 'Machine Learning', 'Statistical Pipelines'],
-    actionLabel: 'Explore Identity',
-    actionUrl: '#naresh'
-  },
-  {
-    id: 'doctor',
-    nodeId: 'dataset_doctor',
-    stepNum: 2,
-    durationSec: 10,
-    camX: 4.0,
-    camY: -41.0,
-    camZoom: 1.5,
-    badge: 'FLAGSHIP PLATFORM',
-    badgeCol: '#22C55E',
-    title: 'Dataset Doctor',
-    subtitle: 'The Data-to-Model Quality & ML Reliability Platform',
-    story: 'Catches silent data traps before model training: target leakage, sentinel values, and class imbalance. Enforces split-first zero leakage with 117 passing pytest tests.',
-    highlightSkills: ['117 Tests Passing', 'Train-Only 5-Fold CV', 'FastAPI', 'Zero Leakage'],
-    actionLabel: 'Launch App on Render ↗',
-    actionUrl: 'https://dataset-doctor-8c7b.onrender.com/',
-    isExternalUrl: true
-  },
-  {
-    id: 'ml_models',
-    nodeId: 'ml_category',
-    stepNum: 3,
-    durationSec: 10,
-    camX: 32.0,
-    camY: -24.0,
-    camZoom: 1.4,
-    badge: 'MACHINE LEARNING',
-    badgeCol: '#E84FD0',
-    title: 'Supervised Models & SMOTE',
-    subtitle: 'SVM Digit Classification & Road Accident Severity',
-    story: 'Maximizing non-linear hyperplane separation with RBF kernels for digit recognition, and balancing extreme casualty distributions via synthetic SMOTE sampling.',
-    highlightSkills: ['Support Vector Machines', 'SMOTE Resampling', 'scikit-learn', 'ROC-AUC'],
-    actionLabel: 'View GitHub Repos ↗',
-    actionUrl: 'https://github.com/Naresh-Kumar17/svm-handwritten-digits',
-    isExternalUrl: true
-  },
-  {
-    id: 'forecasting',
-    nodeId: 'air_quality',
-    stepNum: 4,
-    durationSec: 10,
-    camX: 24.0,
-    camY: -41.0,
-    camZoom: 1.5,
-    badge: 'DATA SCIENCE',
-    badgeCol: '#22C55E',
-    title: 'Air Quality Forecasting',
-    subtitle: 'Time-Series Decomposition & Environmental Prediction',
-    story: 'End-to-end framework predicting AQI spikes and particulate concentration. Features Seasonal-Trend Decomposition (STL), lagged temporal rolling windows, and meteorological covariates.',
-    highlightSkills: ['Time-Series Forecasting', 'STL Decomposition', 'Rolling Features', 'pandas'],
-    actionLabel: 'View Source Code ↗',
-    actionUrl: 'https://github.com/Naresh-Kumar17/Air_Quality_Forcasating-',
-    isExternalUrl: true
-  },
-  {
-    id: 'cosmos',
-    nodeId: 'cosmos_portfolio',
-    stepNum: 5,
-    durationSec: 10,
-    camX: 56.0,
-    camY: -4.0,
-    camZoom: 1.45,
-    badge: 'WEB COMPUTING',
-    badgeCol: '#38BDF8',
-    title: '3D Constellation Cosmos',
-    subtitle: 'Custom Perspective 3D Engine on HTML5 Canvas',
-    story: 'Engineered entirely from scratch with React 19 and Canvas 2D math without bulky 3D engines. Features Gaussian volumetric haze, travelling photon curves, and automated collision avoidance.',
-    highlightSkills: ['React 19', 'TypeScript', 'HTML5 Canvas 2D', 'AWS Amplify CI/CD'],
-    actionLabel: 'View Portfolio Repo ↗',
-    actionUrl: 'https://github.com/Naresh-Kumar17/portoflio_naresh',
-    isExternalUrl: true
-  },
-  {
-    id: 'resume',
-    nodeId: 'resume_hub',
-    stepNum: 6,
-    durationSec: 10,
-    camX: 6.0,
-    camY: 28.0,
-    camZoom: 1.45,
-    badge: 'QUALIFICATIONS',
-    badgeCol: '#FFAA00',
-    title: 'Curriculum Vitae',
-    subtitle: 'Academic Background, Research & Direct Contact',
-    story: 'Full qualifications, academic course history at FAST-NUCES Karachi, and open technical availability for Machine Learning and Data Science opportunities.',
-    highlightSkills: ['FAST-NUCES 2025–2029', 'Machine Learning', 'Available for Collaboration'],
-    actionLabel: 'Open Resume Sheet →',
-    actionUrl: '/resume',
-    isExternalUrl: false
-  }
-];
-
 class CelestialAudioEngine {
   private ctx: AudioContext | null = null;
   private masterGain: GainNode | null = null;
@@ -887,12 +759,7 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
     let fieldCX = 0.5, fieldCXt = 0.5;
     let userZoom = 1, viewRot = 0, viewTiltX = 0.18, userInteracted = false;
 
-    // ── 60-Second Guided Tour State & Web Audio Synthesizer ──
-    let isTourActive = false;
-    let isTourPaused = false;
-    let tourStopIndex = 0;
-    let tourStopElapsed = 0;
-    let tourTotalElapsed = 0;
+    // ── Camera Flight State & Audio Synthesizer ──
     let curCamX = cx0;
     let curCamY = cy0;
     let targetCamX = cx0;
@@ -900,6 +767,12 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
     let targetCamZoom = 1.0;
 
     const audioEngine = new CelestialAudioEngine();
+
+    // ── Visitor Star Map ("Star Wala") State ──
+    let visitorStars: VisitorStar[] = getVisitorStars();
+    let hoverStarId: string | null = null;
+    let selectedStarColor = '#9B8FFF';
+    let isStarMapOpen = false;
 
     const sat = (v: number) => Math.max(0, Math.min(1, v));
     const ease = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
@@ -970,7 +843,25 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
         }
         if (best !== hoverId) {
           hoverId = best ? best.id : null;
-          c.style.cursor = isDragging ? 'grabbing' : (best ? 'pointer' : 'grab');
+          // Check visitor star hover
+        let bestStar: any = null, bestStarDist = 24;
+        for (const vs of visitorStars) {
+          const [vx, vy] = proj(vs.x, vs.y, vs.z || 0.1);
+          const d = Math.hypot(mouseX - vx, mouseY - vy);
+          if (d < Math.max(bestStarDist, 18 * userZoom)) {
+            bestStarDist = d;
+            bestStar = vs;
+          }
+        }
+        if (bestStar) {
+          hoverStarId = bestStar.id;
+          c.style.cursor = 'pointer';
+          showStarTip(bestStar, mouseX, mouseY);
+        } else if (hoverStarId) {
+          hoverStarId = null;
+          if (!best) hideTip();
+        }
+        c.style.cursor = isDragging ? 'grabbing' : (best || bestStar ? 'pointer' : 'grab');
           if (best) showTip(best, mouseX, mouseY);
           else hideTip();
         } else if (best) {
@@ -1016,6 +907,18 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
       if (galMode) {
         goHome();
       }
+    }
+
+    function showStarTip(star: VisitorStar, x: number, y: number) {
+      const col = star.color || '#9B8FFF';
+      tip.querySelector('.nm')!.innerHTML =
+        `<span class="tdot" style="background:${col};box-shadow:0 0 8px ${col}"></span>✦ ${star.name} <span style="font-size:10px;opacity:0.75;">(${star.location})</span>`;
+      tip.querySelector('.kc')!.textContent = `"${star.message || 'Placed a star in this cosmos'}"`;
+      tip.querySelector('.go')!.textContent = 'VISITOR STAR MAP · CLICK TO EXPLORE';
+      tip.style.borderColor = col;
+      tip.style.opacity = '1';
+      tip.style.left = x + 'px';
+      tip.style.top = y + 'px';
     }
 
     function showTip(n: any, x: number, y: number) {
@@ -1095,272 +998,139 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
     backBtn.onclick = returnHome;
     if (spacer) spacer.onclick = returnHome;
 
-    const tourToggleBtn = root.querySelector('#tour-toggle-btn') as HTMLButtonElement | null;
-    const tourOverlay = root.querySelector('#cosmos-tour-overlay') as HTMLDivElement | null;
-    const tourStoryCard = root.querySelector('#tour-story-card') as HTMLDivElement | null;
-    const tourProgressFill = root.querySelector('#tour-progress-fill') as HTMLDivElement | null;
-    const tourTimeText = root.querySelector('#tour-time-text') as HTMLSpanElement | null;
-    const tourPrevBtn = root.querySelector('#tour-prev-btn') as HTMLButtonElement | null;
-    const tourPauseBtn = root.querySelector('#tour-pause-btn') as HTMLButtonElement | null;
-    const tourNextBtn = root.querySelector('#tour-next-btn') as HTMLButtonElement | null;
-    const tourSoundBtn = root.querySelector('#tour-sound-btn') as HTMLButtonElement | null;
-    const tourCloseBtn = root.querySelector('#tour-close-btn') as HTMLButtonElement | null;
+        // ── Visitor Star Map ("Star Wala") Drawer & Registry Controls ──
+    const starMapBtn = root.querySelector('#star-map-toggle-btn') as HTMLButtonElement | null;
+    const starMapDrawer = root.querySelector('#star-map-drawer') as HTMLDivElement | null;
+    const starMapCloseBtn = root.querySelector('#star-map-close-btn') as HTMLButtonElement | null;
+    const starMapForm = root.querySelector('#star-map-form') as HTMLFormElement | null;
+    const starRegistryList = root.querySelector('#star-registry-list') as HTMLDivElement | null;
+    const starCountBadge = root.querySelector('#star-count-badge') as HTMLSpanElement | null;
+    const starRegistryCount = root.querySelector('#star-registry-count') as HTMLSpanElement | null;
 
-    function renderTourCard(stop: TourStop) {
-      if (!tourStoryCard) return;
-      tourStoryCard.innerHTML = `
-        <div class="tour-header">
-          <span class="tour-step-chip" style="background:${stop.badgeCol}1f;color:${stop.badgeCol};border:1px solid ${stop.badgeCol}55;">
-            <span class="tour-chip-dot" style="background:${stop.badgeCol};box-shadow:0 0 8px ${stop.badgeCol};"></span>
-            ${stop.badge} · STOP 0${stop.stepNum} OF 06
-          </span>
-        </div>
-        <h2 class="tour-title">${stop.title}</h2>
-        <h3 class="tour-subtitle" style="color:${stop.badgeCol}">${stop.subtitle}</h3>
-        <p class="tour-story">${stop.story}</p>
-        <div class="tour-skills">
-          ${stop.highlightSkills.map((sk: string) => `<span class="tour-skill-tag">${sk}</span>`).join('')}
-        </div>
-        ${stop.actionUrl ? `
-          <div class="tour-action-row">
-            <a href="${stop.actionUrl}" ${stop.isExternalUrl ? 'target="_blank" rel="noopener noreferrer"' : ''} class="tour-action-link" style="background:${stop.badgeCol};color:#06070D;">
-              ${stop.actionLabel || 'Explore More →'}
-            </a>
-          </div>
-        ` : ''}
-      `;
+    function renderStarRegistry() {
+      if (!starRegistryList) return;
+      starRegistryList.innerHTML = '';
+      if (starCountBadge) starCountBadge.textContent = String(visitorStars.length);
+      if (starRegistryCount) starRegistryCount.textContent = String(visitorStars.length);
 
-      if (tourOverlay) {
-        tourOverlay.querySelectorAll('.tour-step-dot').forEach((dot: any) => {
-          const s = parseInt(dot.dataset.step, 10);
-          dot.classList.toggle('active', s === tourStopIndex);
-          if (s === tourStopIndex) {
-            dot.style.background = stop.badgeCol;
-            dot.style.borderColor = stop.badgeCol;
-            dot.style.color = '#06070D';
-          } else {
-            dot.style.background = '';
-            dot.style.borderColor = '';
-            dot.style.color = '';
-          }
-        });
-      }
-    }
-
-    function goToTourStop(index: number) {
-      tourStopIndex = Math.max(0, Math.min(TOUR_STOPS.length - 1, index));
-      tourStopElapsed = 0;
-      tourTotalElapsed = tourStopIndex * 10;
-      const stop = TOUR_STOPS[tourStopIndex];
-
-      targetCamX = stop.camX;
-      targetCamY = stop.camY;
-      targetCamZoom = stop.camZoom;
-
-      const nodeIdx = idIndex[stop.nodeId];
-      if (nodeIdx !== undefined) {
-        const children = CATEGORY_MAP[stop.nodeId] || [];
-        const childIndices = children.map((cId: string) => idIndex[cId]).filter((x: number | undefined) => x !== undefined);
-        focusSet = new Set([nodeIdx, ...childIndices]);
-        fieldSel = stop.nodeId;
-      }
-
-      audioEngine.playChime(1.0 + tourStopIndex * 0.08);
-      audioEngine.playChordForStep(tourStopIndex);
-      renderTourCard(stop);
-      updateTourUI();
-    }
-
-    function updateTourUI() {
-      if (!isTourActive) return;
-      const totalSec = Math.min(60, Math.floor(tourTotalElapsed));
-      const pct = Math.min(100, (tourTotalElapsed / 60) * 100);
-      if (tourProgressFill) {
-        tourProgressFill.style.width = `${pct.toFixed(1)}%`;
-      }
-      if (tourTimeText) {
-        const secStr = totalSec < 10 ? `0${totalSec}` : `${totalSec}`;
-        tourTimeText.textContent = `${secStr}s / 60s`;
-      }
-    }
-
-    function toggleTourPause() {
-      isTourPaused = !isTourPaused;
-      if (tourPauseBtn) {
-        tourPauseBtn.textContent = isTourPaused ? '▶' : '⏸';
-        tourPauseBtn.title = isTourPaused ? 'Resume Tour' : 'Pause Tour';
-      }
-    }
-
-    function startTour() {
-      isTourActive = true;
-      isTourPaused = false;
-      tourStopIndex = 0;
-      tourStopElapsed = 0;
-      tourTotalElapsed = 0;
-      userInteracted = true;
-
-      galMode = null;
-      galNode = null;
-      galleryEl.classList.remove('show');
-
-      if (tourToggleBtn) {
-        tourToggleBtn.classList.add('touring');
-        tourToggleBtn.innerHTML = '<span class="tour-btn-icon">⏹</span><span class="tour-btn-text">Exit Tour</span>';
-      }
-      if (tourOverlay) {
-        tourOverlay.classList.add('active');
-      }
-      if (tourPauseBtn) {
-        tourPauseBtn.textContent = '⏸';
-      }
-
-      audioEngine.start();
-      goToTourStop(0);
-    }
-
-    function stopTour() {
-      isTourActive = false;
-      isTourPaused = false;
-      tourStopElapsed = 0;
-      tourTotalElapsed = 0;
-
-      if (tourToggleBtn) {
-        tourToggleBtn.classList.remove('touring');
-        tourToggleBtn.innerHTML = '<span class="tour-hud-pulse"></span><span class="tour-btn-icon">▶</span><span class="tour-btn-text">60s Tour</span>';
-      }
-      if (tourOverlay) {
-        tourOverlay.classList.remove('active');
-      }
-
-      audioEngine.stop();
-      targetCamX = cx0;
-      targetCamY = cy0;
-      targetCamZoom = 1.0;
-      goHome();
-    }
-
-    function finishTour() {
-      isTourPaused = true;
-      if (tourProgressFill) tourProgressFill.style.width = '100%';
-      if (tourTimeText) tourTimeText.textContent = '60s / 60s';
-      audioEngine.playChime(1.5);
-
-      if (tourStoryCard) {
-        tourStoryCard.innerHTML = `
-          <div class="tour-header">
-            <span class="tour-step-chip" style="background:#22C55E22;color:#22C55E;border:1px solid #22C55E66;">
-              <span class="tour-chip-dot" style="background:#22C55E;box-shadow:0 0 8px #22C55E;"></span>
-              TOUR COMPLETE · 60s FLIGHT COMPLETED
-            </span>
-          </div>
-          <h2 class="tour-title">Flight Journey Complete</h2>
-          <h3 class="tour-subtitle" style="color:#22C55E;">Constellation Explored</h3>
-          <p class="tour-story">
-            You have explored the core data science platforms, machine learning models, and engineering architectures.
-            Feel free to orbit, zoom, or click any star cluster on the map to inspect in-depth case studies!
-          </p>
-          <div class="tour-action-row" style="gap:10px;">
-            <button id="tour-replay-btn" type="button" class="tour-action-link" style="background:#9B8FFF;color:#06070D;cursor:pointer;border:none;">
-              ⟲ Replay Tour
-            </button>
-            <button id="tour-finish-close-btn" type="button" class="tour-action-link" style="background:rgba(255,255,255,0.12);color:var(--ink);cursor:pointer;border:1px solid rgba(255,255,255,0.2);">
-              Explore Freely ↗
-            </button>
+      visitorStars.slice().reverse().forEach((star) => {
+        const item = document.createElement('div');
+        item.className = 'star-entry-card';
+        item.innerHTML = `
+          <span class="star-entry-dot" style="background:${star.color};color:${star.color};"></span>
+          <div class="star-entry-content">
+            <div class="star-entry-top">
+              <span class="star-entry-name">${star.name} ${star.isUserStar ? '<span style="font-size:10px;color:#CFFF04;font-family:var(--mono);">[Your Star]</span>' : ''}</span>
+              <button class="star-entry-fly-btn" type="button" data-fly-id="${star.id}">Fly to Star ↗</button>
+            </div>
+            <span class="star-entry-loc">${star.location} · ${star.createdAt}</span>
+            <p class="star-entry-msg">"${star.message}"</p>
           </div>
         `;
 
-        const replayBtn = tourStoryCard.querySelector('#tour-replay-btn') as HTMLButtonElement | null;
-        if (replayBtn) {
-          replayBtn.onclick = () => {
-            isTourPaused = false;
-            goToTourStop(0);
+        const flyBtn = item.querySelector('[data-fly-id]') as HTMLButtonElement | null;
+        if (flyBtn) {
+          flyBtn.onclick = (e) => {
+            e.stopPropagation();
+            flyToVisitorStar(star);
+            closeStarMap();
           };
         }
-        const finishCloseBtn = tourStoryCard.querySelector('#tour-finish-close-btn') as HTMLButtonElement | null;
-        if (finishCloseBtn) {
-          finishCloseBtn.onclick = () => {
-            stopTour();
-          };
-        }
-      }
-    }
-
-    if (tourToggleBtn) {
-      tourToggleBtn.onclick = (e) => {
-        e.stopPropagation();
-        if (isTourActive) {
-          stopTour();
-        } else {
-          startTour();
-        }
-      };
-    }
-    if (tourPrevBtn) {
-      tourPrevBtn.onclick = (e) => {
-        e.stopPropagation();
-        if (tourStopIndex > 0) {
-          goToTourStop(tourStopIndex - 1);
-        }
-      };
-    }
-    if (tourNextBtn) {
-      tourNextBtn.onclick = (e) => {
-        e.stopPropagation();
-        if (tourStopIndex < TOUR_STOPS.length - 1) {
-          goToTourStop(tourStopIndex + 1);
-        } else {
-          finishTour();
-        }
-      };
-    }
-    if (tourPauseBtn) {
-      tourPauseBtn.onclick = (e) => {
-        e.stopPropagation();
-        toggleTourPause();
-      };
-    }
-    if (tourSoundBtn) {
-      tourSoundBtn.onclick = (e) => {
-        e.stopPropagation();
-        const muted = audioEngine.toggleMute();
-        tourSoundBtn.textContent = muted ? '🔇' : '🔊';
-        tourSoundBtn.title = muted ? 'Unmute Audio' : 'Mute Audio';
-      };
-    }
-    if (tourCloseBtn) {
-      tourCloseBtn.onclick = (e) => {
-        e.stopPropagation();
-        stopTour();
-      };
-    }
-    if (tourOverlay) {
-      tourOverlay.querySelectorAll('.tour-step-dot').forEach((pill: any) => {
-        pill.onclick = (e: MouseEvent) => {
-          e.stopPropagation();
-          const step = parseInt(pill.dataset.step, 10);
-          if (!isNaN(step)) {
-            if (!isTourActive) {
-              startTour();
-            }
-            goToTourStop(step);
-          }
-        };
+        starRegistryList.appendChild(item);
       });
     }
 
+    function openStarMap(focusStarId?: string) {
+      isStarMapOpen = true;
+      if (starMapDrawer) starMapDrawer.classList.add('show');
+      // Close side gallery if open to prevent collision
+      galMode = null;
+      galNode = null;
+      galleryEl.classList.remove('show');
+      renderStarRegistry();
+
+      if (focusStarId) {
+        const found = visitorStars.find((s) => s.id === focusStarId);
+        if (found) flyToVisitorStar(found);
+      }
+    }
+
+    function closeStarMap() {
+      isStarMapOpen = false;
+      if (starMapDrawer) starMapDrawer.classList.remove('show');
+    }
+
+    function flyToVisitorStar(star: VisitorStar) {
+      targetCamX = star.x;
+      targetCamY = star.y;
+      targetCamZoom = 1.45;
+      userInteracted = true;
+      audioEngine.playChime(1.15);
+    }
+
+    if (starMapBtn) {
+      starMapBtn.onclick = (e) => {
+        e.stopPropagation();
+        if (isStarMapOpen) closeStarMap();
+        else openStarMap();
+      };
+    }
+    if (starMapCloseBtn) {
+      starMapCloseBtn.onclick = (e) => {
+        e.stopPropagation();
+        closeStarMap();
+      };
+    }
+
+    // Color Swatch Selection
+    const colorSwatches = root.querySelectorAll('.star-color-swatch');
+    colorSwatches.forEach((swatch: any) => {
+      swatch.onclick = (e: MouseEvent) => {
+        e.stopPropagation();
+        colorSwatches.forEach((s: any) => s.classList.remove('selected'));
+        swatch.classList.add('selected');
+        selectedStarColor = swatch.dataset.hex || '#9B8FFF';
+      };
+    });
+
+    // Form Submission: Place Star in Constellation
+    if (starMapForm) {
+      starMapForm.onsubmit = (e) => {
+        e.preventDefault();
+        const nameInput = root.querySelector('#star-input-name') as HTMLInputElement | null;
+        const locInput = root.querySelector('#star-input-location') as HTMLInputElement | null;
+        const msgInput = root.querySelector('#star-input-message') as HTMLInputElement | null;
+
+        const name = nameInput ? nameInput.value.trim() : '';
+        const location = locInput ? locInput.value.trim() : '';
+        const message = msgInput ? msgInput.value.trim() : '';
+
+        if (!name || !location) return;
+
+        const newStar = saveVisitorStar({
+          name,
+          location,
+          message: message || 'Placed a star in this cosmos',
+          color: selectedStarColor,
+        });
+
+        visitorStars = getVisitorStars();
+        renderStarRegistry();
+        flyToVisitorStar(newStar);
+        audioEngine.playChime(1.25);
+
+        // Reset form & close drawer so visitor sees their star immediately!
+        starMapForm.reset();
+        closeStarMap();
+      };
+    }
+
+    renderStarRegistry();
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        if (isTourActive) {
-          stopTour();
-        } else {
-          returnHome();
-        }
-      } else if (e.code === 'Space' && isTourActive) {
-        e.preventDefault();
-        toggleTourPause();
-      }
+        if (isStarMapOpen) closeStarMap(); else returnHome();
+      } 
     };
     window.addEventListener('keydown', handleKeyDown);
 
@@ -1370,7 +1140,7 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
         hoverId = null;
         hideTip();
         userInteracted = true;
-        if (isTourActive) stopTour();
+        if (isStarMapOpen) closeStarMap();
         setFieldFocus(detail);
       }
     };
@@ -1407,7 +1177,7 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
           hoverId = null;
           hideTip();
           userInteracted = true;
-          if (isTourActive) stopTour();
+          if (isStarMapOpen) closeStarMap();
           tab.action();
         };
         tabsEl.appendChild(d);
@@ -1646,29 +1416,11 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
         }
       }
 
-      if (isTourActive) {
-        const easeSpeed = 2.8;
-        curCamX += (targetCamX - curCamX) * Math.min(1, dt * easeSpeed);
-        curCamY += (targetCamY - curCamY) * Math.min(1, dt * easeSpeed);
-        camZoom += (targetCamZoom - camZoom) * Math.min(1, dt * easeSpeed);
-
-        if (!isTourPaused) {
-          tourStopElapsed += dt;
-          tourTotalElapsed += dt;
-          updateTourUI();
-
-          if (tourStopElapsed >= TOUR_STOPS[tourStopIndex].durationSec) {
-            if (tourStopIndex < TOUR_STOPS.length - 1) {
-              goToTourStop(tourStopIndex + 1);
-            } else {
-              finishTour();
-            }
-          }
-        }
-      } else {
-        curCamX += (cx0 - curCamX) * Math.min(1, dt * 2.5);
-        curCamY += (cy0 - curCamY) * Math.min(1, dt * 2.5);
-      }
+      // Smooth camera flight towards target (orbit center or visitor star)
+      const easeSpeed = 2.8;
+      curCamX += (targetCamX - curCamX) * Math.min(1, dt * easeSpeed);
+      curCamY += (targetCamY - curCamY) * Math.min(1, dt * easeSpeed);
+      camZoom += (targetCamZoom - camZoom) * Math.min(1, dt * easeSpeed);
 
       if (mode === 'cold') {
         coldP += dt / 1.0;
@@ -1678,8 +1430,6 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
           setFieldFocus('naresh');
         }
         camZoom = lerp(0.6, 1.0, ease(coldP));
-      } else if (!isTourActive) {
-        camZoom = 1;
       }
 
       // Continuous ambient celestial rotation (keeps gently revolving)
@@ -2057,53 +1807,69 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
         <div className="doc" id="doc" />
       </div>
 
-      {/* ── 60-Second Guided Flight Tour Overlay ── */}
-      <div id="cosmos-tour-overlay" className="cosmos-tour-overlay">
-        <div className="tour-card-container">
-          <div className="tour-timeline-wrap">
-            <div className="tour-timeline-bar">
-              <div id="tour-progress-fill" className="tour-progress-fill" style={{ width: '0%' }} />
+      {/* ── Visitor Star Map Drawer ("Star Wala") ── */}
+      <div id="star-map-drawer" className="star-map-drawer">
+        <div className="star-map-inner">
+          <div className="star-map-header">
+            <div className="star-map-title-row">
+              <span className="star-map-badge">✦ VISITOR STAR MAP</span>
+              <button id="star-map-close-btn" className="star-map-close" type="button" aria-label="Close Star Map">✕</button>
             </div>
-            <div className="tour-timeline-info">
-              <span id="tour-time-text" className="tour-time-text">00s / 60s</span>
-              <span className="tour-total-label">60s GUIDED FLIGHT TOUR</span>
-            </div>
+            <h2 className="star-map-title">Leave Your Star in the Cosmos</h2>
+            <p className="star-map-desc">
+              Join visitors from around the world who have ignited a star in Naresh's celestial galaxy.
+            </p>
           </div>
 
-          <div id="tour-story-card" className="tour-story-card" />
-
-          <div className="tour-control-bar">
-            <div className="tour-step-pills" id="tour-step-pills">
-              {TOUR_STOPS.map((s, idx) => (
-                <button
-                  key={s.id}
-                  type="button"
-                  className={`tour-step-dot ${idx === 0 ? 'active' : ''}`}
-                  data-step={idx}
-                  title={`Stop ${idx + 1}: ${s.title}`}
-                >
-                  {idx + 1}
-                </button>
-              ))}
+          <form id="star-map-form" className="star-map-form">
+            <div className="star-form-grid">
+              <div className="star-form-field">
+                <label>YOUR NAME / HANDLE</label>
+                <input id="star-input-name" type="text" placeholder="e.g. Sarah M. / Tech Recruiter" required maxLength={30} />
+              </div>
+              <div className="star-form-field">
+                <label>LOCATION / CITY</label>
+                <input id="star-input-location" type="text" placeholder="e.g. London, UK / Karachi, PK" required maxLength={35} />
+              </div>
+            </div>
+            <div className="star-form-field">
+              <label>NOTE / GREETING</label>
+              <input id="star-input-message" type="text" placeholder="e.g. Loved the leak-free ML remediation platform!" required maxLength={80} />
             </div>
 
-            <div className="tour-nav-btns">
-              <button id="tour-prev-btn" className="tour-nav-btn" type="button" title="Previous Stop" aria-label="Previous Stop">
-                ◀
-              </button>
-              <button id="tour-pause-btn" className="tour-nav-btn tour-pause-btn" type="button" title="Pause / Resume" aria-label="Pause / Resume">
-                ⏸
-              </button>
-              <button id="tour-next-btn" className="tour-nav-btn" type="button" title="Next Stop" aria-label="Next Stop">
-                ▶
-              </button>
-              <button id="tour-sound-btn" className="tour-nav-btn tour-sound-btn" type="button" title="Mute / Unmute Audio" aria-label="Mute / Unmute Audio">
-                🔊
-              </button>
-              <button id="tour-close-btn" className="tour-nav-btn tour-exit-btn" type="button" title="Exit Tour" aria-label="Exit Tour">
-                ✕
-              </button>
+            <div className="star-form-field">
+              <label>STAR SPECTRAL COLOR</label>
+              <div className="star-color-picker" id="star-color-picker">
+                {[
+                  { name: 'Lavender', hex: '#9B8FFF' },
+                  { name: 'Solar Lime', hex: '#CFFF04' },
+                  { name: 'Sky Cyan', hex: '#00B0CD' },
+                  { name: 'Amber Gold', hex: '#FFAA00' },
+                  { name: 'Neural Magenta', hex: '#E84FD0' },
+                  { name: 'Emerald', hex: '#22C55E' }
+                ].map((c, i) => (
+                  <button
+                    key={c.hex}
+                    type="button"
+                    className={`star-color-swatch ${i === 0 ? 'selected' : ''}`}
+                    data-hex={c.hex}
+                    style={{ backgroundColor: c.hex }}
+                    title={c.name}
+                  />
+                ))}
+              </div>
             </div>
+
+            <button type="submit" className="star-submit-btn">
+              ✦ Ignite Your Star in Cosmos
+            </button>
+          </form>
+
+          <div className="star-registry-section">
+            <div className="star-registry-head">
+              <span>EXPLORE VISITOR STARS (<span id="star-registry-count">0</span>)</span>
+            </div>
+            <div id="star-registry-list" className="star-registry-list" />
           </div>
         </div>
       </div>
