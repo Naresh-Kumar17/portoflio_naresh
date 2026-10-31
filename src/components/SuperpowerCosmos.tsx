@@ -1234,7 +1234,7 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
       galleryEl.classList.add('show');
 
       const parentId = PARENT_MAP[n.id];
-      const backLabel = parentId && byId[parentId] ? `← Back to ${byId[parentId].name}` : '↖ Return to Map';
+      const backLabel = parentId && byId[parentId] ? `Back to ${byId[parentId].name}` : 'Return to Map';
 
       let actionButtons = '';
       if (n.id === 'skills_hub') {
