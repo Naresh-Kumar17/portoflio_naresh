@@ -2,6 +2,14 @@ import { useEffect, useRef } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 import './SuperpowerCosmos.css';
 
+interface DrawnLabelBox {
+  id: string;
+  x1: number;
+  y1: number;
+  x2: number;
+  y2: number;
+}
+
 /* ── Naresh Kumar Data Science Constellation Dataset ── */
 const NARESH_DB = {
   N: [
@@ -10,10 +18,11 @@ const NARESH_DB = {
       id: "naresh",
       name: "Naresh",
       region: "entry",
-      x: -12.0,
-      y: 8.0,
+      x: -14.0,
+      y: 10.0,
       r: 1.85,
       z: 0,
+      labelPos: "top",
       kicker: "Data Science Student & ML Practitioner",
       links: [
         ["Featured Projects", "/projects"],
@@ -43,10 +52,11 @@ const NARESH_DB = {
       id: "skills_hub",
       name: "Skills",
       region: "skills",
-      x: -32.0,
-      y: 22.0,
+      x: -36.0,
+      y: 24.0,
       r: 1.5,
       z: 0.15,
+      labelPos: "left",
       kicker: "Core Competencies & Case Studies",
       links: [],
       sum: "In-page technical case study covering Python ML, C++ systems, and modern Web engineering.",
@@ -67,10 +77,11 @@ const NARESH_DB = {
       id: "about_me",
       name: "About Naresh",
       region: "entry",
-      x: -34.0,
-      y: 8.0,
+      x: -38.0,
+      y: 10.0,
       r: 1.05,
       z: 0.1,
+      labelPos: "left",
       kicker: "Background & Aspirations",
       sum: "Data Science undergraduate, machine learning developer, and computational thinker.",
       body: "I am an undergraduate student in Data Science at FAST-NUCES Karachi. My focus spans applied machine learning, time-series environmental forecasting, road safety risk prediction, and fullstack interactive data applications.",
@@ -92,10 +103,11 @@ const NARESH_DB = {
       id: "contacto",
       name: "Let's Connect",
       region: "entry",
-      x: -32.0,
-      y: -6.0,
+      x: -36.0,
+      y: -4.0,
       r: 1.0,
       z: -0.1,
+      labelPos: "left",
       kicker: "Open for Opportunities",
       sum: "Get in touch for internships, data science research, and software collaborations.",
       links: [
@@ -114,10 +126,11 @@ const NARESH_DB = {
       id: "resume_hub",
       name: "Resume",
       region: "entry",
-      x: 6.0,
-      y: 22.0,
+      x: 4.0,
+      y: 24.0,
       r: 1.45,
       z: 0.15,
+      labelPos: "top",
       kicker: "Curriculum Vitae",
       links: [
         ["View Full CV Page", "/resume"]
@@ -142,9 +155,10 @@ const NARESH_DB = {
       name: "Projects",
       region: "growth",
       x: 12.0,
-      y: -6.0,
+      y: -8.0,
       r: 1.75,
       z: 0.1,
+      labelPos: "bottom",
       kicker: "Portfolio Showcase",
       links: [
         ["GitHub Repositories", "https://github.com/Naresh-Kumar17"]
@@ -166,10 +180,11 @@ const NARESH_DB = {
       id: "web_category",
       name: "Web Development",
       region: "web",
-      x: 30.0,
-      y: -6.0,
+      x: 34.0,
+      y: -4.0,
       r: 1.35,
       z: 0.15,
+      labelPos: "top",
       kicker: "Project Category 01",
       links: [
         ["Interactive 3D Cosmos", "https://github.com/Naresh-Kumar17/portoflio_naresh"]
@@ -185,10 +200,11 @@ const NARESH_DB = {
       id: "cosmos_portfolio",
       name: "3D Cosmos Portfolio",
       region: "web",
-      x: 44.0,
-      y: -6.0,
+      x: 50.0,
+      y: -4.0,
       r: 1.05,
       z: 0.2,
+      labelPos: "right",
       kicker: "Featured Project · Web Development",
       sum: "Custom mathematical 3D constellation cosmos engine built with React 19, TypeScript, and HTML5 Canvas.",
       body: "Designed and developed this portfolio to showcase machine learning research, data science pipelines, and software projects. Implemented a custom 3D perspective projection engine on HTML5 Canvas, Box-Muller Gaussian volumetric nebula haze, travelling photon bezier curves, and smooth camera physics.",
@@ -210,10 +226,11 @@ const NARESH_DB = {
       id: "ml_category",
       name: "Machine Learning",
       region: "ai",
-      x: 28.0,
-      y: -19.0,
+      x: 30.0,
+      y: -22.0,
       r: 1.35,
       z: 0.15,
+      labelPos: "right",
       kicker: "Project Category 02",
       links: [
         ["SVM Handwritten Digits", "https://github.com/Naresh-Kumar17/svm-handwritten-digits"],
@@ -230,10 +247,11 @@ const NARESH_DB = {
       id: "svm_digits",
       name: "SVM Digit Recognition",
       region: "ai",
-      x: 41.0,
-      y: -14.5,
+      x: 44.0,
+      y: -17.5,
       r: 1.0,
       z: 0.2,
+      labelPos: "right",
       kicker: "Machine Learning Project",
       sum: "Support Vector Machine classifier for handwritten digit recognition with kernel optimization and ROC diagnostics.",
       body: "Trained and evaluated SVM models with RBF and polynomial kernels, tuning C and gamma regularization parameters to optimize digit boundary separation.",
@@ -248,10 +266,11 @@ const NARESH_DB = {
       id: "accident_severity",
       name: "Road Accident Risk",
       region: "ai",
-      x: 41.0,
-      y: -24.5,
+      x: 44.0,
+      y: -26.5,
       r: 1.0,
       z: 0.2,
+      labelPos: "right",
       kicker: "Machine Learning Project",
       sum: "Risk prediction pipeline predicting traffic collision injury severity with SMOTE class rebalancing.",
       body: "Tackled severe class imbalance using SMOTE and feature engineering across environmental and geometric conditions to maximize recall on critical incidents.",
@@ -269,9 +288,10 @@ const NARESH_DB = {
       name: "Data Science",
       region: "data",
       x: 12.0,
-      y: -23.0,
+      y: -26.0,
       r: 1.35,
       z: 0.15,
+      labelPos: "bottom",
       kicker: "Project Category 03",
       links: [
         ["Dataset Doctor", "https://github.com/Naresh-Kumar17/Dataset-Doctor"],
@@ -288,10 +308,11 @@ const NARESH_DB = {
       id: "dataset_doctor",
       name: "Dataset Doctor",
       region: "data",
-      x: 4.0,
-      y: -34.5,
+      x: 3.0,
+      y: -38.5,
       r: 1.15,
       z: 0.25,
+      labelPos: "bottom",
       kicker: "ML Reliability & Remediation Platform",
       sum: "The Data-to-Model Quality, ML Reliability & Leak-Free Remediation Platform with train-only 5-fold CV benchmarks and 117 passing tests.",
       body: "Upload raw tabular data, uncover silent data traps (target leaks, sentinels, impossible boundaries, class imbalance), and benchmark candidate repairs with 5-fold cross-validation strictly on training data. Enforces the non-negotiable invariant: Split first, lock test partition immediately with zero leakage, and export standalone reproduce.py scripts. Validated with 117 passing pytest tests (Gate 8 PASS) and live on Render.",
@@ -317,10 +338,11 @@ const NARESH_DB = {
       id: "air_quality",
       name: "Air Quality Forecasting",
       region: "data",
-      x: 20.0,
-      y: -34.5,
+      x: 21.0,
+      y: -38.5,
       r: 1.0,
       z: 0.25,
+      labelPos: "bottom",
       kicker: "Data Science Project",
       sum: "Time-series forecasting model analyzing particulate matter and meteorological trends to forecast AQI episodes.",
       body: "Developed an end-to-end framework handling temporal gaps, seasonal decomposition (STL), and lagged rolling features for air quality predictions.",
@@ -481,9 +503,9 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
     let SC = 1, LBL = 1;
 
     // Origin center: Centered directly on Naresh at (0, 0)
-    const cx0 = 5.0;
-    const cy0 = -6.0;
-    const orgR = 46.0;
+    const cx0 = 6.0;
+    const cy0 = -7.0;
+    const orgR = 52.0;
 
     function resize() {
       W = c.width = window.innerWidth;
@@ -555,10 +577,8 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
     let galNode: string | null = null;
 
     let curRot = 0, curBr = 1, lastTs = 0;
-    let autoRotateElapsed = 0;
-    const AUTO_ROTATE_MAX_SECS = 2.0;
     let fieldCX = 0.5, fieldCXt = 0.5;
-    let userZoom = 1, viewRot = 0, viewTiltX = 0, userInteracted = false;
+    let userZoom = 1, viewRot = 0, viewTiltX = 0.18, userInteracted = false;
 
     const sat = (v: number) => Math.max(0, Math.min(1, v));
     const ease = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
@@ -1043,14 +1063,9 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
         camZoom = 1;
       }
 
-      // Automatically stop continuous 3D rotation after 2.0 seconds intro
-      autoRotateElapsed += dt;
-      if (autoRotateElapsed < AUTO_ROTATE_MAX_SECS && !userInteracted) {
-        const decay = Math.max(0, 1 - (autoRotateElapsed / AUTO_ROTATE_MAX_SECS));
-        curRot += dt * 0.045 * (decay * decay);
-      } else {
-        // Smoothly settle curRot to 0 so nodes remain stationary in the hand-drawn view
-        curRot += (0 - curRot) * Math.min(1, dt * 4.0);
+      // Continuous ambient celestial rotation (keeps gently revolving)
+      if (!isDragging) {
+        curRot += dt * (userInteracted ? 0.018 : 0.022);
       }
       curBr = 1 + Math.sin(t * 0.5) * 0.02;
 
@@ -1131,8 +1146,9 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
         }
       }
 
-      // 5. Draw Nodes & Labels
+      // 5. Draw Nodes & Labels with dynamic collision avoidance
       const HUB_IDS = new Set(Object.values(REGION_TO_HUB));
+      const drawnLabels: DrawnLabelBox[] = [];
       for (let i = 0; i < N.length; i++) {
         const n = N[i] as any;
         const [sx, sy, persp] = proj(n.x, n.y, n.z);
@@ -1174,7 +1190,7 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
         ctx.fillStyle = col;
         ctx.fill();
 
-        // Node Label with decluttering (Hubs always visible; children reveal on hover, select, cluster focus, or zoom)
+        // Node Label with dynamic collision avoidance (never overlaps)
         const isHub = HUB_IDS.has(n.id);
         const isCategoryFocused = fieldSel && fieldSel !== 'naresh';
         const shouldShowLabel =
@@ -1195,44 +1211,80 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
           const textMetrics = ctx.measureText(labelText);
           const textW = textMetrics.width;
           const textH = fontSize;
-
-          // Flexible directional label placement to avoid node/text overlap
-          const pos = (n as any).labelPos || (n.x < -2 ? 'left' : 'right');
           const padX = 6, padY = 3.5;
-          let boxX = 0, boxY = 0, textX = 0, textY = 0;
-          let align: CanvasTextAlign = 'left';
 
-          if (pos === 'top') {
-            boxX = sx - textW / 2 - padX;
-            boxY = sy - R - textH - padY * 2 - 6;
-            textX = sx;
-            textY = sy - R - textH / 2 - padY - 6;
-            align = 'center';
-          } else if (pos === 'bottom') {
-            boxX = sx - textW / 2 - padX;
-            boxY = sy + R + 6;
-            textX = sx;
-            textY = sy + R + 6 + textH / 2 + padY;
-            align = 'center';
-          } else if (pos === 'left') {
-            boxX = sx - R - 8 - textW - padX * 2;
-            boxY = sy - textH / 2 - padY;
-            textX = sx - R - 8 - padX;
-            textY = sy;
-            align = 'right';
-          } else {
-            // Default 'right'
-            boxX = sx + R + 8 - padX;
-            boxY = sy - textH / 2 - padY;
-            textX = sx + R + 8;
-            textY = sy;
-            align = 'left';
+          const preferredPos = (n as any).labelPos || (n.x < -2 ? 'left' : 'right');
+          const candidatePositions = [preferredPos, 'top', 'bottom', 'right', 'left'];
+
+          let chosenBox = { boxX: 0, boxY: 0, textX: 0, textY: 0, align: 'left' as CanvasTextAlign };
+          let foundNonOverlapping = false;
+
+          for (const pos of candidatePositions) {
+            let bX = 0, bY = 0, tX = 0, tY = 0, al: CanvasTextAlign = 'left';
+            if (pos === 'top') {
+              bX = sx - textW / 2 - padX;
+              bY = sy - R - textH - padY * 2 - 6;
+              tX = sx;
+              tY = sy - R - textH / 2 - padY - 6;
+              al = 'center';
+            } else if (pos === 'bottom') {
+              bX = sx - textW / 2 - padX;
+              bY = sy + R + 6;
+              tX = sx;
+              tY = sy + R + 6 + textH / 2 + padY;
+              al = 'center';
+            } else if (pos === 'left') {
+              bX = sx - R - 8 - textW - padX * 2;
+              bY = sy - textH / 2 - padY;
+              tX = sx - R - 8 - padX;
+              tY = sy;
+              al = 'right';
+            } else {
+              bX = sx + R + 8 - padX;
+              bY = sy - textH / 2 - padY;
+              tX = sx + R + 8;
+              tY = sy;
+              al = 'left';
+            }
+
+            const candidateRect = {
+              id: n.id,
+              x1: bX,
+              y1: bY,
+              x2: bX + textW + padX * 2,
+              y2: bY + textH + padY * 2,
+            };
+
+            const collides = drawnLabels.some((prev: DrawnLabelBox) =>
+              !(candidateRect.x2 + 4 < prev.x1 ||
+                candidateRect.x1 - 4 > prev.x2 ||
+                candidateRect.y2 + 4 < prev.y1 ||
+                candidateRect.y1 - 4 > prev.y2)
+            );
+
+            if (!collides) {
+              chosenBox = { boxX: bX, boxY: bY, textX: tX, textY: tY, align: al };
+              drawnLabels.push(candidateRect);
+              foundNonOverlapping = true;
+              break;
+            }
           }
+
+          if (!foundNonOverlapping) {
+            const bX = sx + R + 8 - padX;
+            const bY = sy - textH / 2 - padY + (drawnLabels.length % 2 === 0 ? 14 : -14);
+            const tX = sx + R + 8;
+            const tY = bY + padY + textH / 2;
+            chosenBox = { boxX: bX, boxY: bY, textX: tX, textY: tY, align: 'left' };
+            drawnLabels.push({ id: n.id, x1: bX, y1: bY, x2: bX + textW + padX * 2, y2: bY + textH + padY * 2 });
+          }
+
+          const { boxX, boxY, textX, textY, align } = chosenBox;
 
           // Frosted background pill for high contrast and zero clutter
           ctx.globalCompositeOperation = 'source-over';
-          ctx.fillStyle = LITE ? 'rgba(239, 231, 212, 0.88)' : 'rgba(12, 10, 20, 0.82)';
-          ctx.strokeStyle = isSel || isHover ? col : (LITE ? 'rgba(0,0,0,0.15)' : 'rgba(255,255,255,0.12)');
+          ctx.fillStyle = LITE ? 'rgba(239, 231, 212, 0.92)' : 'rgba(12, 10, 20, 0.88)';
+          ctx.strokeStyle = isSel || isHover ? col : (LITE ? 'rgba(0,0,0,0.18)' : 'rgba(255,255,255,0.16)');
           ctx.lineWidth = isSel || isHover ? 1.5 : 0.8;
 
           ctx.beginPath();
