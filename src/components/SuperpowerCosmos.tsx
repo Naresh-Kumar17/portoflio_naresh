@@ -645,6 +645,7 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
     const mini = root.querySelector('#mini') as HTMLCanvasElement;
     const mctx = mini.getContext('2d')!;
     const tip = root.querySelector('#tip') as HTMLDivElement;
+    const galleryBackdrop = root.querySelector('#gallery-backdrop') as HTMLElement;
     const galleryEl = root.querySelector('#gallery') as HTMLElement;
     const pageEl = root.querySelector('#page') as HTMLDivElement;
     const docEl = root.querySelector('#doc') as HTMLDivElement;
@@ -655,6 +656,14 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
     const resetOrbitBtn = root.querySelector('#reset-orbit') as HTMLElement;
     const zoomInBtn = root.querySelector('#zoom-in') as HTMLElement;
     const zoomOutBtn = root.querySelector('#zoom-out') as HTMLElement;
+
+    if (galleryBackdrop) {
+      galleryBackdrop.onclick = (e) => {
+        if (e.target === galleryBackdrop) {
+          goHome();
+        }
+      };
+    }
 
     if (resetOrbitBtn) {
       resetOrbitBtn.onclick = (e) => {
@@ -1211,6 +1220,7 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
     // ── Side Gallery Drawer (#gallery) ──
     function renderGallery() {
       if (!galMode || !galNode || mode === 'page') {
+        galleryBackdrop?.classList.remove('show');
         galleryEl.classList.remove('show');
         galleryEl.innerHTML = '';
         return;
@@ -1218,8 +1228,9 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
       const n = byId[galNode];
       if (!n) return;
 
-      const acc = COLOR[n.region] || '#9B8FFF';
+      const acc = n.id === 'resume_hub' ? '#E84FD0' : (COLOR[n.region] || '#9B8FFF');
       galleryEl.style.setProperty('--cc', acc);
+      galleryBackdrop?.classList.add('show');
       galleryEl.classList.add('show');
 
       const parentId = PARENT_MAP[n.id];
@@ -1234,23 +1245,21 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
         `;
       } else if (n.id === 'resume_hub') {
         actionButtons = `
-          <div style="display:flex;gap:10px;flex-wrap:wrap;margin:16px 0 10px;">
-            <a href="/resume.pdf" download="Naresh_Kumar_Resume.pdf" class="genter" style="flex:1;min-width:140px;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;background:#E84FD0;color:#06070D;font-weight:700;padding:11px 16px;border-radius:10px;box-shadow:0 0 18px rgba(232,79,208,0.45);cursor:pointer;">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin:18px 0 14px;">
+            <a href="/resume.pdf" download="Naresh_Kumar_Resume.pdf" class="genter" style="flex:1;min-width:160px;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;background:#E84FD0;color:#06070D;font-weight:700;padding:12px 18px;border-radius:12px;box-shadow:0 0 20px rgba(232,79,208,0.45);cursor:pointer;font-size:13.5px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
               <span>Download PDF</span>
             </a>
-            <button id="resume-preview-toggle-btn" type="button" class="genter" style="flex:1;min-width:140px;display:inline-flex;align-items:center;justify-content:center;gap:8px;background:rgba(232,79,208,0.16);border:1px solid #E84FD0;color:#FAFAF7;font-weight:600;padding:11px 16px;border-radius:10px;cursor:pointer;">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-              <span id="resume-preview-btn-text">Hide PDF</span>
+            <button id="resume-preview-toggle-btn" type="button" class="genter" style="flex:1;min-width:160px;display:inline-flex;align-items:center;justify-content:center;gap:8px;background:rgba(232,79,208,0.16);border:1.5px solid #E84FD0;color:#FAFAF7;font-weight:600;padding:12px 18px;border-radius:12px;cursor:pointer;font-size:13.5px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              <span id="resume-preview-btn-text">Preview PDF</span>
             </button>
           </div>
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-family:var(--mono);font-size:11px;">
-            <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" style="color:#E84FD0;text-decoration:none;display:inline-flex;align-items:center;gap:4px;">
-              <span>Open in new tab</span>
+            <span style="color:var(--ink3);">Official 1-Page Curriculum Vitae</span>
+            <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" style="color:#E84FD0;text-decoration:none;display:inline-flex;align-items:center;gap:4px;font-weight:600;">
+              <span>Open PDF in new tab</span>
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-            </a>
-            <a href="/resume" style="color:var(--ink3);text-decoration:none;">
-              Open full CV page →
             </a>
           </div>
         `;
@@ -1329,7 +1338,7 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
         `;
       } else if (n.id === 'resume_hub') {
         customDossierHTML = `
-          <div id="resume-preview-container" style="margin:12px 0 16px;border-radius:12px;overflow:hidden;border:1px solid rgba(232,79,208,0.35);background:#12111d;box-shadow:0 12px 36px rgba(0,0,0,0.6);">
+          <div id="resume-preview-container" style="display:none;margin:14px 0 16px;border-radius:14px;overflow:hidden;border:1px solid rgba(232,79,208,0.35);background:#12111d;box-shadow:0 12px 36px rgba(0,0,0,0.6);">
             <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:rgba(232,79,208,0.1);border-bottom:1px solid rgba(232,79,208,0.2);font-family:var(--mono);font-size:11px;">
               <span style="color:#FAFAF7;font-weight:600;display:inline-flex;align-items:center;gap:7px;">
                 <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#E84FD0;box-shadow:0 0 8px #E84FD0;"></span>
@@ -1339,9 +1348,9 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
                 Official PDF
               </span>
             </div>
-            <div style="position:relative;width:100%;height:490px;background:#1a1926;">
-              <object data="/resume.pdf#view=FitH" type="application/pdf" width="100%" height="490px" style="display:block;border:none;">
-                <iframe src="/resume.pdf#view=FitH" width="100%" height="490px" title="Resume PDF Preview" style="border:none;display:block;">
+            <div style="position:relative;width:100%;height:520px;background:#1a1926;">
+              <object data="/resume.pdf#view=FitH" type="application/pdf" width="100%" height="520px" style="display:block;border:none;">
+                <iframe src="/resume.pdf#view=FitH" width="100%" height="520px" title="Resume PDF Preview" style="border:none;display:block;">
                   <div style="padding:48px 20px;text-align:center;color:var(--ink2);">
                     <p style="margin-bottom:14px;font-size:13px;">PDF inline preview not supported on this device.</p>
                     <a href="/resume.pdf" download="Naresh_Kumar_Resume.pdf" class="genter" style="display:inline-block;text-decoration:none;background:#E84FD0;color:#06070D;font-weight:700;padding:8px 16px;border-radius:8px;">
@@ -1386,14 +1395,17 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
       `).join('');
 
       galleryEl.innerHTML = `
-        <div class="ghead">
-          <button class="gback" data-back="true">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-            ${backLabel}
-          </button>
-          <span class="gchip" style="background:${acc}22;color:${acc};border:1px solid ${acc}55;">
-            ${n.kicker || RLAB[n.region]}
-          </span>
+        <div class="ghead" style="display:flex;align-items:center;justify-content:space-between;width:100%;margin-bottom:16px;">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <button class="gback" data-back="true">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+              ${backLabel}
+            </button>
+            <span class="gchip" style="background:${acc}22;color:${acc};border:1px solid ${acc}55;">
+              ${n.kicker || RLAB[n.region]}
+            </span>
+          </div>
+          <button id="gallery-close-btn" class="gclose" type="button" aria-label="Close" title="Return to Cosmos (Esc)">✕</button>
         </div>
 
         <div class="gname">${n.name}</div>
@@ -1401,8 +1413,13 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
         ${customDossierHTML}
         ${actionButtons}
         ${skillsHTML}
-        ${items.length > 0 ? `<div class="gcaplab">${sectionLabel} (${items.length})</div>${cardsHTML}` : ''}
+        ${items.length > 0 ? `<div class="gcaplab">${sectionLabel} (${items.length})</div><div class="gcards-grid">${cardsHTML}</div>` : ''}
       `;
+
+      const closeBtn = galleryEl.querySelector('#gallery-close-btn') as HTMLElement | null;
+      if (closeBtn) {
+        closeBtn.onclick = () => goHome();
+      }
 
       const previewToggleBtn = galleryEl.querySelector('#resume-preview-toggle-btn');
       const previewContainer = galleryEl.querySelector('#resume-preview-container') as HTMLElement | null;
@@ -1412,8 +1429,8 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
         previewToggleBtn.addEventListener('click', () => {
           const isClosed = previewContainer.style.display === 'none';
           previewContainer.style.display = isClosed ? 'block' : 'none';
-          previewBtnText.textContent = isClosed ? 'Hide PDF' : 'Preview PDF';
-          (previewToggleBtn as HTMLElement).style.background = isClosed ? 'rgba(232,79,208,0.28)' : 'rgba(232,79,208,0.16)';
+          previewBtnText.textContent = isClosed ? 'Hide Preview' : 'Preview PDF';
+          (previewToggleBtn as HTMLElement).style.background = isClosed ? 'rgba(232,79,208,0.32)' : 'rgba(232,79,208,0.16)';
           if (isClosed) {
             previewContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
           }
@@ -1492,9 +1509,8 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
       }
       curBr = 1 + Math.sin(t * 0.5) * 0.02;
 
-      // Adjust camera horizontal center when gallery panel is active
-      const galShown = mode === 'field' && !!galMode && window.innerWidth > 760;
-      fieldCXt = galShown ? 0.32 : 0.5;
+      // Keep 3D cosmos centered and spacious (Option 1: Centered Immersive Glass Card)
+      fieldCXt = 0.5;
       fieldCX += (fieldCXt - fieldCX) * 0.08;
 
       const fieldLike = mode === 'field' || mode === 'cold';
@@ -1790,7 +1806,9 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
         topEl.style.opacity = String(chO);
         topEl.style.pointerEvents = chO > 0.5 ? 'auto' : 'none';
       }
-      galleryEl.classList.toggle('show', mode === 'field' && !!galMode);
+      const isGalActive = mode === 'field' && !!galMode;
+      galleryEl.classList.toggle('show', isGalActive);
+      galleryBackdrop?.classList.toggle('show', isGalActive);
 
   animId = requestAnimationFrame(frame);
     }
@@ -1891,8 +1909,10 @@ export function SuperpowerCosmos({}: SuperpowerCosmosProps = {}) {
         <div className="go" />
       </div>
 
-      {/* ── Side Gallery Drawer (#gallery) ── */}
-      <aside id="gallery" />
+      {/* ── Immersive Centered Glass Modal (#gallery-backdrop > #gallery) ── */}
+      <div id="gallery-backdrop" className="gallery-backdrop">
+        <aside id="gallery" />
+      </div>
 
       {/* ── Full Editorial Case Study Reader (#page / #doc) ── */}
       <div id="pagetop">
